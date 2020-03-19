@@ -17,19 +17,36 @@ export default {
 <style lang="scss">
   // Text Styling
   *{
+    color: #f5f5f5;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   }
-  h1, h2, h3, h4, h5, h6, .logo, .v-label--active{
+  h1, h2, h3, h4, h5, h6, .logo{
+    color: #0093B1;
     font-family: 'Bodoni', serif !important;
   }
   // Container Classes
   .pageContent{
+    background: #202020;
     padding: 64px 128px 128px 128px;
+    min-height: calc(100vh - 60px) !important;
   }
   // User Authentication Classes
   .userForm{
     max-width: 256px;
     margin: 16px 0px;
+  }
+  .v-label, .v-application .primary--text{
+    color: #0093B1 !important;
+    background: transparent !important;
+  }
+  .v-input__slot .error--text{
+    color: #ff5252 !important;
+  }
+  .v-input__slot {
+    background: #191919 !important;
+  }
+  .v-input input{
+    color: #f5f5f5 !important;
   }
   .userHeading{
     font-size: 4em;

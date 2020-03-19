@@ -3,6 +3,7 @@
     <h1 class="userHeading">Log In</h1>
     <v-form class="userForm">
       <v-text-field
+        class="userInput"
         label="Email"
         v-model="email"
         :rules="emailRules"
