@@ -1,27 +1,24 @@
 <template>
-  <div>
-    <h1 class="userHeading">Log In</h1>
-    <v-form class="userForm">
-      <v-text-field
-        class="userInput"
-        label="Email"
-        v-model="email"
-        :rules="emailRules"
-        outlined
-        required
-      ></v-text-field>
-      <v-text-field
-        label="Password"
-        v-model="password"
-        :rules="passwordRules"
-        outlined
-        required
-      ></v-text-field>
-      <ButtonSubmit
-        message = "Log In"
-      />
-    </v-form>
-  </div>
+  <v-form class="userForm">
+    <v-text-field
+      class="userInput"
+      label="Email"
+      v-model="email"
+      :rules="emailRules"
+      outlined
+      required
+    ></v-text-field>
+    <v-text-field
+      label="Password"
+      v-model="password"
+      :rules="passwordRules"
+      outlined
+      required
+    ></v-text-field>
+    <ButtonSubmit
+      message = "Log In"
+    />
+  </v-form>
 </template>
 
 <script>
