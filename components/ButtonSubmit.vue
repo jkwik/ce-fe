@@ -1,25 +1,36 @@
 <template>
-  <button class="submitBtn">
-    {{this.message}}
+  <button 
+    v-if="type === 'login'"
+    @click='loginSubmit'
+    class="submitBtn"
+  >
+    <MessageButton :m='message'/>
   </button>
 </template>
 
 <script>
+import MessageButton from '~/components/MessageButton'
 export default {
   props: {
-    message: String
+    message: String,
+    type: String
+  },
+  components: {
+    MessageButton
+  },
+  methods: {
+    loginSubmit: function() {
+      console.log("got it");
+    }
   }
 }
 </script>
 
 <style lang="scss">
   .submitBtn{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     padding: 8px 48px;
     background: #00C9F2;
-    color: #191919;
     border: 2px solid #191919;
     border-radius: 12px;
-    font-size: 18px;
   }
 </style>

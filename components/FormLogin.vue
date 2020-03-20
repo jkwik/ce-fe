@@ -17,10 +17,11 @@
         outlined
         required
       ></v-text-field>
+    </v-form>
       <ButtonSubmit
         message = "Log In"
+        type = "login"
       />
-    </v-form>
   </div>
 </template>
 
