@@ -15,13 +15,17 @@ export default {
 </script>
 
 <style lang="scss">
+  // Vuetify Overwrites
+  .v-application p {
+    margin-bottom: 0px;
+  }
   // Text Styling
   *{
     color: #f5f5f5;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   }
   h1, h2, h3, h4, h5, h6, .logo{
-    color: #0093B1;
+    color: #00C9F2 !important;
     font-family: 'Bodoni', serif !important;
   }
   // Container Classes

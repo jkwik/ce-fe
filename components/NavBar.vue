@@ -24,7 +24,7 @@ export default {
     }
     .logo{
       font-size: 28px;
-      color: #00C9F2;
+      font-weight: 700;
     }
     .navLink{
       font-size: 22px;
