@@ -8,15 +8,8 @@
       outlined
       required
     ></v-text-field>
-    <v-text-field
-      label="Password"
-      v-model="password"
-      :rules="passwordRules"
-      outlined
-      required
-    ></v-text-field>
     <ButtonSubmit
-      message = "Log In"
+      message = "Continue"
     />
   </v-form>
 </template>
@@ -29,14 +22,10 @@ export default {
     ButtonSubmit
   },
   data: () => ({
-      email: '',
-      password: '',
-      emailRules: [
-        v => !!v || 'Email is required',
-      ],
-      passwordRules: [
-        v => !!v || 'Password is required',
-      ],
+    email: '',
+    emailRules: [
+      v => !!v || 'Email is required',
+    ],
   })
 }
 </script>

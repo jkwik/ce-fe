@@ -1,15 +1,16 @@
 <template>
-  <div>
-    <PasswordResetForm></PasswordResetForm>
+  <div class = "pageContent">
+    <h1 class = "userHeading"> Reset Password</h1>
+    <FormResetPassword></FormResetPassword>
   </div>
 </template>
 
 <script>
-import PasswordResetForm from '~/components/PasswordResetForm'
+import FormResetPassword from '~/components/FormResetPassword'
 
 export default {
   components: {
-    PasswordResetForm
+    FormResetPassword
   }
 }
 </script>
