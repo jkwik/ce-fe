@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="pageContent">
+    <h1 class="userHeading">Sign Up</h1>
     <FormSignup></FormSignup>
   </div>
 </template>
