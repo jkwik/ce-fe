@@ -1,11 +1,12 @@
 <template>
-  <button 
-    v-if="type === 'login'"
-    @click='loginSubmit'
-    class="submitBtn"
-  >
-    <MessageButton v-if="message" :m='message'/>
-  </button>
+  <div>
+    <button 
+      v-if="type === 'login'"
+      @click='loginSubmit'
+      class="submitBtn">
+      <MessageButton v-if="message" :m='message'/>
+    </button>
+  </div>
 </template>
 
 <script>
