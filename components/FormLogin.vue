@@ -12,8 +12,11 @@
       label="Password"
       v-model="password"
       :rules="passwordRules"
+      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+      :type="show ? 'text' : 'password'"
       outlined
       required
+      @click:append="show = !show"
     ></v-text-field>
   </v-form>
 </template>
@@ -25,6 +28,7 @@ export default {
   data: () => ({
       email: '',
       password: '',
+      show: false,
       emailRules: [
         v => !!v || 'Email is required',
       ],
