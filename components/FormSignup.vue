@@ -34,6 +34,7 @@
     ></v-text-field>
     <ButtonSubmit
       message = "Continue"
+      type = "continue"
     />
   </v-form>
 </template>

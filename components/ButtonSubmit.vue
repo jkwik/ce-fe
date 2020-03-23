@@ -1,11 +1,21 @@
 <template>
-  <button 
-    v-if="type === 'login'"
-    @click='loginSubmit'
-    class="submitBtn"
-  >
-    <MessageButton v-if="message" :m='message'/>
-  </button>
+  <div>
+    <button 
+      v-if="type === 'login'"
+      @click='loginSubmit'
+      class="submitBtn"
+    >
+      <MessageButton v-if="message" :m='message'/>
+    </button>
+
+    <button 
+      v-if="type === 'continue'"
+      @click='continueSubmit'
+      class="submitBtn"
+    >
+      <MessageButton v-if="message" :m='message'/>
+    </button>
+  </div>
 </template>
 
 <script>
@@ -20,7 +30,10 @@ export default {
   },
   methods: {
     loginSubmit: function() {
-      console.log("got it");
+      console.log("got Login");
+    },
+    continueSubmit: function() {
+      console.log("got Continue");
     }
   }
 }
