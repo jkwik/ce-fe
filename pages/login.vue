@@ -12,11 +12,12 @@
 <script>
 import ButtonSubmit from '~/components/ButtonSubmit'
 import FormLogin from '~/components/FormLogin'
+import ButtonSubmit from '~/components/ButtonSubmit'
 
 export default {
   components: {
-    ButtonSubmit,
-    FormLogin
+    FormLogin,
+    ButtonSubmit
   }
 }
 </script>

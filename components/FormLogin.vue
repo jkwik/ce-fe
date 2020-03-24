@@ -22,9 +22,8 @@
 </template>
 
 <script>
+
 export default {
-  components: {
-  },
   data: () => ({
       email: '',
       password: '',
