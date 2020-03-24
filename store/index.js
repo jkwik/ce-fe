@@ -4,6 +4,9 @@ export const state = () => ({
 })
 
 export const mutations = {
+  logIn (state) {
+    state.loggedIn = !state.loggedIn;
+  },
 }
 
 export const actions = {

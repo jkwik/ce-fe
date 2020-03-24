@@ -31,6 +31,7 @@ export default {
   methods: {
     loginSubmit: function() {
       console.log("got Login");
+      this.$store.commit('logIn');
     },
     continueSubmit: function() {
       console.log("got Continue");
