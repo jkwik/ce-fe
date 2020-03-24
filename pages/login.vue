@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import ButtonSubmit from '~/components/ButtonSubmit'
 import FormLogin from '~/components/FormLogin'
 import ButtonSubmit from '~/components/ButtonSubmit'
 

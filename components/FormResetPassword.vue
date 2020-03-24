@@ -5,32 +5,34 @@
       label="Password"
       v-model="password"
       :rules="passwordRules"
+      :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+      :type="showPassword ? 'text' : 'password'"
       outlined
       required
+      @click:append="showPassword = !showPassword"
     ></v-text-field>
     <v-text-field
       label="New password"
       v-model="newPassword"
       :rules="newPasswordRules"
+      :append-icon="showNewPassword ? 'mdi-eye' : 'mdi-eye-off'"
+      :type="showNewPassword ? 'text' : 'password'"
       outlined
       required
+      @click:append="showNewPassword = !showNewPassword"
     ></v-text-field>
-    <ButtonSubmit
-      message = "Continue"
-    />
   </v-form>
 </template>
 
 <script>
-import ButtonSubmit from '~/components/ButtonSubmit'
-
 export default {
   components: {
-    ButtonSubmit
   },
   data: (vm) => ({
     password: '',
     newPassword: '',
+    showPassword: false,
+    showNewPassword: false,
     passwordRules: [
       v => !!v || 'Password is required',
     ],

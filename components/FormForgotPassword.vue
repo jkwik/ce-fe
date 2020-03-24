@@ -8,18 +8,12 @@
       outlined
       required
     ></v-text-field>
-    <ButtonSubmit
-      message = "Continue"
-    />
   </v-form>
 </template>
 
 <script>
-import ButtonSubmit from '~/components/ButtonSubmit'
-
 export default {
   components: {
-    ButtonSubmit
   },
   data: () => ({
     email: '',

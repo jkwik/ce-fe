@@ -3,7 +3,7 @@
     <v-text-field
       class="userInput"
       label="First name"
-      v-model="email"
+      v-model="firstName"
       :rules="firstNameRules"
       outlined
       required
@@ -11,7 +11,7 @@
     <v-text-field
       class="userInput"
       label="Last name"
-      v-model="email"
+      v-model="lastName"
       :rules="lastNameRules"
       outlined
       required
@@ -27,13 +27,17 @@
     <v-text-field
       class="userInput"
       label="Password"
-      v-model="email"
+      v-model="password"
       :rules="passwordRules"
+      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+      :type="show ? 'text' : 'password'"
       outlined
       required
+      @click:append="show = !show"
     ></v-text-field>
     <ButtonSubmit
       message = "Continue"
+      type = "continue"
     />
   </v-form>
 </template>
@@ -50,6 +54,7 @@ export default {
     lastName: '',
     email: '',
     password: '',
+    show: false,
     firstNameRules: [
       v => !!v || 'First name is required',
     ],
