@@ -2,6 +2,8 @@
   <nav>
     <div class="navUserAuth">
       <nuxt-link to="/" class="logo">Coach Easy</nuxt-link>
+      <span class="navSpacer"></span>
+      <nuxt-link v-if="loggedIn && role" to="/dashboard" class="navLink">Dashboard</nuxt-link>
     </div>
     <div v-if="!loggedIn" class="navUserAuth">
       <nuxt-link to="/login" class="navLink">Log In</nuxt-link>
@@ -9,7 +11,6 @@
     </div>
     <div v-if="loggedIn" class="navUserAuth">
       <span class="navIcon"><MdPersonIcon w="40px" h="40px"/></span>
-      <nuxt-link to="/dashboard" class="navLink">Dashboard</nuxt-link>
       <nuxt-link to="/profile" class="navLink">View Profile</nuxt-link>
       <span class="navLink" @click="logOut()">Log Out</span>
 
@@ -24,10 +25,10 @@ export default {
     MdPersonIcon
   },
   computed: {
-    loggedIn(){
+    loggedIn: function(){
       return this.$store.state.loggedIn;
     },
-    role(){
+    role: function(){
       if(this.$store.state.userData){
         return this.$store.state.userData.role;
       }
@@ -36,7 +37,8 @@ export default {
   },
   methods: {
     logOut: function() {
-      console.log('logOut')
+      this.$store.commit('logIn')
+      console.log(this.$store.state.loggedIn)
     }
   },
 }
@@ -72,6 +74,9 @@ export default {
     .navUserAuth{
       display: flex;
       align-items: center;
+    }
+    .navSpacer{
+      width: 16px;
     }
   }
 </style>

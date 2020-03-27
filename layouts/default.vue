@@ -10,6 +10,11 @@ import NavBar from '~/components/NavBar'
 export default {
   components:{
     NavBar
+  },
+  beforeUpdate(){
+    if(loggedIn && role==='coach'){
+      this.$store.commit('setClientList');
+    }
   }
 }
 </script>
@@ -27,6 +32,10 @@ export default {
   h1, h2, h3, h4, h5, h6, .logo{
     color: #00C9F2 !important;
     font-family: 'Bodoni', serif !important;
+  }
+  .prompt{
+    color: #00C9F2 !important;
+    text-decoration: none;
   }
   // Container Classes
   .pageContent{
