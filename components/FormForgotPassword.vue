@@ -14,7 +14,7 @@
       @click='forgotPassword'
       class="submitBtn"
     >
-      <MessageButton v-if="message" m='Continue'/>
+      <MessageButton  m='Continue'/>
     </button>
   </div>
 </template>

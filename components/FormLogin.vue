@@ -24,7 +24,7 @@
       @click='loginSubmit'
       class="submitBtn"
     >
-      <MessageButton v-if="message" m='Log In'/>
+      <MessageButton m='Log In'/>
     </button>
   </div>
 </template>
