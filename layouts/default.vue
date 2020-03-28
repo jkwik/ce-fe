@@ -65,4 +65,11 @@ export default {
     font-size: 4em;
     font-weight: 700;
   }
+   //button
+  .submitBtn{
+    padding: 8px 48px;
+    background: #00C9F2;
+    border: 2px solid #191919;
+    border-radius: 12px;
+  }
 </style>

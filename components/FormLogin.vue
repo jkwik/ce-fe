@@ -19,12 +19,19 @@
         required
         @click:append="show = !show"
       ></v-text-field>
+      <nuxt-link to="/forgotPassword" class="prompt">Forgot password?</nuxt-link>
     </v-form>
     <button 
       @click='loginSubmit'
       class="submitBtn"
     >
-      <MessageButton v-if="message" m='Log In'/>
+      <MessageButton m='Log In'/>
+    </button>
+    <button 
+      @click='viewSignup'
+      class="submitBtn"
+    >
+      <MessageButton m='Sign Up'/>
     </button>
   </div>
 </template>
@@ -51,11 +58,22 @@ export default {
       ],
   }),
   methods:{
-    loginSubmit: function() {
-      this.$store.commit('setUserData', this.result.user)
-      this.$store.commit('logIn')
-      window.location.href = '/'
+    async loginSubmit () {
+      try {
+          await this.$auth.loginWith('local', {
+            data: user
+          })
+          this.$store.commit('setUserData', this.result.user)
+          this.$store.commit('logIn')
+          window.location.href = '/'
+        } catch (error) {
+          //Do something if it fails
+          console.log(error)
+        }
     },
+    viewSignup() {
+      window.location.href = '/signUp'
+    }
   },
   beforeUpdate() {
     this.$store.commit('setFormData', this.user)

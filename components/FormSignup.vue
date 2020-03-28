@@ -4,7 +4,7 @@
       <v-text-field
         class="userInput"
         label="First name"
-        v-model="firstName"
+        v-model="signUpInfo.firstName"
         :rules="firstNameRules"
         outlined
         required
@@ -12,7 +12,7 @@
       <v-text-field
         class="userInput"
         label="Last name"
-        v-model="lastName"
+        v-model="signUpInfo.lastName"
         :rules="lastNameRules"
         outlined
         required
@@ -20,7 +20,7 @@
       <v-text-field
         class="userInput"
         label="Email"
-        v-model="email"
+        v-model="signUpInfo.email"
         :rules="emailRules"
         outlined
         required
@@ -28,7 +28,7 @@
       <v-text-field
         class="userInput"
         label="Password"
-        v-model="password"
+        v-model="signUpInfo.password"
         :rules="passwordRules"
         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
         :type="show ? 'text' : 'password'"
@@ -41,7 +41,13 @@
       @click='signUp'
       class="submitBtn"
     >
-      <MessageButton v-if="message" m='Log In'/>
+      <MessageButton m='Sign Up'/>
+    </button>
+    <button 
+      @click='viewLogin'
+      class="submitBtn"
+    >
+      <MessageButton m='Log In'/>
     </button>
   </div>
 </template>
@@ -55,10 +61,12 @@ export default {
     MessageButton
   },
   data: () => ({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
+    signUpInfo: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+    },
     show: false,
     firstNameRules: [
       v => !!v || 'First name is required',
@@ -74,12 +82,25 @@ export default {
     ],
   }),
   methods:{
-    signUp: function() {
-      this.$store.commit('setUserData', this.result.user)
-      this.$store.commit('logIn')
-      window.location.href = '/'
+    async signUp(signupInfo) {
+      try {
+            await this.$axios.post('https://coach-easy-deploy.herokuapp.com/auth/signUp', signupInfo)
+
+          await this.$auth.loginWith('local', {
+            data: signupInfo
+          })
+          this.$store.commit('setUserData', this.result.user)
+          this.$store.commit('logIn')
+          window.location.href = '/'
+        } catch (error) {
+          //Do something if it fails
+          console.log(error)
+        }
     },
-  },
+    viewLogin() {
+      window.location.href = '/login'
+    }
+  }
 }
 </script>
 
