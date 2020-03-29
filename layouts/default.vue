@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="defaultLayout">
     <NavBar />
     <nuxt />
   </v-app>
@@ -24,6 +24,16 @@ export default {
   .v-application p {
     margin-bottom: 0px;
   }
+  .v-application p {
+    text-decoration: none !important;
+  }
+  .row{
+    margin: 0 !important;
+  }
+  // Other Overwrites
+  a:-webkit-any-link {
+    text-decoration: none !important;
+  }
   // Text Styling
   *{
     color: #f5f5f5;
@@ -33,11 +43,19 @@ export default {
     color: #00C9F2 !important;
     font-family: 'Bodoni', serif !important;
   }
+  .subHeading{
+    color: #79DEF2 !important;
+    font-family: 'Bodoni', serif !important;
+    font-size: 1.5em;
+  }
   .prompt{
     color: #00C9F2 !important;
     text-decoration: none;
   }
   // Container Classes
+  .defaultLayout{
+    background: #202020;
+  }
   .pageContent{
     background: #202020;
     padding: 64px 128px 128px 128px;
@@ -72,4 +90,34 @@ export default {
     border: 2px solid #191919;
     border-radius: 12px;
   }
+  .actionBtn{
+    font-size: 14px;
+    text-decoration: none !important;
+    padding: 6px 10px;
+    background: #00C9F2;
+    border: 1px solid #191919;
+    border-radius: 4px;
+    margin-left: 8px;
+    color: #191919 !important;
+  }
+  .primaryBackground{
+    background: #79DEF2 !important;
+    color: #191919 !important;
+  }
+  .errorText{
+    color: #F20050 !important;
+  }
+  .errorBackground{
+    background: #F279A1 !important;
+    color: #191919 !important;
+  }
+  .successText{
+    color: #79F28D !important;
+  }
+  .successBackground{
+    background: #79F28D !important;
+    color: #191919 !important;
+  }
+  // client list
+
 </style>

@@ -75,7 +75,7 @@ export default {
   }),
   methods:{
     signUp: function() {
-      this.$store.commit('setUserData', this.result.user)
+      // this.$store.commit('setUserData', this.result.user)
       this.$store.commit('logIn')
       window.location.href = '/'
     },
