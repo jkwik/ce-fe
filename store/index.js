@@ -5,31 +5,28 @@ const url = 'http://coach-easy-deploy.herokuapp.com';
 export const strict = false
 
 export const state = () => ({
-  loggedIn: true,
+  loggedIn: false,
   loading: false,
-  userData: {
-    "approved": true,
-    "check_in": null,
-    "coach_id": null,
-    "email": "kwik@wisc.edu",
-    "first_name": "Justin",
-    "id": 10,
-    "last_name": "Kwik",
-		"role": "COACH"
-  },
+  userData: {},
   currentClient: {},
   clientList: {}
   })
 
 export const mutations = {
   logIn (state) {
-    return state.loggedIn = !state.loggedIn;
+    return state.loggedIn = true;
+  },
+  logOut (state) {
+    return state.loggedIn = false;
   },
   isLoading (state) {
     return state.loading = !state.loading;
   },
   loaded (state) {
     return state.loading = false;
+  },
+  setUserData (state, data) {
+    return state.currentClient = data;
   },
   setClientList (state, data) {
     return state.clientList=data;
@@ -50,11 +47,13 @@ export const actions = {
     });
   },
   getCurrentClient(context, id){
-    axios.get(`${url}/getUser?id=${id}`).then(result => {
-      console.log(result)
-      context.commit('setCurrentClient', result.data)
-    }).catch(error => {
-      console.log(error)
-    });
+    if(context.store.currentClient.id !== id){
+      axios.get(`${url}/getUser?id=${id}`).then(result => {
+        console.log(result)
+        context.commit('setCurrentClient', result.data)
+      }).catch(error => {
+        console.log(error)
+      });
+    }
   }
 }

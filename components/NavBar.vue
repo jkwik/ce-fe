@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     logOut: function() {
-      this.$store.commit('logIn')
+      this.$store.commit('logOut')
       console.log(this.$store.state.loggedIn)
     }
   },

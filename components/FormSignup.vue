@@ -4,7 +4,7 @@
       <v-text-field
         class="userInput"
         label="First name"
-        v-model="signUpInfo.firstName"
+        v-model="firstName"
         :rules="firstNameRules"
         outlined
         required
@@ -12,7 +12,7 @@
       <v-text-field
         class="userInput"
         label="Last name"
-        v-model="signUpInfo.lastName"
+        v-model="lastName"
         :rules="lastNameRules"
         outlined
         required
@@ -20,7 +20,7 @@
       <v-text-field
         class="userInput"
         label="Email"
-        v-model="signUpInfo.email"
+        v-model="email"
         :rules="emailRules"
         outlined
         required
@@ -28,7 +28,7 @@
       <v-text-field
         class="userInput"
         label="Password"
-        v-model="signUpInfo.password"
+        v-model="password"
         :rules="passwordRules"
         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
         :type="show ? 'text' : 'password'"
@@ -54,19 +54,18 @@
 
 <script>
 import MessageButton from '~/components/MessageButton'
-import axios from 'axios'
+import axios from 'axios';
 axios.defaults.withCredentials = true;
+const url = 'https://coach-easy-deploy.herokuapp.com';
 export default {
   components: {
     MessageButton
   },
   data: () => ({
-    signUpInfo: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-    },
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
     show: false,
     firstNameRules: [
       v => !!v || 'First name is required',
@@ -82,16 +81,40 @@ export default {
     ],
   }),
   methods:{
-    async signUp(signupInfo) {
+    async signUp() {
       try {
-            await this.$axios.post('https://coach-easy-deploy.herokuapp.com/auth/signUp', signupInfo)
-
-          await this.$auth.loginWith('local', {
-            data: signupInfo
+          var self = this;
+          axios.post(`${url}/signUp`, {
+            first_name: this.firstName,
+            last_name: this.lastName,
+            email: this.email,
+            password: this.password,
+            role: "CLIENT"
           })
-          this.$store.commit('setUserData', this.result.user)
-          this.$store.commit('logIn')
-          window.location.href = '/'
+          .then(function (response) {
+            console.log(response)
+            axios.post(`${url}/auth/login`, {
+              email: self.email,
+              password: self.password
+            })
+            .then(function (response){
+              console.log(response)
+              self.$store.commit('setUserData', response.user)
+              self.$store.commit('logIn')
+              window.location.href = '/'
+            })
+            .catch(function (error){
+              console.log(error);
+            })
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          // await this.$auth.loginWith('local', {
+          //   data: signupInfo
+          // })
+          
+          // 
         } catch (error) {
           //Do something if it fails
           console.log(error)

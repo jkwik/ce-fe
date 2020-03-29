@@ -4,14 +4,14 @@
       <v-text-field
         class="userInput"
         label="Email"
-        v-model="user.email"
+        v-model="email"
         :rules="emailRules"
         outlined
         required
       ></v-text-field>
       <v-text-field
         label="Password"
-        v-model="user.password"
+        v-model="password"
         :rules="passwordRules"
         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
         :type="show ? 'text' : 'password'"
@@ -40,15 +40,14 @@
 import MessageButton from '~/components/MessageButton'
 import axios from 'axios'
 axios.defaults.withCredentials = true;
+const url = 'https://coach-easy-deploy.herokuapp.com';
 export default {
   components: {
     MessageButton
   },
   data: () => ({
-      user: {
-        email: '',
-        password: '',
-      },
+      email: '',
+      password: '',
       show: false,
       emailRules: [
         v => !!v || 'Email is required',
@@ -60,23 +59,27 @@ export default {
   methods:{
     async loginSubmit () {
       try {
-          await this.$auth.loginWith('local', {
-            data: user
+        var self = this;
+        axios.post(`${url}/auth/login`, {
+            email: self.email,
+            password: self.password
           })
-          this.$store.commit('setUserData', this.result.user)
-          this.$store.commit('logIn')
-          window.location.href = '/'
-        } catch (error) {
-          //Do something if it fails
-          console.log(error)
-        }
+          .then(function (response){
+            console.log(response)
+            self.$store.commit('setUserData', response.user)
+            self.$store.commit('logIn')
+            window.location.href = '/dashboard'
+          })
+          .catch(function (error){
+            console.log(error);
+          })
+      } catch (e){
+        console.log(e)
+      }
     },
     viewSignup() {
       window.location.href = '/signUp'
     }
-  },
-  beforeUpdate() {
-    this.$store.commit('setFormData', this.user)
   },
 }
 </script>
