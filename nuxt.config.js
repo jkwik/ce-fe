@@ -45,12 +45,26 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/auth'
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+        login: { url: 'https://coach-easy-deploy.herokuapp.com/auth/login', method: 'post', propertyName: 'token'},
+        logout: { url: 'https://coach-easy-deploy.herokuapp.com/auth/logout', method: 'delete'},
+        user: { url: 'https://coach-easy-deploy.herokuapp.com/auth/logout/verifyUser', method: 'get', propertyName: 'user' }
+        },
+        // tokenRequired: true,
+        // tokenType: 'bearer'
+      }
+    }
   },
   /*
   ** vuetify module configuration

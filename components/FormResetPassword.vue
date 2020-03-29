@@ -27,7 +27,7 @@
       @click='resetPassword'
       class="submitBtn"
     >
-      <MessageButton  m='Continue'/>
+      <MessageButton m='Continue'/>
     </button>
   </div>
 </template>
@@ -40,7 +40,7 @@ export default {
   components: {
     MessageButton
   },
-  data: (vm) => ({
+  data: () => ({
     password: '',
     newPassword: '',
     showPassword: false,

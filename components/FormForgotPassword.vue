@@ -14,7 +14,7 @@
       @click='forgotPassword'
       class="submitBtn"
     >
-      <MessageButton  m='Continue'/>
+      <MessageButton m='Continue'/>
     </button>
   </div>
 </template>
@@ -34,9 +34,14 @@ export default {
     ],
   }),
   methods:{
-    forgotPassword: function() {
-      console.log('forgotPassword')
-      window.location.href = '/'
+    async forgotPassword() {
+      try{
+        await this.$axios.get('https://coach-easy-deploy.herokuapp.com/forgotPassword', email)
+        console.log('forgotPassword')
+        window.location.href = '/'
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
 }
