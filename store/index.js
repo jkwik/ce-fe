@@ -1,108 +1,60 @@
 import axios from 'axios';
-const url = 'asdf';
+axios.defaults.withCredentials = true;
+const url = 'http://coach-easy-deploy.herokuapp.com';
 
 export const strict = false
 
 export const state = () => ({
-  loggedIn: false,
+  loggedIn: true,
+  loading: false,
   userData: {
     "approved": true,
     "check_in": null,
     "coach_id": null,
     "email": "kwik@wisc.edu",
     "first_name": "Justin",
-    "id": 14,
+    "id": 10,
     "last_name": "Kwik",
-		"role": "CLIENT"
+		"role": "COACH"
   },
-  currentClient: {
-
-  },
-  clientList: {
-    "approvedClients": [
-      {
-        "approved": true,
-        "check_in": null,
-        "coach_id": 97,
-        "email": "kwik@wisc.edu",
-        "first_name": "Justin",
-        "id": 95,
-        "last_name": "Kwik",
-        "reset_token": null,
-        "role": "CLIENT",
-        "verified": true
-      },
-      {
-        "approved": true,
-        "check_in": null,
-        "coach_id": 97,
-        "email": "solomonfett@wisc.edu",
-        "first_name": "Nati",
-        "id": 101,
-        "last_name": "Solomon Fett",
-        "reset_token": "1b97b9b0-6e10-11ea-bed2-acde48001122",
-        "role": "CLIENT",
-        "verified": true
-      }
-    ],
-    "pastClients": [
-      {
-        "approved": null,
-        "check_in": null,
-        "coach_id": null,
-        "email": "test@gmail.com",
-        "first_name": "test",
-        "id": 104,
-        "last_name": "test_last",
-        "reset_token": null,
-        "role": "CLIENT",
-        "verified": false
-      }
-    ],
-    "unapprovedClients": [
-      {
-        "approved": false,
-        "check_in": null,
-        "coach_id": null,
-        "email": "test_verify@gmail.com",
-        "first_name": "test",
-        "id": 103,
-        "last_name": "Fett",
-        "reset_token": null,
-        "role": "CLIENT",
-        "verified": false
-      }
-    ]
-  }
-})
+  currentClient: {},
+  clientList: {}
+  })
 
 export const mutations = {
   logIn (state) {
-    state.loggedIn = !state.loggedIn;
+    return state.loggedIn = !state.loggedIn;
   },
-  emptyClientList (state) {
-    state.clientList={};
+  isLoading (state) {
+    return state.loading = !state.loading;
+  },
+  loaded (state) {
+    return state.loading = false;
   },
   setClientList (state, data) {
-    axios.get(url + '/clientList')
-    .then(function (response) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    state.userData=data;
+    return state.clientList=data;
   },
-  setUserData (state) {
-    state.clientList;
-  },
-  setCurrentClient (state) {
-    state.currentClient;
+  setCurrentClient (state, data) {
+    return state.currentClient = data;
   },
 }
 
 export const actions = {
-
+  getClientList(context){
+    axios.get(`${url}/clientList`).then(result => {
+      console.log(result.data)
+      // console.log(result.data.data)
+      context.commit('setClientList', result.data)
+    }).catch(error => {
+      console.log(error)
+    });
+  },
+  getCurrentClient(context, id){
+    axios.get(`${url}/getUser?id=${id}`).then(result => {
+      console.log(result)
+      context.commit('setCurrentClient', result.data)
+    }).catch(error => {
+      console.log(error)
+    });
+  }
 }
