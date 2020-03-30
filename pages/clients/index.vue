@@ -26,6 +26,13 @@
               Approve
             </button>
             <button 
+              v-if="i==='unapprovedClients' 
+              || i==='pastClients'"
+              @click="deleteClient(c)"
+              class="errorBackground actionBtn">
+              Delete
+            </button>
+            <button 
               v-if="i=='approvedClients'"
               @click="terminateClient(c)"
               class="errorBackground actionBtn">
@@ -48,6 +55,7 @@ export default {
   methods: {
     setCurrentClient: function(data){
       this.$store.commit('isLoading')
+      console.log(data.id)
       this.$store.commit('setCurrentClient', data);
       window.location.href = `/clients/${data.id}`
     },
@@ -74,6 +82,17 @@ export default {
       axios.put(url+`/terminateClient`, {
         id: data.id
       })
+      .then(function (response) {
+        console.log(response);
+        self.$store.dispatch("getClientList");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+    deleteClient: function(data){
+      var self = this;
+      axios.delete(url+`/user?id=${data.id}`)
       .then(function (response) {
         console.log(response);
         self.$store.dispatch("getClientList");

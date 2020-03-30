@@ -39,13 +39,10 @@ export default {
   },
   computed:{
     currentClient () {
-      if(this.$store.state.currentClient.id == this.$route.params.id){
-        this.error = false;
-        this.$store.commit('loaded')
-        return this.$store.state.currentClient;
-      } else{
-        console.log('here')
+      if(this.$store.state.currentClient.id != this.$route.params.id){
         this.$store.dispatch('getCurrentClient', this.$route.params.id)
+      } else {
+        return this.$store.state.currentClient
       }
     },
   },

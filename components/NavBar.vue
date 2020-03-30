@@ -19,6 +19,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+axios.defaults.withCredentials = true;
+const url = 'https://coach-easy-deploy.herokuapp.com';
 import MdPersonIcon from 'vue-ionicons/dist/md-person.vue'
 export default {
   components: {
@@ -37,8 +40,20 @@ export default {
   },
   methods: {
     logOut: function() {
-      this.$store.commit('logOut')
-      console.log(this.$store.state.loggedIn)
+      var self = this
+      axios.get(`${url}/auth/logout`)
+      .then(function (response){
+        self.$store.commit('logOut')
+        window.location.href = '/'
+      })
+      .catch(function (error){
+        if(error.response.status===400){
+          self.$store.commit('logOut')
+          console.log('not logged in');
+        } else {
+          console.log(error);
+        }
+      })
     }
   },
 }

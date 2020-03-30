@@ -99,7 +99,7 @@ export default {
             })
             .then(function (response){
               console.log(response)
-              self.$store.commit('setUserData', response.user)
+              self.$store.commit('setUserData', response.data.user)
               self.$store.commit('logIn')
               window.location.href = '/'
             })

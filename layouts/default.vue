@@ -91,13 +91,13 @@ export default {
     border-radius: 12px;
   }
   .actionBtn{
+    overflow: hidden;
     font-size: 14px;
     text-decoration: none !important;
     padding: 6px 10px;
     background: #00C9F2;
     border: 1px solid #191919;
     border-radius: 4px;
-    margin-left: 8px;
     color: #191919 !important;
   }
   .primaryBackground{

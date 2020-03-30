@@ -26,7 +26,7 @@ export const mutations = {
     return state.loading = false;
   },
   setUserData (state, data) {
-    return state.currentClient = data;
+    return state.userData = data;
   },
   setClientList (state, data) {
     return state.clientList=data;
@@ -47,13 +47,16 @@ export const actions = {
     });
   },
   getCurrentClient(context, id){
-    if(context.store.currentClient.id !== id){
-      axios.get(`${url}/getUser?id=${id}`).then(result => {
+    // if(context.store.currentClient.id !== id){
+      axios.get(`${url}/getUser?id=${id}`)
+      .then(result => {
+        console.log('success')
         console.log(result)
-        context.commit('setCurrentClient', result.data)
+        context.commit('setCurrentClient', result.data.user)
       }).catch(error => {
+        console.log('current client error')
         console.log(error)
       });
-    }
+    // }
   }
 }

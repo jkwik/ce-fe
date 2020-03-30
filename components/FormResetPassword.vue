@@ -36,6 +36,7 @@
 import MessageButton from '~/components/MessageButton'
 import axios from 'axios'
 axios.defaults.withCredentials = true;
+const url = 'https://coach-easy-deploy.herokuapp.com';
 export default {
   components: {
     MessageButton
@@ -54,8 +55,18 @@ export default {
   }),
   methods:{
     resetPassword: function() {
-      console.log('resetPassword')
-      window.location.href = '/'
+      var self = this;
+      console.log(this.password)
+      axios.post(`${url}/resetPassword`, {
+        password: self.password,
+        reset_token: self.$route.query.reset_token
+      })
+      .then(function (response){
+        window.location.href = '/login'
+      })
+      .catch(function (error){
+        console.log(error);
+      })
     },
   },
 }
