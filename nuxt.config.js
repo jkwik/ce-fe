@@ -30,27 +30,41 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/vuex-persist', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa',
+    '@nuxtjs/auth'
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+        login: { url: 'https://coach-easy-deploy.herokuapp.com/auth/login', method: 'post', propertyName: 'token'},
+        logout: { url: 'https://coach-easy-deploy.herokuapp.com/auth/logout', method: 'delete'},
+        user: { url: 'https://coach-easy-deploy.herokuapp.com/auth/logout/verifyUser', method: 'get', propertyName: 'user' }
+        },
+        // tokenRequired: true,
+        // tokenType: 'bearer'
+      }
+    }
   },
   /*
   ** vuetify module configuration
@@ -59,7 +73,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
