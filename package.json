@@ -17,6 +17,7 @@
     "@nuxtjs/pwa": "^3.0.0-0",
     "nuxt": "^2.0.0",
     "vue-ionicons": "^3.0.4",
+    "vuetify": "^2.2.19",
     "vuex-persist": "^2.2.0"
   },
   "devDependencies": {
