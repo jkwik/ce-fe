@@ -11,6 +11,7 @@
     <SpacerSmall />
     <UserProfile 
       v-if="!edit"
+      :userData="this.userData"
     />
     <EditProfile
       v-if="edit"

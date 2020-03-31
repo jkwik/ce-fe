@@ -9,10 +9,8 @@
 
 <script>
 export default {
-  computed: {
-    userData: function(){
-      return this.$store.state.userData;
-    }
+  props: {
+    userData: Object
   }
 }
 </script>

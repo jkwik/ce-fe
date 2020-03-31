@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p v-if="msg">Updated Profile</p>
     <v-text-field
       label="First Name"
       :placeholder="userData.first_name"
@@ -41,6 +42,7 @@ export default {
       firstName: '',
       lastName: '',
       email: '',
+      msg: false,
     }
   },
   computed: {
@@ -50,6 +52,7 @@ export default {
   },
   methods: {
     editProfile: function(){
+      var self = this;
       let fn = this.$store.state.userData.first_name;
       let ln = this.$store.state.userData.last_name;
       let em = this.$store.state.userData.email;
@@ -64,12 +67,13 @@ export default {
       }
       console.log(`${fn} ${ln} ${em}`)
       axios.put(`${url}/updateProfile`, {
-        email: this.em,
-        first_name: this.fn,
-        last_name: this.ln
+        email: self.em,
+        first_name: self.fn,
+        last_name: self.ln
       })
       .then(function (response) {
-        console.log(response);
+        self.$store.commit('setUserData', response.data.user);
+        self.msg = true;
       })
       .catch(function (error) {
         console.log(error);
