@@ -37,13 +37,12 @@ export default {
       error: false
     }
   },
+  mounted() {
+    this.$store.dispatch('getCurrentClient', this.$route.params.id)
+  },
   computed:{
     currentClient () {
-      if(this.$store.state.currentClient.id != this.$route.params.id){
-        this.$store.dispatch('getCurrentClient', this.$route.params.id)
-      } else {
-        return this.$store.state.currentClient
-      }
+        return this.$store.state.currentClient;
     },
   },
 }
