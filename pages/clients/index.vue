@@ -48,14 +48,13 @@
 
 <script>
 import axios from 'axios'
-const url = 'http://coach-easy-deploy.herokuapp.com';
+const url = 'https://coach-easy-deploy.herokuapp.com';
 axios.defaults.withCredentials = true;
 
 export default {
   methods: {
     setCurrentClient: function(data){
       this.$store.commit('isLoading')
-      console.log(data.id)
       this.$store.commit('setCurrentClient', data);
       window.location.href = `/clients/${data.id}`
     },

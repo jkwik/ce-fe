@@ -56,7 +56,6 @@ export default {
   methods:{
     resetPassword: function() {
       var self = this;
-      console.log(this.password)
       axios.post(`${url}/resetPassword`, {
         password: self.password,
         reset_token: self.$route.query.reset_token

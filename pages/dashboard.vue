@@ -5,19 +5,13 @@
       <v-row>
         <v-col 
           cols="4">
-          <nuxt-link to="/clients">
-            <v-card 
-            class="dashCard">
-            <div class="dashContents">
-              <MdPeopleIcon w="75px" h="75px"/>
-              <h2 class="subHeading">Client List</h2>
-            </div>
-            </v-card>
-          </nuxt-link>
+          <DashCard 
+            type="clients"
+          />
         </v-col>
-        <v-col>
+        <!-- <v-col>
           <p @click="testMethod()">Click</p>
-        </v-col>
+        </v-col> -->
       </v-row>
     </div>
   </div>
@@ -25,31 +19,31 @@
 
 <script>
 import axios from 'axios'
-import MdPeopleIcon from 'vue-ionicons/dist/md-people.vue'
+import DashCard from '~/components/DashCard'
 export default {
   components: {
-    MdPeopleIcon
+    DashCard
   },
   methods: {
-    testMethod: function(){
-      // axios.post('http://coach-easy-deploy.herokuapp.com/signUp', {
+    // testMethod: function(){
+      // axios.post('https://coach-easy-deploy.herokuapp.com/signUp', {
       //   first_name: 'Fred',
       //   last_name: 'Flintstone',
       //   email: 'cfarris@wisc.edu',
       //   password: 'testPass',
       //   role: "COACH"
       // })
-      axios.post('http://coach-easy-deploy.herokuapp.com/auth/login', {
-        email: 'cfarris@wisc.edu',
-        password: 'testPass',
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
+      // axios.post('https://coach-easy-deploy.herokuapp.com/auth/login', {
+      //   email: 'cfarris@wisc.edu',
+      //   password: 'testPass',
+      // })
+      // .then(function (response) {
+      //   console.log(response);
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // });
+    // }
 // - first_name: string - REQUIRED
 // - last_name: string - REQUIRED
 // - email: string - REQUIRED

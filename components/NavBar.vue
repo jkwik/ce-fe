@@ -10,7 +10,7 @@
       <nuxt-link to="/signUp" class="navLink">Sign Up</nuxt-link>
     </div>
     <div v-if="loggedIn" class="navUserAuth">
-      <span class="navIcon"><MdPersonIcon w="40px" h="40px"/></span>
+      <!-- <span class="navIcon"><MdPersonIcon w="40px" h="40px"/></span> -->
       <nuxt-link to="/profile" class="navLink">View Profile</nuxt-link>
       <span class="navLink" @click="logOut()">Log Out</span>
 

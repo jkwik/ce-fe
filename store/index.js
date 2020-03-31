@@ -1,6 +1,6 @@
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-const url = 'http://coach-easy-deploy.herokuapp.com';
+const url = 'https://coach-easy-deploy.herokuapp.com';
 
 export const strict = false
 
@@ -26,6 +26,7 @@ export const mutations = {
     return state.loading = false;
   },
   setUserData (state, data) {
+    console.log(data)
     return state.userData = data;
   },
   setClientList (state, data) {
@@ -40,23 +41,20 @@ export const actions = {
   getClientList(context){
     axios.get(`${url}/clientList`).then(result => {
       console.log(result.data)
-      // console.log(result.data.data)
       context.commit('setClientList', result.data)
     }).catch(error => {
       console.log(error)
     });
   },
   getCurrentClient(context, id){
-    // if(context.store.currentClient.id !== id){
-      axios.get(`${url}/getUser?id=${id}`)
-      .then(result => {
-        console.log('success')
-        console.log(result)
-        context.commit('setCurrentClient', result.data.user)
-      }).catch(error => {
-        console.log('current client error')
-        console.log(error)
-      });
-    // }
+    axios.get(`${url}/getUser?id=${id}`)
+    .then(result => {
+      console.log('success')
+      console.log(result)
+      context.commit('setCurrentClient', result.data.user)
+    }).catch(error => {
+      console.log('current client error')
+      console.log(error)
+    });
   }
 }
