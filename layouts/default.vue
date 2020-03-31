@@ -2,14 +2,17 @@
   <v-app class="defaultLayout">
     <NavBar />
     <nuxt />
+    <Footer />
   </v-app>
 </template>
 
 <script>
 import NavBar from '~/components/NavBar'
+import Footer from '~/components/Footer'
 export default {
   components:{
-    NavBar
+    NavBar,
+    Footer
   },
   beforeUpdate(){
     if(loggedIn && role==='coach'){
@@ -60,6 +63,13 @@ export default {
     background: #202020;
     padding: 64px 128px 128px 128px;
     min-height: calc(100vh - 60px) !important;
+  }
+  .footer{
+    height: 64px;
+    background: #191919;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   // User Authentication Classes
   .userForm{

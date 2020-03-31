@@ -1,6 +1,6 @@
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-const url = 'http://coach-easy-deploy.herokuapp.com';
+const url = 'https://coach-easy-deploy.herokuapp.com';
 
 export const strict = false
 

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p v-if="msg">Updated Profile</p>
+    <p v-if="msg" class="successText">Updated Profile</p>
+    <SpacerSmall v-if="msg" />
     <v-text-field
       label="First Name"
       :placeholder="userData.first_name"
@@ -33,9 +34,11 @@ import axios from 'axios'
 axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
 import MessageButton from '~/components/MessageButton'
+import SpacerSmall from '~/components/SpacerSmall'
 export default {
   components:{
-    MessageButton
+    MessageButton,
+    SpacerSmall
   },
   data() {
     return {
@@ -65,15 +68,15 @@ export default {
       if(this.email!==''){
         em = this.email;
       }
-      console.log(`${fn} ${ln} ${em}`)
       axios.put(`${url}/updateProfile`, {
-        email: self.em,
-        first_name: self.fn,
-        last_name: self.ln
+        email: em,
+        first_name: fn,
+        last_name: ln
       })
       .then(function (response) {
         self.$store.commit('setUserData', response.data.user);
         self.msg = true;
+        window.location.href = '/profile'
       })
       .catch(function (error) {
         console.log(error);

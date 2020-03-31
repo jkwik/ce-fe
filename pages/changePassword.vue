@@ -56,7 +56,7 @@ export default {
         this.error = false;
         let em = this.$store.state.userData.email;
         axios.put(`${url}/updateProfile`, {
-          email: this.em,
+          email: em,
           newPassword: this.newPassword,
           oldPassword: this.oldPassword
         })

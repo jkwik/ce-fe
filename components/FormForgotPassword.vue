@@ -36,7 +36,6 @@ export default {
   methods:{
     async forgotPassword() {
       try{
-        console.log(this.email)
         await this.$axios.get(`https://coach-easy-deploy.herokuapp.com/forgotPassword?email=${this.email}`)
         .then(function (response){
           console.log(response)
@@ -44,7 +43,6 @@ export default {
         .catch(function (error){
           console.log(error);
         })
-        // window.location.href = '/'
       } catch (error) {
         console.log(error)
       }
