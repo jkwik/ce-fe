@@ -5,16 +5,25 @@
     <v-text-field
       label="Old Password"
       v-model="oldPassword"
+      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+      :type="show1 ? 'text' : 'password'"
+      @click:append="show1 = !show1"
       outlined
     ></v-text-field>
     <v-text-field
       label="New Password"
       v-model="newPassword"
+      :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+      :type="show2 ? 'text' : 'password'"
+      @click:append="show2 = !show2"
       outlined
     ></v-text-field>
     <v-text-field
       label="Confirm Password"
       v-model="confirmPassword"
+      :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+      :type="show3 ? 'text' : 'password'"
+      @click:append="show3 = !show3"
       outlined
     ></v-text-field>
     <button 
@@ -42,7 +51,10 @@ export default {
       oldPassword: '',
       newPassword: '',
       confirmPassword: '',
-      error: false
+      error: false,
+      show1: false,
+      show2: false,
+      show3: false
     }
   },
   computed: {
@@ -62,6 +74,7 @@ export default {
         })
         .then(function (response) {
           console.log(response);
+          window.location.href = '/profile'
         })
         .catch(function (error) {
           console.log(error);

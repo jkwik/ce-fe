@@ -39,6 +39,7 @@ export default {
         await this.$axios.get(`https://coach-easy-deploy.herokuapp.com/forgotPassword?email=${this.email}`)
         .then(function (response){
           console.log(response)
+          window.location.href = '/'
         })
         .catch(function (error){
           console.log(error);

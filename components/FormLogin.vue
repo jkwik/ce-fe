@@ -68,7 +68,7 @@ export default {
             console.log(response)
             self.$store.commit('setUserData', response.data.user)
             self.$store.commit('logIn')
-            // window.location.href = '/dashboard'
+            window.location.href = '/dashboard'
           })
           .catch(function (error){
             console.log(error);
