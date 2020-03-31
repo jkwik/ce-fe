@@ -66,7 +66,7 @@ export default {
 
 <style lang="scss">
   .dashCard{
-    display: flex;
+    display: flex !important;
     width: 100%;
     height: 250px;
     align-items: center;
