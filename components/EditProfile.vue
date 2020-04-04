@@ -85,10 +85,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #f5f5f5 !important;
-    opacity: .6 !important; /* Firefox */
-  }
-</style>

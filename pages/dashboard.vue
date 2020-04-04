@@ -9,9 +9,6 @@
             type="clients"
           />
         </v-col>
-        <!-- <v-col>
-          <p @click="testMethod()">Click</p>
-        </v-col> -->
       </v-row>
     </div>
   </div>

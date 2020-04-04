@@ -1,6 +1,5 @@
 <template>
   <div class="spacerSmall">
-    
   </div>
 </template>
 
