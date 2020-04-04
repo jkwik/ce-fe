@@ -1,14 +1,16 @@
 <template>
-<div>
-  <div class="pageContent" v-if="myClientList">
+<div class="pageContent" >
+  <Loading v-if="loading" :loading="this.loading"/>
+  <MessageError v-if="error" :error="this.error" :message="errorMessage"/>
+  <div v-if="!loading && !error">
     <div
-      v-for="(client, i) in myClientList"
+      v-for="(client, i) in clientList"
       :key="i">
       <h2 class="clientListHeader">{{getHeader(i)}}</h2>
       
       <v-row
-        v-for="c in client"
-        :key="c.id"
+        v-for="(c, id) in client"
+        :key="id"
       >
         <v-card class="clientListCard">
           <div>{{c.first_name}} {{c.last_name}}</div>
@@ -19,22 +21,20 @@
               View
             </button>
             <button 
-              v-if="i==='unapprovedClients' 
-              || i==='pastClients'"
-              @click="approveClient(c)"
+              v-if="approve.includes(i)"
+              @click="changeClient(c, 'approveClient')"
               class="successBackground actionBtn">
               Approve
             </button>
             <button 
-              v-if="i==='unapprovedClients' 
-              || i==='pastClients'"
+              v-if="remove.includes(i)"
               @click="deleteClient(c)"
               class="errorBackground actionBtn">
               Delete
             </button>
             <button 
-              v-if="i=='approvedClients'"
-              @click="terminateClient(c)"
+              v-if="terminate.includes(i)"
+              @click="changeClient(c, 'terminateClient')"
               class="errorBackground actionBtn">
               Terminate
             </button>
@@ -47,69 +47,77 @@
 </template>
 
 <script>
+import Loading from '~/components/Loading'
+import MessageError from '~/components/MessageError'
+
 import axios from 'axios'
 const url = 'https://coach-easy-deploy.herokuapp.com';
 axios.defaults.withCredentials = true;
 
 export default {
+  components: {
+    Loading,
+    MessageError
+  },
+  data() {
+    return {
+      loading: true,
+      error: false,
+      errorMessage: '',
+      clientList: {},
+      approve: ['unapprovedClients','pastClients'],
+      remove: ['unapprovedClients','pastClients'],
+      terminate: ['approvedClients'],
+    }
+  },
   methods: {
-    setCurrentClient: function(data){
-      this.$store.commit('isLoading')
-      this.$store.commit('setCurrentClient', data);
-      window.location.href = `/clients/${data.id}`
-    },
     getHeader: function (header) {
       let slicePoint = header.indexOf("Clients");
       let str = header.slice(0, slicePoint);
       return str.charAt(0).toUpperCase() + str.slice(1) + " Clients";
     },
-    approveClient: function(data){
-      var self = this;
-      axios.put(url+`/approveClient`, {
-        id: data.id
-      })
-      .then(function (response) {
-        console.log(response);
-        self.$store.dispatch("getClientList");
-      })
-      .catch(function (error) {
-        console.log(error);
+    updateClientList: function(){
+      let self = this;
+      axios.get(`${url}/clientList`).then(result => {
+        self.clientList = result.data
+        self.loading = false;
+        self.error = false;
+      }).catch(error => {
+        self.error = true;
+        self.errorMessage = error;
       });
     },
-    terminateClient: function(data){
+    changeClient: function(data, endpoint){
       var self = this;
-      axios.put(url+`/terminateClient`, {
+      axios.put(url+`/${endpoint}`, {
         id: data.id
       })
       .then(function (response) {
-        console.log(response);
-        self.$store.dispatch("getClientList");
+        self.updateClientList()
+        self.error = false;
+        self.errorMessage = `Update client list failed`;
       })
       .catch(function (error) {
-        console.log(error);
+        self.error = true;
+        self.errorMessage = `${endpoint} failed: ${data.first_name} ${data.last_name}`;
       });
     },
     deleteClient: function(data){
       var self = this;
       axios.delete(url+`/user?id=${data.id}`)
       .then(function (response) {
-        console.log(response);
-        self.$store.dispatch("getClientList");
+        self.updateClientList()
+        self.error = false;
       })
       .catch(function (error) {
-        console.log(error);
+        self.error = true;
+        self.errorMessage = `Delete failed: ${data.first_name} ${data.last_name}`;
       });
     }
   },
   mounted() {
-    this.$store.dispatch("getClientList");
+    this.updateClientList();
   },
-  computed: {
-    myClientList: function(){
-      return this.$store.state.clientList;
-      //  this.$store.state.clientList;
-    }
-  }
 }
 </script>
 

@@ -1,15 +1,17 @@
 <template>
-  <div class = "pageContent">
-    <h1 class = "userHeading"> Reset Password</h1>
+  <div class="pageContent">
+    <HeadingUserAuth message="Reset Password" />
     <FormResetPassword/>
   </div>
 </template>
 
 <script>
+import HeadingUserAuth from '~/components/HeadingUserAuth'
 import FormResetPassword from '~/components/FormResetPassword'
 
 export default {
   components: {
+    HeadingUserAuth,
     FormResetPassword
   }
 }

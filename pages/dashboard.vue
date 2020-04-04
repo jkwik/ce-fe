@@ -1,63 +1,50 @@
 <template>
   <div class="pageContent">
-    <h1>Dashboard</h1>
-    <div v-if="loggedIn && role==='COACH'">
-      <v-row>
-        <v-col 
-          cols="4">
-          <DashCard 
-            type="clients"
-          />
-        </v-col>
-      </v-row>
-    </div>
+    <h1 v-if="!loading">Dashboard</h1>
+    <Loading v-if="loading" :loading="this.loading"/>
+    <DashboardCoach v-if="isCoach && !loading"/>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import DashCard from '~/components/DashCard'
+import Loading from '~/components/Loading'
+import DashboardCoach from '~/components/DashboardCoach'
 export default {
   components: {
-    DashCard
+    Loading,
+    DashboardCoach
   },
-  methods: {
-    // testMethod: function(){
-      // axios.post('https://coach-easy-deploy.herokuapp.com/signUp', {
-      //   first_name: 'Fred',
-      //   last_name: 'Flintstone',
-      //   email: 'cfarris@wisc.edu',
-      //   password: 'testPass',
-      //   role: "COACH"
-      // })
-      // axios.post('https://coach-easy-deploy.herokuapp.com/auth/login', {
-      //   email: 'cfarris@wisc.edu',
-      //   password: 'testPass',
-      // })
-      // .then(function (response) {
-      //   console.log(response);
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      // });
-    // }
-// - first_name: string - REQUIRED
-// - last_name: string - REQUIRED
-// - email: string - REQUIRED
-// - password: string - REQUIRED
-// - role: enum(COACH, CLIENT) - REQUIRED
-  },
-  computed: {
-    loggedIn: function(){
-      return this.$store.state.loggedIn;
-    },
-    role: function(){
-      if(this.$store.state.userData){
-        return this.$store.state.userData.role;
-      }
-      return 'none'
+  data() {
+    return {
+      loading: true,
+      isLoggedIn: false,
+      isCoach: false
     }
   },
+  mounted(){
+    this.isLoggedIn = this.$store.state.loggedIn
+    let role = this.$store.state.userData.role;
+    if(role === 'COACH') {
+      this.isCoach=true;
+    } else if (role === 'CLIENT') {
+      this.approvedClient=true;
+    } else {
+      this.unapprovedClient=true;
+    }
+    console.log(this.role)
+    this.loading = false;
+  },
+  // computed: {
+  //   xloggedIn: function(){
+  //     return this.$store.state.loggedIn;
+  //   },
+  //   xcoach: function(){
+  //     if(this.$store.state.userData){
+  //       return ;
+  //     }
+  //     return false
+  //   }
+  // },
 }
 </script>
 
