@@ -15,11 +15,11 @@
         <v-card class="clientListCard">
           <div>{{c.first_name}} {{c.last_name}}</div>
           <div>
-            <button
+            <nuxt-link
               class="primaryBackground actionBtn"
-              @click="setCurrentClient(c)">
+              :to="`/${$router.currentRoute.name}/${c.id}`">
               View
-            </button>
+            </nuxt-link>
             <button 
               v-if="approve.includes(i)"
               @click="changeClient(c, 'approveClient')"
@@ -113,6 +113,9 @@ export default {
         self.error = true;
         self.errorMessage = `Delete failed: ${data.first_name} ${data.last_name}`;
       });
+    },
+    viewClient: function(data){
+      window.location.href = `/${this.$router.currentRoute.name}/${data.id}`;
     }
   },
   mounted() {

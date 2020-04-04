@@ -9,7 +9,7 @@
       </div>
     </div>
     <SpacerSmall />
-    <UserProfile 
+    <ProfileUser 
       v-if="!edit"
       :userData="this.userData"
     />
@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import UserProfile from '~/components/UserProfile'
+import ProfileUser from '~/components/ProfileUser'
 import EditProfile from '~/components/EditProfile'
 import SpacerSmall from '~/components/SpacerSmall'
 export default {
   components: {
-    UserProfile,
+    ProfileUser,
     EditProfile,
     SpacerSmall
   },
