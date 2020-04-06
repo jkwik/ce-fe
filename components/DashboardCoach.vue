@@ -1,7 +1,10 @@
 <template>
   <v-row>
     <v-col 
-      cols="4">
+      :lg="4"
+      :md="4"
+      :sm="6"
+      cols="12">
       <DashboardCard 
         type="clients"
       />

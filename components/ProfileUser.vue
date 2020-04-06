@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="profileHeading">
-      <h1>{{getHeading()}} Client</h1>
+      <h1 v-if="!coach">{{getHeading()}} Client</h1>
     </div>
     <h3>Name</h3>
     <p>{{user.first_name}} {{user.last_name}}</p>
@@ -14,6 +14,7 @@
 export default {
   props: {
     user: Object,
+    coach: Boolean,
   },
   methods: {
     getHeading: function(){
