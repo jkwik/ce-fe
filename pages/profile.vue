@@ -17,11 +17,12 @@
       v-if="edit"
     />
     <SpacerSmall />
-    <nuxt-link to="/changePassword" class="prompt">Change Password?</nuxt-link>
+    <MessagePrompt link='/changePassword' m='Change Password?' />
   </div>
 </template>
 
 <script>
+import MessagePrompt from '~/components/MessagePrompt'
 import UserProfile from '~/components/UserProfile'
 import EditProfile from '~/components/EditProfile'
 import SpacerSmall from '~/components/SpacerSmall'
@@ -29,7 +30,8 @@ export default {
   components: {
     UserProfile,
     EditProfile,
-    SpacerSmall
+    SpacerSmall,
+    MessagePrompt
   },
   data() {
     return {

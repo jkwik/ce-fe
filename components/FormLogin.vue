@@ -19,7 +19,7 @@
         required
         @click:append="show = !show"
       ></v-text-field>
-      <nuxt-link to="/forgotPassword" class="prompt">Forgot password?</nuxt-link>
+      <MessagePrompt link='/forgotPassword' m='Forgot password?' />
     </v-form>
     <button 
       @click='loginSubmit'
@@ -27,23 +27,25 @@
     >
       <MessageButton m='Log In'/>
     </button>
-    <button 
-      @click='viewSignup'
-      class="submitBtn"
-    >
-      <MessageButton m='Sign Up'/>
-    </button>
+    <MessageRedirect link="/signup" m="Sign Up" />
+    <MessageError :errorText="errorText" v-if="errorText !== ''"/> 
   </div>
 </template>
 
 <script>
 import MessageButton from '~/components/MessageButton'
+import MessageError from '~/components/MessageError'
+import MessagePrompt from '~/components/MessagePrompt'
+import MessageRedirect from '~/components/MessageRedirect'
 import axios from 'axios'
 axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
 export default {
   components: {
-    MessageButton
+    MessageButton,
+    MessageError,
+    MessagePrompt,
+    MessageRedirect
   },
   data: () => ({
       email: '',
@@ -55,6 +57,7 @@ export default {
       passwordRules: [
         v => !!v || 'Password is required',
       ],
+      errorText: '',
   }),
   methods:{
     async loginSubmit () {
@@ -68,10 +71,13 @@ export default {
             console.log(response)
             self.$store.commit('setUserData', response.data.user)
             self.$store.commit('logIn')
+            self.errorText = ''
             window.location.href = '/dashboard'
           })
-          .catch(function (error){
+          .catch(function (error){ 
+            // on login promise failure
             console.log(error);
+            self.errorText = error.response.data.error
           })
       } catch (error){
         console.log(error)

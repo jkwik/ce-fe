@@ -26,11 +26,13 @@
     >
       <MessageButton m='Save'/>
     </button>
+    <MessageError :errorText="errorText" v-if="errorText !== ''"/> 
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import MessageError from '~/components/MessageError'
 axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
 import MessageButton from '~/components/MessageButton'
@@ -38,6 +40,7 @@ import SpacerSmall from '~/components/SpacerSmall'
 export default {
   components:{
     MessageButton,
+    MessageError,
     SpacerSmall
   },
   data() {
@@ -46,6 +49,7 @@ export default {
       lastName: '',
       email: '',
       msg: false,
+      errorText: '',
     }
   },
   computed: {
@@ -79,6 +83,8 @@ export default {
         window.location.href = '/profile'
       })
       .catch(function (error) {
+        //if the update profile request fails
+        self.errorText = error.response.data.error
         console.log(error);
       });
     }
