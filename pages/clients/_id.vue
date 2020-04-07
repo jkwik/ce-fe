@@ -1,49 +1,50 @@
 <template>
   <div class="pageContent">
-    <div v-if="currentClient">
-      <h1>{{currentClient.first_name}}</h1>
-      <span
-        v-if="currentClient.approved"
-        class="subHeading">
-        Approved
-      </span>
-      <span 
-        v-if="currentClient.approved==false"
-        class="subHeading">
-        Potential
-      </span>
-      <span
-        v-if="currentClient.approved==null"
-        class="subHeading">
-        Terminated
-      </span>
-      <span class="subHeading"> Client</span>
-      <h3>Name</h3>
-      <p>{{currentClient.first_name}} {{currentClient.last_name}}</p>
-      <h3>Email</h3>
-      <p>{{currentClient.email}}</p>
-    </div>
-    <div v-if="error">
-      Cannot Find Client
-    </div>
+    <Loading :loading="this.loading" />
+    <MessageError :error="error" :message="errorMessage"/>
+    <ProfileUser v-if="!loading && !error" :user="client"/>
   </div>
 </template>
 
 <script>
+import Loading from '~/components/Loading'
+import MessageError from '~/components/MessageError'
+import ProfileUser from '~/components/ProfileUser'
 import axios from 'axios'
+const url = 'https://coach-easy-deploy.herokuapp.com';
+axios.defaults.withCredentials = true;
+
 export default {
+  components:{
+    MessageError,
+    Loading,
+    ProfileUser
+  },
   data() {
     return {
-      error: false
+      client: {},
+      loading: true,
+      error: false,
+      errorMessage: ''
+    }
+  },
+  methods: {
+    findClient: function(){
+      const self = this;
+      const id = this.$route.params.id
+      axios.get(`${url}/getUser?id=${id}`)
+      .then(result => {
+        self.client = result.data.user
+        self.loading = false;
+      }).catch(error => {
+        self.loading = false;
+        self.error = true;
+        self.errorMessage = "Cannot Find User."
+      });
     }
   },
   mounted() {
-    this.$store.dispatch('getCurrentClient', this.$route.params.id)
-  },
-  computed:{
-    currentClient () {
-        return this.$store.state.currentClient;
-    },
+    this.findClient();
   },
 }
 </script>

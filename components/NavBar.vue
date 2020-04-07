@@ -1,15 +1,15 @@
 <template>
   <nav>
-    <div class="navUserAuth">
+    <div class="navCol">
       <nuxt-link to="/" class="logo">Coach Easy</nuxt-link>
       <span class="navSpacer"></span>
       <nuxt-link v-if="loggedIn && role" to="/dashboard" class="navLink">Dashboard</nuxt-link>
     </div>
-    <div v-if="!loggedIn" class="navUserAuth">
+    <div v-if="!loggedIn" class="navCol">
       <nuxt-link to="/login" class="navLink">Log In</nuxt-link>
       <nuxt-link to="/signUp" class="navLink">Sign Up</nuxt-link>
     </div>
-    <div v-if="loggedIn" class="navUserAuth">
+    <div v-if="loggedIn" class="navCol">
       <!-- <span class="navIcon"><MdPersonIcon w="40px" h="40px"/></span> -->
       <nuxt-link to="/profile" class="navLink">View Profile</nuxt-link>
       <span class="navLink" @click="logOut()">Log Out</span>
@@ -60,12 +60,6 @@ export default {
 </script>
 
 <style lang="scss">
-  .ion__svg{
-    padding-top: 7px;
-    path{
-      fill: white;
-    }
-  }
   nav {
     display: flex;
     justify-content: space-between;
@@ -73,22 +67,14 @@ export default {
     height: 64px;
     padding: 16px;
     background: #191919;
-    a{
-      text-decoration: none;
-    }
-    .logo{
-      font-size: 28px;
-      font-weight: 700;
+    .navCol{
+      display: flex;
+      align-items: center;
     }
     .navLink{
-      font-size: 18px;
       color: #f5f5f5;
       padding-left: 8px;
       cursor: pointer;
-    }
-    .navUserAuth{
-      display: flex;
-      align-items: center;
     }
     .navSpacer{
       width: 16px;
