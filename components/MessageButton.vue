@@ -1,5 +1,5 @@
 <template>
-  <p class="messageButton">{{m}}</p>
+  <p class="colorDark">{{m}}</p>
 </template>
 
 <script>
@@ -9,11 +9,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  .messageButton{
-    color: #191919;
-    font-size: 18px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  }
-</style>

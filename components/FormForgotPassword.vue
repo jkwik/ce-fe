@@ -16,7 +16,7 @@
     >
       <MessageButton m='Continue'/>
     </button>
-    <MessageError :errorText="errorText" v-if="errorText !== ''"/>
+    <MessageError :error="error" :message="errorMessage" />
   </div>
 </template>
 
@@ -35,12 +35,14 @@ export default {
     emailRules: [
       v => !!v || 'Email is required',
     ],
-    errorText: '',
+    errorMessage: '',
+    error: false,
   }),
   methods:{
     async forgotPassword() {
       try{
         var self = this;
+        self.error = false
         await this.$axios.get(`https://coach-easy-deploy.herokuapp.com/forgotPassword?email=${this.email}`)
         .then(function (response){
           console.log(response)
@@ -48,11 +50,14 @@ export default {
         })
         .catch(function (error){
           //if the forget password request fails
-          self.errorText = error.response.data.error
+          error = true
+          self.errorMessage = error.response.data.error
           console.log(error);
         })
       } catch (error) {
         console.log(error)
+        error = true
+        errorMessage = 'Something unexpected happened'
       }
     },
   },

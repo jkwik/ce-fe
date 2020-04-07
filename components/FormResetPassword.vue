@@ -28,8 +28,8 @@
       class="submitBtn"
     >
       <MessageButton m='Continue'/>
-    <MessageError :errorText="errorText" v-if="errorText !== ''"/>
     </button>
+    <MessageError :error="error" :message="errorMessage" />
   </div>
 </template>
 
@@ -55,7 +55,8 @@ export default {
     newPasswordRules: [
       v => !!v || 'New password is required',
     ],
-    errorText: '',
+    errorMessage: '',
+    error: false,
   }),
   methods:{
     resetPassword: function() {
@@ -65,17 +66,16 @@ export default {
         reset_token: self.$route.query.reset_token
       })
       .then(function (response){
-        self.errorText = error.response.data.error
+        self.error = true
+        self.errorMessage = ''
         window.location.href = '/login'
       })
       .catch(function (error){
         console.log(error);
+        self.error = true
+        self.errorMessage = error.response.data.error
       })
     },
   },
 }
 </script>
-
-<style>
-
-</style>

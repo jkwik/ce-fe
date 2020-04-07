@@ -1,15 +1,18 @@
 <template>
-  <p class="errorText">{{errorText}}</p>
+  <div v-if="error">
+    <h1 class="errorText">Error. Please contact support.</h1>
+    <p>{{message}}</p>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    errorText: String
+    error: Boolean,
+    message: String
   }
 }
 </script>
 
 <style lang="scss">
-// see layouts/default.vue for styling
 </style>

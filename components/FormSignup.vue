@@ -44,7 +44,7 @@
       <MessageButton m='Sign Up'/>
     </button>
     <MessageRedirect link="/login" m="Log in" />
-    <MessageError :errorText="errorText" v-if="errorText !== ''"/> 
+    <MessageError :error="error" :message="errorMessage" />
   </div>
 </template>
 
@@ -79,12 +79,15 @@ export default {
     passwordRules: [
       v => !!v || 'password is required',
     ],
-    errorText: '',
+    errorMessage: '',
+    error: false,
   }),
   methods:{
     async signUp() {
       try {
           var self = this;
+          self.error = false 
+          self.errorMessage = ''
           axios.post(`${url}/signUp`, {
             first_name: this.firstName,
             last_name: this.lastName,
@@ -107,23 +110,23 @@ export default {
             .catch(function (error){
               //if the login request fails
               console.log(error);
-              self.errorText = error.response.data.error
+              self.error = true
+              self.errorMessage = error.response.data.error
             })
           })
           .catch(function (error) {
             //if the signup request fails
-            console.log(error);
-            self.errorText = error.response.data.error
+            console.log(error);              
+            self.error = true
+            self.errorMessage = error.response.data.error
           }); 
         } catch (error) {
           //if the try fails
           console.log(error)
+          self.error = true
+          self.errorMessage = 'Something unexpected happened'
         }
     },
   }
 }
 </script>
-
-<style>
-
-</style>

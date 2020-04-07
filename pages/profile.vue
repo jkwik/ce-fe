@@ -1,12 +1,18 @@
 <template>
   <div class="pageContent">
-    <div class="profileHeading">
-      <h1>Welcome, {{userData.first_name}}</h1>
-      <div
-        @click="edit=!edit"
-      >
-        <p class="actionBtn">Edit &#9998;</p>
-      </div>
+    <Loading :loading="this.loading" />
+    <div v-if="!loading">
+      <HeadingProfile :name="this.user.first_name"/>
+      <SpacerSmall />
+      <ProfileUser 
+        v-if="!error 
+          && !edit" 
+        :user="this.user" 
+        :coach="this.user.role==='COACH'" />
+      <FormEditProfile
+        v-if="edit"
+        :u="this.user" />
+      <SpacerSmall />
     </div>
     <SpacerSmall />
     <UserProfile 
@@ -22,30 +28,53 @@
 </template>
 
 <script>
+import axios from 'axios'
+axios.defaults.withCredentials = true;
+const url = 'https://coach-easy-deploy.herokuapp.com';
+
+
+import HeadingProfile from '~/components/HeadingProfile'
 import MessagePrompt from '~/components/MessagePrompt'
-import UserProfile from '~/components/UserProfile'
-import EditProfile from '~/components/EditProfile'
+import ProfileUser from '~/components/ProfileUser'
+import FormEditProfile from '~/components/FormEditProfile'
 import SpacerSmall from '~/components/SpacerSmall'
+import Loading from '~/components/Loading'
 export default {
   components: {
-    UserProfile,
-    EditProfile,
+    HeadingProfile,
+    ProfileUser,
+    FormEditProfile,
     SpacerSmall,
+    Loading,
     MessagePrompt
   },
   data() {
     return {
-      edit: false,
+      user: {},
+      error: false,
+      loading: true,
+      loadingFailed: false,
+      myId: null,
     }
   },
-  mounted() {
-    console.log(this.$store.state.userData)
+  methods: {
+    getUser: function(){
+      Promise.all([ this.$store.state.userData ]).then( () => {
+        this.user = this.$store.state.userData
+        this.loading = false
+      },() => {
+        this.loadingFailed = true
+      })
+    }
   },
   computed: {
-    userData: function(){
-      return this.$store.state.userData;
+    edit: function() {
+      return this.$store.state.edit;
     }
-  }
+  },
+  created() {
+    this.getUser();
+  },
 }
 </script>
 

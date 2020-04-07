@@ -28,7 +28,7 @@
       <MessageButton m='Log In'/>
     </button>
     <MessageRedirect link="/signup" m="Sign Up" />
-    <MessageError :errorText="errorText" v-if="errorText !== ''"/> 
+    <MessageError :error="error" :message="errorMessage" />
   </div>
 </template>
 
@@ -37,9 +37,11 @@ import MessageButton from '~/components/MessageButton'
 import MessageError from '~/components/MessageError'
 import MessagePrompt from '~/components/MessagePrompt'
 import MessageRedirect from '~/components/MessageRedirect'
+
 import axios from 'axios'
 axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
+
 export default {
   components: {
     MessageButton,
@@ -57,12 +59,15 @@ export default {
       passwordRules: [
         v => !!v || 'Password is required',
       ],
-      errorText: '',
+      errorMessage: '',
+      error: false,
   }),
   methods:{
     async loginSubmit () {
       try {
         var self = this;
+        self.error = false
+        self.errorMessage = ''
         axios.post(`${url}/auth/login`, {
             email: self.email,
             password: self.password
@@ -71,16 +76,18 @@ export default {
             console.log(response)
             self.$store.commit('setUserData', response.data.user)
             self.$store.commit('logIn')
-            self.errorText = ''
             window.location.href = '/dashboard'
           })
           .catch(function (error){ 
             // on login promise failure
             console.log(error);
-            self.errorText = error.response.data.error
+            self.error = true
+            self.errorMessage = error.response.data.error
           })
       } catch (error){
         console.log(error)
+        self.error = true
+        errorMessage = 'Something unexpected happened'
       }
     },
     viewSignup() {
