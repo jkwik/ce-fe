@@ -1,21 +1,32 @@
+// $background: #191919;
+$background: #f5f5f5;
+$background-secondary: #f1f1f1;
+$text: #101010;
+$primary: #0060CC;
+$primaryLight: #99CCFF;
+$primaryDark: #003388;
+$error: #F20050;
+$errorLight: rgb(204, 0, 96);
+$success: rgb(0, 204, 96);
+
 .colorDark{
-  color: #191919;
+  color: $background;
 }
 .primaryBackground{
-  background: #79DEF2 !important;
-  color: #191919 !important;
+  background: $primary !important;
+  color: $background !important;
 }
 .errorText{
-  color: #F20050 !important;
+  color: $error !important;
 }
 .errorBackground{
-  background: #F279A1 !important;
-  color: #191919 !important;
+  background: $errorLight !important;
+  color: $background !important;
 }
 .successText{
-  color: #79F28D !important;
+  color: $success !important;
 }
 .successBackground{
-  background: #79F28D !important;
-  color: #191919 !important;
+  background: $success !important;
+  color: $background !important;
 }

@@ -16,7 +16,7 @@
           <div>{{c.first_name}} {{c.last_name}}</div>
           <div>
             <nuxt-link
-              class="primaryBackground actionBtn"
+              class="primaryLightBackground actionBtn"
               :to="`/${$router.currentRoute.name}/${c.id}`">
               View
             </nuxt-link>
@@ -130,7 +130,7 @@ export default {
   }
   .clientListCard{
     width: 100%;
-    background: #353535 !important;
+    background: $background-secondary !important;
     padding: 8px 16px;
     margin-bottom: 8px;
     display: flex;

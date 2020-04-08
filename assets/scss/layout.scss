@@ -1,9 +1,9 @@
 // Main Layouts
 .defaultLayout{
-  background: #202020;
+  background: $background;
 }
 .pageContent{
-  background: #202020;
+  background: $background;
   padding: 64px 128px 128px 128px;
   min-height: calc(100vh - 60px) !important;
 }
