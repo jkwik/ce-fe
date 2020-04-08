@@ -13,8 +13,8 @@
         v-if="edit"
         :u="this.user" />
       <SpacerSmall />
-      <nuxt-link to="/changePassword" class="prompt">Change Password?</nuxt-link>
     </div>
+    <MessagePrompt link='/changePassword' m='Change Password?' />
   </div>
 </template>
 
@@ -25,6 +25,7 @@ const url = 'https://coach-easy-deploy.herokuapp.com';
 
 
 import HeadingProfile from '~/components/HeadingProfile'
+import MessagePrompt from '~/components/MessagePrompt'
 import ProfileUser from '~/components/ProfileUser'
 import FormEditProfile from '~/components/FormEditProfile'
 import SpacerSmall from '~/components/SpacerSmall'
@@ -35,7 +36,8 @@ export default {
     ProfileUser,
     FormEditProfile,
     SpacerSmall,
-    Loading
+    Loading,
+    MessagePrompt
   },
   data() {
     return {

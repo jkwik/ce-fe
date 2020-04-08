@@ -10,10 +10,20 @@
       <nuxt-link to="/signUp" class="navLink">Sign Up</nuxt-link>
     </div>
     <div v-if="loggedIn" class="navCol">
-      <!-- <span class="navIcon"><MdPersonIcon w="40px" h="40px"/></span> -->
-      <nuxt-link to="/profile" class="navLink">View Profile</nuxt-link>
-      <span class="navLink" @click="logOut()">Log Out</span>
+      <v-menu v-model="showMenu" absolute offset-y style="max-width: 40px">
+        <template v-slot:activator="{ on }">
+          <span class="navIcon" v-on="on"><MdPersonIcon w="40px" h="40px"/></span>    
+        </template>
 
+        <v-list dark>
+          <v-list-item class='navLink'>
+            <nuxt-link class="navLink" to="/profile">View Profile</nuxt-link>
+          </v-list-item>
+         <v-list-item class='navLink'>
+          <span class="navLink" @click="logOut()">Log Out</span>
+         </v-list-item>
+        </v-list>
+      </v-menu>
     </div>
   </nav>
 </template>
@@ -27,6 +37,13 @@ export default {
   components: {
     MdPersonIcon
   },
+  data: () => ({
+    showMenu: false,
+    items: [
+      { title: 'View Profile', icon: 'mdi-account', action: 'logOut' },
+      { title: 'Log Out', icon: 'mdi-flag', action: 'logOut()' },
+    ]
+  }),
   computed: {
     loggedIn: function(){
       return this.$store.state.loggedIn;
@@ -54,7 +71,7 @@ export default {
           console.log(error);
         }
       })
-    }
+    },
   },
 }
 </script>

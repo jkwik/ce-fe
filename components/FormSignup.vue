@@ -43,23 +43,23 @@
     >
       <MessageButton m='Sign Up'/>
     </button>
-    <button 
-      @click='viewLogin'
-      class="submitBtn"
-    >
-      <MessageButton m='Log In'/>
-    </button>
+    <MessageRedirect link="/login" m="Log in" />
+    <MessageError :error="error" :message="errorMessage" />
   </div>
 </template>
 
 <script>
 import MessageButton from '~/components/MessageButton'
+import MessageError from '~/components/MessageError'
+import MessageRedirect from '~/components/MessageRedirect'
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
 export default {
   components: {
-    MessageButton
+    MessageButton,
+    MessageError,
+    MessageRedirect
   },
   data: () => ({
     firstName: '',
@@ -79,11 +79,15 @@ export default {
     passwordRules: [
       v => !!v || 'password is required',
     ],
+    errorMessage: '',
+    error: false,
   }),
   methods:{
     async signUp() {
       try {
           var self = this;
+          self.error = false 
+          self.errorMessage = ''
           axios.post(`${url}/signUp`, {
             first_name: this.firstName,
             last_name: this.lastName,
@@ -104,25 +108,25 @@ export default {
               window.location.href = '/dashboard'
             })
             .catch(function (error){
+              //if the login request fails
               console.log(error);
+              self.error = true
+              self.errorMessage = error.response.data.error
             })
           })
           .catch(function (error) {
-            console.log(error);
-          });
-          // await this.$auth.loginWith('local', {
-          //   data: signupInfo
-          // })
-          
-          // 
+            //if the signup request fails
+            console.log(error);              
+            self.error = true
+            self.errorMessage = error.response.data.error
+          }); 
         } catch (error) {
-          //Do something if it fails
+          //if the try fails
           console.log(error)
+          self.error = true
+          self.errorMessage = 'Something unexpected happened'
         }
     },
-    viewLogin() {
-      window.location.href = '/login'
-    }
   }
 }
 </script>
