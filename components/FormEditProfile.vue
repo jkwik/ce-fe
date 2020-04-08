@@ -1,7 +1,7 @@
 <template>
   <div>
     <MessageSuccess v-if="success" :message="successMessage"/>
-    <MessageError v-if="error" :message="errorMessage" />
+    <MessageError :error="error" :message="errorMessage" />
     <SpacerSmall v-if="submitted" />
     <v-text-field
       label="First Name"

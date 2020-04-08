@@ -30,6 +30,7 @@
     >
       <MessageButton m='Save'/>
     </button>
+    <MessageError v-if="error" :message="errorMessage" />
 </div>
 </template>
 
@@ -39,10 +40,12 @@ axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
 
 import MessageButton from '~/components/MessageButton'
+import MessageError from '~/components/MessageError'
 
 export default {
   components:{
-    MessageButton
+    MessageButton,
+    MessageError
   },
   data() {
     return {
@@ -50,6 +53,7 @@ export default {
       newPassword: '',
       confirmPassword: '',
       error: false,
+      errorMessage: '',
       show1: false,
       show2: false,
       show3: false
@@ -70,10 +74,14 @@ export default {
           window.location.href = '/profile'
         })
         .catch(function (error) {
+          //axios promise failed
+          this.error = true;
+          errorMessage = error.response.data.error
           console.log(error);
         });
       } else {
         this.error = true;
+        errorMessage = 'New password and password confirmation do not match'
       }
     }
   },
