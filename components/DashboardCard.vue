@@ -9,12 +9,6 @@
           <MdPeopleIcon w="75px" h="75px"/>
           <h2 class="subHeading">Client List</h2>
         </div>
-        <div 
-          v-if="type==='templates'"
-          class="dashContents">
-          <MdPeopleIcon w="75px" h="75px"/>
-          <h2 class="subHeading">Templates</h2>
-        </div>
       </v-card>
     </nuxt-link>
   </div>
