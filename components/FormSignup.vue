@@ -36,6 +36,8 @@
         required
         @click:append="show = !show"
       ></v-text-field>
+      <MessageRedirect link="/login" message="Already a member? Log in" />
+      <SpacerExtraSmall />
     </v-form>
     <button 
       @click='signUp'
@@ -43,8 +45,7 @@
     >
       <MessageButton message='Sign Up'/>
     </button>
-    <MessageRedirect link="/login" message="Log in" />
-    <MessageError :error="error" :message="errorMessage" />
+    <MessageError v-if="error" :message="errorMessage" />
   </div>
 </template>
 
@@ -52,6 +53,7 @@
 import MessageButton from '~/components/MessageButton'
 import MessageError from '~/components/MessageError'
 import MessageRedirect from '~/components/MessageRedirect'
+import SpacerExtraSmall from '~/components/SpacerExtraSmall'
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
@@ -59,7 +61,8 @@ export default {
   components: {
     MessageButton,
     MessageError,
-    MessageRedirect
+    MessageRedirect,
+    SpacerExtraSmall
   },
   data: () => ({
     firstName: '',
@@ -118,7 +121,6 @@ export default {
         } catch (error) {
           //if the try fails
           self.error = true
-          self.errorMessage = 'Something unexpected happened'
         }
     },
   }

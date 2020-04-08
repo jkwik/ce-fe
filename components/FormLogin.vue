@@ -20,15 +20,16 @@
         @click:append="show = !show"
       ></v-text-field>
       <MessageRedirect link='/forgotPassword' message='Forgot password?' />
+      <SpacerExtraSmall />
+      <MessageRedirect link="/signup" message="Not registered? Sign Up" />
     </v-form>
-    <MessageError :error="error" :message="errorMessage" />
+    <MessageError v-if="error" :message="errorMessage" />
     <button 
       @click='loginSubmit'
       class="submitBtn"
     >
       <MessageButton message='Log In'/>
     </button>
-    <MessageRedirect link="/signup" message="Sign Up" />
   </div>
 </template>
 
@@ -36,6 +37,7 @@
 import MessageButton from '~/components/MessageButton'
 import MessageError from '~/components/MessageError'
 import MessageRedirect from '~/components/MessageRedirect'
+import SpacerExtraSmall from '~/components/SpacerExtraSmall'
 
 import axios from 'axios'
 axios.defaults.withCredentials = true;
@@ -45,7 +47,8 @@ export default {
   components: {
     MessageButton,
     MessageError,
-    MessageRedirect
+    MessageRedirect,
+    SpacerExtraSmall
   },
   data: () => ({
       email: '',

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MessageError :error="error" :message="errorMessage" />
+    <MessageError v-if="error" :message="errorMessage" />
     <v-form class="userForm">
       <v-text-field
         class="userInput"
@@ -45,7 +45,6 @@ export default {
         self.error = false
         await this.$axios.get(`https://coach-easy-deploy.herokuapp.com/forgotPassword?email=${this.email}`)
         .then(function (response){
-          console.log(response)
           window.location.href = '/'
         })
         .catch(function (error){
