@@ -14,15 +14,6 @@
         :u="this.user" />
       <SpacerSmall />
     </div>
-    <SpacerSmall />
-    <UserProfile 
-      v-if="!edit"
-      :userData="this.userData"
-    />
-    <EditProfile
-      v-if="edit"
-    />
-    <SpacerSmall />
     <MessagePrompt link='/changePassword' m='Change Password?' />
   </div>
 </template>
