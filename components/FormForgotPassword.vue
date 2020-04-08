@@ -1,5 +1,6 @@
 <template>
   <div>
+    <MessageError :error="error" :message="errorMessage" />
     <v-form class="userForm">
       <v-text-field
         class="userInput"
@@ -14,9 +15,8 @@
       @click='forgotPassword'
       class="submitBtn"
     >
-      <MessageButton m='Continue'/>
+      <MessageButton message='Continue'/>
     </button>
-    <MessageError :error="error" :message="errorMessage" />
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
     emailRules: [
       v => !!v || 'Email is required',
     ],
-    errorMessage: '',
+    errorMessage: "Failed to Submit Form",
     error: false,
   }),
   methods:{
@@ -50,14 +50,10 @@ export default {
         })
         .catch(function (error){
           //if the forget password request fails
-          error = true
-          self.errorMessage = error.response.data.error
-          console.log(error);
+          self.error = true
         })
       } catch (error) {
-        console.log(error)
         error = true
-        errorMessage = 'Something unexpected happened'
       }
     },
   },

@@ -41,9 +41,9 @@
       @click='signUp'
       class="submitBtn"
     >
-      <MessageButton m='Sign Up'/>
+      <MessageButton message='Sign Up'/>
     </button>
-    <MessageRedirect link="/login" m="Log in" />
+    <MessageRedirect link="/login" message="Log in" />
     <MessageError :error="error" :message="errorMessage" />
   </div>
 </template>
@@ -79,7 +79,7 @@ export default {
     passwordRules: [
       v => !!v || 'password is required',
     ],
-    errorMessage: '',
+    errorMessage: 'Failed to Submit Form',
     error: false,
   }),
   methods:{
@@ -102,27 +102,21 @@ export default {
               password: self.password
             })
             .then(function (response){
-              console.log(response)
               self.$store.commit('setUserData', response.data.user)
               self.$store.commit('logIn')
               window.location.href = '/dashboard'
             })
             .catch(function (error){
               //if the login request fails
-              console.log(error);
               self.error = true
-              self.errorMessage = error.response.data.error
             })
           })
           .catch(function (error) {
             //if the signup request fails
-            console.log(error);              
             self.error = true
-            self.errorMessage = error.response.data.error
           }); 
         } catch (error) {
           //if the try fails
-          console.log(error)
           self.error = true
           self.errorMessage = 'Something unexpected happened'
         }

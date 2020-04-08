@@ -25,7 +25,7 @@
       @click='editProfile'
       class="submitBtn"
     >
-      <MessageButton m='Save'/>
+      <MessageButton message='Save'/>
     </button>
   </div>
 </template>

@@ -27,7 +27,7 @@
       @click='resetPassword'
       class="submitBtn"
     >
-      <MessageButton m='Continue'/>
+      <MessageButton message='Continue'/>
     </button>
     <MessageError :error="error" :message="errorMessage" />
   </div>
@@ -55,7 +55,7 @@ export default {
     newPasswordRules: [
       v => !!v || 'New password is required',
     ],
-    errorMessage: '',
+    errorMessage: 'Failed to Submit Form',
     error: false,
   }),
   methods:{
@@ -71,9 +71,7 @@ export default {
         window.location.href = '/login'
       })
       .catch(function (error){
-        console.log(error);
         self.error = true
-        self.errorMessage = error.response.data.error
       })
     },
   },

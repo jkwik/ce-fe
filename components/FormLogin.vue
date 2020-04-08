@@ -19,23 +19,22 @@
         required
         @click:append="show = !show"
       ></v-text-field>
-      <MessagePrompt link='/forgotPassword' m='Forgot password?' />
+      <MessageRedirect link='/forgotPassword' message='Forgot password?' />
     </v-form>
+    <MessageError :error="error" :message="errorMessage" />
     <button 
       @click='loginSubmit'
       class="submitBtn"
     >
-      <MessageButton m='Log In'/>
+      <MessageButton message='Log In'/>
     </button>
-    <MessageRedirect link="/signup" m="Sign Up" />
-    <MessageError :error="error" :message="errorMessage" />
+    <MessageRedirect link="/signup" message="Sign Up" />
   </div>
 </template>
 
 <script>
 import MessageButton from '~/components/MessageButton'
 import MessageError from '~/components/MessageError'
-import MessagePrompt from '~/components/MessagePrompt'
 import MessageRedirect from '~/components/MessageRedirect'
 
 import axios from 'axios'
@@ -46,7 +45,6 @@ export default {
   components: {
     MessageButton,
     MessageError,
-    MessagePrompt,
     MessageRedirect
   },
   data: () => ({
@@ -59,7 +57,7 @@ export default {
       passwordRules: [
         v => !!v || 'Password is required',
       ],
-      errorMessage: '',
+      errorMessage: 'Failed to Submit Form',
       error: false,
   }),
   methods:{
@@ -80,14 +78,10 @@ export default {
           })
           .catch(function (error){ 
             // on login promise failure
-            console.log(error);
             self.error = true
-            self.errorMessage = error.response.data.error
           })
       } catch (error){
-        console.log(error)
         self.error = true
-        errorMessage = 'Something unexpected happened'
       }
     },
     viewSignup() {
