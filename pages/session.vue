@@ -1,7 +1,9 @@
 <template>
-  <v-card>
-    <ViewSession/>
-  </v-card>
+  <div class="pageContent">
+    <v-card>
+      <ViewSession/>
+    </v-card>
+  </div>
 </template>
 
 <script>
