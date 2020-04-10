@@ -4,23 +4,20 @@
       <Loading v-if="loading" :loading="this.loading"/>
 
       <div
-        v-for="(session, i) in sessionList"
+        v-for="(session, i) in this.sessionList"
         :key="i"
       >
         <v-row>
-          <v-col>
-            <v-card class="sessionListCard">
-              <div>Session: {{session.id}} <br> Name: {{session.name}}</div>
-              <div>
-                <nuxt-link
-                  class="primaryBackground actionBtn"
-                  to="/session">
-                  View
-                </nuxt-link>
+            <v-card class="ListSessionsCard" to="/session">
+              <div> 
+                <span> Name: {{ session.name }} </span> <br>
+                <span> Completed: {{ isCompleted(session.completed) }} </span>
               </div>
             </v-card>
-          </v-col>
         </v-row>
+      </div>
+      <div v-if="isEmpty(this.sessionList)">
+        <span> No sessions to view. </span>
       </div>
     </div> 
 </template>
@@ -43,20 +40,23 @@ export default {
     return {
       error: false,
       loading: true,
-      currentTemplate: null,
-      sessionList: {
-      },
+      sessionList: {},
       name: null,
     }
   },
   methods: {
-    updateSessionList: function () {
-      this.sessionList = this.currentTemplate.sessions;
+    updateSessionList: function() {
+      this.sessionList = this.$props.template.sessions;
       this.loading = false;
     },
+    isCompleted: function(completed) {
+      return completed ? "Yes" : "No";
+    },
+    isEmpty: function(sessionList) {
+      return Object.keys(sessionList).length == 0;
+    }
   },
   mounted() {
-    this.currentTemplate = this.$props.template
     this.updateSessionList();
   }
 }
@@ -72,5 +72,14 @@ export default {
     justify-content: space-between;
     align-items: center;
   }
+  .ListSessionsCard{
+  width: 100%;
+  background: #353535 !important;
+  padding: 8px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 </style>

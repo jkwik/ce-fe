@@ -1,7 +1,6 @@
 <template>
   <div>
     <HeadingUserAuth message="Edit Template"/>
-    <MessageSuccess v-if="success" :message="successMessage"/>
     <MessageError :error="error" :message="errorMessage" />
     <div v-if="!loading">
       <Loading v-if="loading" :loading="this.loading"/>
@@ -37,19 +36,21 @@ export default {
     HeadingUserAuth,
   },
   props: {
-    t: Object
+    template: Object
   },
   data() {
     return {
       loading: true,
-      template: this.t,
+      error: false,
+      errorMessage: '',
+      temp: this.template,
       sessionList: {},
     }
 
   },
   methods: {
     updateSessionList: function () {
-      this.sessionList = this.template.sessions;
+      this.sessionList = this.temp.sessions;
       this.loading = false;
     },
     editTemplate: function() {
