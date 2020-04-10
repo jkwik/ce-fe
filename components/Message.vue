@@ -1,12 +1,11 @@
 <template>
-  <nuxt-link :to=link class="prompt">{{m}}</nuxt-link>
+  <p class="prompt">{{message}}</p>
 </template>
 
 <script>
 export default {
   props: {
-    m: String,
-    link: String,
+    message: String,
   }
 }
 </script>

@@ -23,13 +23,13 @@
         @click:append="showNewPassword = !showNewPassword"
       ></v-text-field>
     </v-form>
+    <MessageError v-if="error" :message="errorMessage" />
     <button 
       @click='resetPassword'
       class="submitBtn"
     >
-      <MessageButton m='Continue'/>
+      <MessageButton message='Continue'/>
     </button>
-    <MessageError :error="error" :message="errorMessage" />
   </div>
 </template>
 
@@ -55,7 +55,7 @@ export default {
     newPasswordRules: [
       v => !!v || 'New password is required',
     ],
-    errorMessage: '',
+    errorMessage: 'Failed to Submit Form',
     error: false,
   }),
   methods:{
@@ -67,13 +67,10 @@ export default {
       })
       .then(function (response){
         self.error = true
-        self.errorMessage = ''
         window.location.href = '/login'
       })
       .catch(function (error){
-        console.log(error);
         self.error = true
-        self.errorMessage = error.response.data.error
       })
     },
   },

@@ -15,7 +15,7 @@
           <span class="navIcon" v-on="on"><MdPersonIcon w="40px" h="40px"/></span>    
         </template>
 
-        <v-list dark>
+        <v-list>
           <v-list-item class='navLink'>
             <nuxt-link class="navLink" to="/profile">View Profile</nuxt-link>
           </v-list-item>
@@ -83,18 +83,23 @@ export default {
     align-items: center;
     height: 64px;
     padding: 16px;
-    background: #191919;
+    background: $background-secondary;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.20);
+    z-index: 100;
     .navCol{
       display: flex;
       align-items: center;
     }
     .navLink{
-      color: #f5f5f5;
+      color: $text !important;
       padding-left: 8px;
       cursor: pointer;
     }
     .navSpacer{
       width: 16px;
+    }
+    .navIcon{
+      fill: $text;
     }
   }
 </style>

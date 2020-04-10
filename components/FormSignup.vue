@@ -36,15 +36,16 @@
         required
         @click:append="show = !show"
       ></v-text-field>
+      <MessageRedirect link="/login" message="Already a member? Log in" />
+      <SpacerExtraSmall />
     </v-form>
     <button 
       @click='signUp'
       class="submitBtn"
     >
-      <MessageButton m='Sign Up'/>
+      <MessageButton message='Sign Up'/>
     </button>
-    <MessageRedirect link="/login" m="Log in" />
-    <MessageError :error="error" :message="errorMessage" />
+    <MessageError v-if="error" :message="errorMessage" />
   </div>
 </template>
 
@@ -52,6 +53,7 @@
 import MessageButton from '~/components/MessageButton'
 import MessageError from '~/components/MessageError'
 import MessageRedirect from '~/components/MessageRedirect'
+import SpacerExtraSmall from '~/components/SpacerExtraSmall'
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
@@ -59,7 +61,8 @@ export default {
   components: {
     MessageButton,
     MessageError,
-    MessageRedirect
+    MessageRedirect,
+    SpacerExtraSmall
   },
   data: () => ({
     firstName: '',
@@ -79,7 +82,7 @@ export default {
     passwordRules: [
       v => !!v || 'password is required',
     ],
-    errorMessage: '',
+    errorMessage: 'Failed to Submit Form',
     error: false,
   }),
   methods:{
@@ -102,29 +105,22 @@ export default {
               password: self.password
             })
             .then(function (response){
-              console.log(response)
               self.$store.commit('setUserData', response.data.user)
               self.$store.commit('logIn')
               window.location.href = '/dashboard'
             })
             .catch(function (error){
               //if the login request fails
-              console.log(error);
               self.error = true
-              self.errorMessage = error.response.data.error
             })
           })
           .catch(function (error) {
             //if the signup request fails
-            console.log(error);              
             self.error = true
-            self.errorMessage = error.response.data.error
           }); 
         } catch (error) {
           //if the try fails
-          console.log(error)
           self.error = true
-          self.errorMessage = 'Something unexpected happened'
         }
     },
   }
