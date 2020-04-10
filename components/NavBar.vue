@@ -15,7 +15,7 @@
           <span class="navIcon" v-on="on"><MdPersonIcon w="40px" h="40px"/></span>    
         </template>
 
-        <v-list dark>
+        <v-list>
           <v-list-item class='navLink'>
             <nuxt-link class="navLink" to="/profile">View Profile</nuxt-link>
           </v-list-item>
@@ -91,12 +91,15 @@ export default {
       align-items: center;
     }
     .navLink{
-      color: $text;
+      color: $text !important;
       padding-left: 8px;
       cursor: pointer;
     }
     .navSpacer{
       width: 16px;
+    }
+    .navIcon{
+      fill: $text;
     }
   }
 </style>

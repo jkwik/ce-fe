@@ -1,8 +1,10 @@
 // Vuetify Overwrites
 .v-application p {
   margin-bottom: 0px !important;
+  text-decoration: none !important;
 }
-.v-application p {
+.v-application a {
+  color: $text;
   text-decoration: none !important;
 }
 .row{
