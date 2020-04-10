@@ -90,9 +90,6 @@ export default {
 </script>
 
 <style lang="scss">
-  .listClientLink{
-    width: 100%;
-  }
   .listClientCard{
     width: 100%;
     background: $background-secondary !important;

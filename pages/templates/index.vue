@@ -1,6 +1,12 @@
 <template>
-  <div class="templateGrid" >
-    <div>
+  <div class="pageContent" >
+    <div
+      v-for="(template, i) in templates"
+      :key="i">
+      <ListTemplates :template="template"/> 
+    </div>
+
+    <!-- <div>
       <div
         v-for="(template, i) in templateList"
         :key="i"
@@ -30,35 +36,37 @@
           </v-card>
         </v-row>
       </div>
-    </div>
+    </div> -->
   </div> 
 
 </template>
 
 <script>
+import ListTemplates from "~/components/ListTemplates"
 export default {
+  components:{
+    ListTemplates
+  },
   data() {
     return {
-      templateList: {
-        "templates": [
-          {
-            "template_id": 1,
-            "start_date": "01/01/2020",
-            "end_date": "01/08/2020",
-            "completed": false,
-            "sessions": [
-            ],
-          },
-          {
-            "template_id": 2,
-            "start_date": "01/01/2020",
-            "end_date": "01/08/2020",
-            "completed": false,
-            "sessions": [
-            ],
-          },
-        ]
-      }
+      templates: [
+        {
+          "completed": false,
+          "end_date": null,
+          "id": 1,
+          "name": "Soldier Program",
+          "start_date": "04-08-2020",
+          "user_id": 355
+        },
+        {
+          "completed": true,
+          "end_date": "06-10-2020",
+          "id": 2,
+          "name": "Fat Burner",
+          "start_date": "04-10-2020",
+          "user_id": 355
+        }
+      ]
     }
   },
   methods: {
