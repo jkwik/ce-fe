@@ -1,15 +1,24 @@
 <template>
   <div class="pageContent">
-    <ViewTemplate v-if="!loading" :template="temp"/>
+    <HeadingPage v-if="!edit" />
+    <ButtonEditStatus v-if="!edit" />
+    <ViewTemplate v-if="!loading && !edit" :template="temp"/>  
+    <EditTemplate v-if="edit" :t="this.temp" />
   </div>
 </template>
 
 <script>
 import ViewTemplate from '~/components/ViewTemplate'
+import ButtonEditStatus from '~/components/ButtonEditStatus'
+import EditTemplate from '~/components/EditTemplate'
+import HeadingPage from '~/components/HeadingPage'
 
 export default {
   components: {
-    ViewTemplate
+    ViewTemplate,
+    ButtonEditStatus,
+    EditTemplate,
+    HeadingPage,
   },
   data() {
     return {
@@ -135,7 +144,12 @@ export default {
   },
   mounted() {
     this.getTemplate();
-  }
+  },
+  computed: {
+    edit: function() {
+      return this.$store.state.edit;
+    }
+  },
 
 }
 </script>

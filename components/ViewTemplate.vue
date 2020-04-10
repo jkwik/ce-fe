@@ -1,5 +1,8 @@
 <template>
+
     <div v-if="!loading">
+      <Loading v-if="loading" :loading="this.loading"/>
+
       <div
         v-for="(session, i) in sessionList"
         :key="i"
@@ -11,14 +14,9 @@
               <div>
                 <nuxt-link
                   class="primaryBackground actionBtn"
-                  :to="`/sessions/${session.id}`">
+                  to="/session">
                   View
                 </nuxt-link>
-                <button
-                  @click="editSession(session)"
-                  class="successBackground actionBtn">
-                  Edit
-                </button>
               </div>
             </v-card>
           </v-col>
@@ -28,12 +26,22 @@
 </template>
 
 <script>
+
+import HeadingPage from '~/components/HeadingPage'
+import Loading from '~/components/Loading'
+import EditTemplate from '~/components/EditTemplate'
 export default {
+  components: {
+    HeadingPage,
+    Loading,
+    EditTemplate,
+  },
   props: {
     template: Object
   },
   data() {
     return {
+      error: false,
       loading: true,
       currentTemplate: null,
       sessionList: {
@@ -46,10 +54,6 @@ export default {
       this.sessionList = this.currentTemplate.sessions;
       this.loading = false;
     },
-    editSession: function(data) {
-      let actionText = `Editing session ${data.id}`;
-      console.log(actionText)
-    }
   },
   mounted() {
     this.currentTemplate = this.$props.template
@@ -60,7 +64,7 @@ export default {
 
 <style>
   .sessionListCard{
-    width: 33%;
+    width: 100%;
     background: #353535 !important;
     padding: 4px 8px;
     margin-bottom: 8px;

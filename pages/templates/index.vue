@@ -1,31 +1,25 @@
 <template>
-  <div class="templateGrid" >
+  <div class="pageContent" >
+    <Loading v-if="loading" :loading="this.loading"/>
+    <HeadingPage />
     <div>
       <div
-        v-for="(template, i) in templateList"
+        v-for="(template, i) in templateList.templates"
         :key="i"
       >
-        <v-row
-          v-for="(t, id) in template"
-          :key="id"
-        >
+        <v-row>
           <v-card class="templateListCard">
             <div>
-              Template {{t.template_id}} <br>
-              Start Date: {{t.start_date}} <br>
-              End Date: {{t.end_date}}   
+              Template {{ template.template_id }} <br>
+              Start Date: {{ template.start_date }} <br>
+              End Date: {{ template.end_date }}   
             </div>
             <div>
               <nuxt-link
                 class="primaryBackground actionBtn"
-                :to="`/${$router.currentRoute.name}/${t.template_id}`">
+                :to="`/${$router.currentRoute.name}/${template.template_id}`">
                 View
               </nuxt-link>
-              <button
-                @click="editTemplate(t)"
-                class="successBackground actionBtn">
-                Edit
-              </button>
             </div>
           </v-card>
         </v-row>
@@ -36,9 +30,16 @@
 </template>
 
 <script>
+import HeadingPage from '~/components/HeadingPage'
+import Loading from '~/components/Loading'
 export default {
+  components: {
+    HeadingPage,
+    Loading
+  },
   data() {
     return {
+      loading: true,
       templateList: {
         "templates": [
           {
@@ -64,10 +65,7 @@ export default {
   methods: {
     updateTemplateList: function() {
       let actionText = "updating template list";
-      console.log(actionText);
-    },
-    editTemplate: function(data) {
-      let actionText = `Editing template: ${data.template_id}`;
+      this.loading = false;
       console.log(actionText);
     },
   },
@@ -79,7 +77,7 @@ export default {
 
 <style lang="scss">
   .templateListCard{
-    width: 33%;
+    width: 100%;
     background: #353535 !important;
     padding: 8px 16px;
     margin-bottom: 8px;
