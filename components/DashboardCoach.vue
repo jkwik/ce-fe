@@ -1,24 +1,11 @@
 <template>
-  <v-row>
-    <v-col 
-      :lg="4"
-      :md="4"
-      :sm="6"
-      cols="12">
+  <div class="cardRow">
+    <div class="cardCol" v-for="i in 3" :key="i">
       <DashboardCard 
         type="clients"
       />
-    </v-col>
-    <v-col 
-      :lg="4"
-      :md="4"
-      :sm="6"
-      cols="12">
-      <DashboardCard 
-        type="templates"
-      />
-    </v-col>
-  </v-row>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -29,3 +16,13 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+  .cardRow{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .cardCol{
+    flex: 0 0 21%;
+  }
+</style>
