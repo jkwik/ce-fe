@@ -1,6 +1,7 @@
 <template>
   <v-card>
-    <ViewSession/>
+    <h1>Not Implemented Yet</h1>
+    <!-- <ViewSession/> -->
   </v-card>
 </template>
 

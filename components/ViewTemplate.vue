@@ -1,34 +1,21 @@
 <template>
+  <div>
     <div v-if="!loading">
-      <div
+      <ListSessions
         v-for="(session, i) in sessionList"
         :key="i"
-      >
-        <v-row>
-          <v-col>
-            <v-card class="sessionListCard">
-              <div>Session: {{session.id}} <br> Name: {{session.name}}</div>
-              <div>
-                <nuxt-link
-                  class="primaryBackground actionBtn"
-                  :to="`/sessions/${session.id}`">
-                  View
-                </nuxt-link>
-                <button
-                  @click="editSession(session)"
-                  class="successBackground actionBtn">
-                  Edit
-                </button>
-              </div>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
+        :session="session"
+      />
     </div> 
+  </div>
 </template>
 
 <script>
+import ListSessions from '~/components/ListSessions.vue'
 export default {
+  components:{
+    ListSessions
+  },
   props: {
     template: Object
   },

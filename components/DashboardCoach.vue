@@ -1,12 +1,21 @@
 <template>
   <v-row>
-    <v-col 
+    <v-col
       :lg="4"
       :md="4"
       :sm="6"
       cols="12">
-      <DashboardCard 
+      <DashboardCard
         type="clients"
+      />
+    </v-col>
+    <v-col
+      :lg="4"
+      :md="4"
+      :sm="6"
+      cols="12">
+      <DashboardCard
+        type="templates"
       />
     </v-col>
   </v-row>
