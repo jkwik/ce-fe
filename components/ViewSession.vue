@@ -1,7 +1,10 @@
 <template>
   <Div>
     <HeadingPage />
-    <ViewExercise v-for="(exercise, index) in clientExercises" 
+    <ViewClientExercise v-if="role==='CLIENT'" v-for="(exercise, index) in exerciseList" 
+      :key="index" 
+      :exercise="exercise"  />
+    <ViewCoachExercise v-if="role==='COACH'" v-for="(exercise, index) in exerciseList" 
       :key="index" 
       :exercise="exercise"  />
   </Div>
@@ -15,40 +18,34 @@ axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
 
 import HeadingPage from '~/components/HeadingPage'
-import ViewExercise from '~/components/ViewExercise'
+import ViewClientExercise from '~/components/ViewClientExercise'
+import ViewCoachExercise from '~/components/ViewCoachExercise'
 
 export default {
+  props: {
+    session: Object
+  },
   components: {
     HeadingPage,
-    ViewExercise
+    ViewClientExercise,
+    ViewCoachExercise
   },
-  data: () => ({
-    "id": 1, //session id
-    "name": "Chest and Back Day 1",
-    clientExercises : [
-      {
-        "id": 10, // This is the client exercise id that they need to do
-        "name": "Chest Fly",
-        "reps": 10,
-        "sets": 3,
-        "weight": "100"
-      },
-      {
-        "id": 11, // This is the client exercise id that they need to do
-        "name": "Incline Chest Press",
-        "reps": 8,
-        "sets": 4,
-        "weight": "200"
-      },
-      {
-        "id": 12, // This is the client exercise id that they need to do
-        "name": "Chest Press",
-        "reps": 2,
-        "sets": 3,
-        "weight": "3000"
-      },
-    ]
-  }),
+  data() {
+    return {
+      exerciseList: {},
+      role: ''
+    }
+  },
+  methods: {
+    updateExerciseList: function() {
+      this.exerciseList = (this.role == 'COACH') ? this.$props.session.coach_exercises : this.$props.session.client_exercises  ;
+    }
+  },
+  mounted() {
+    this.role = this.$store.state.userData.role;
+    this.updateExerciseList();
+
+  }
 }
 </script>
 
