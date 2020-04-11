@@ -1,9 +1,8 @@
 <template>
-  <div class="pageContent">
-    <v-card>
-      <ViewSession/>
-    </v-card>
-  </div>
+  <v-card>
+    <h1>Not Implemented Yet</h1>
+    <!-- <ViewSession/> -->
+  </v-card>
 </template>
 
 <script>
