@@ -2,13 +2,15 @@
   <div class="pageContent">
     <HeadingPage v-if="!edit" />
     <ButtonEditStatus v-if="!edit" />
-    <ListSessions v-if="!loading && !edit" :template="this.template"/>  
+    <ListCoachSessions v-if="!loading && !edit && role==='COACH'" :template="this.template"/>  
+    <ListClientSessions v-if="!loading && !edit && role==='CLIENT'" :template="this.template"/>  
     <EditTemplate v-if="edit" :template="this.template" />
   </div>
 </template>
 
 <script>
-import ListSessions from '~/components/ListSessions'
+import ListCoachSessions from '~/components/ListCoachSessions'
+import ListClientSessions from '~/components/ListClientSessions'
 import ButtonEditStatus from '~/components/ButtonEditStatus'
 import EditTemplate from '~/components/EditTemplate'
 import HeadingPage from '~/components/HeadingPage'
@@ -19,7 +21,8 @@ const url = 'https://coach-easy-deploy.herokuapp.com';
 
 export default {
   components: {
-    ListSessions,
+    ListCoachSessions,
+    ListClientSessions,
     ButtonEditStatus,
     EditTemplate,
     HeadingPage,
@@ -30,14 +33,17 @@ export default {
       error: false,
       errorMessage: '',
       template: {},
+      role: '',
     }
   },
   methods: {
     getTemplate: function() {
       const self = this;
-      const id= this.$route.params.id;
-      axios.get(`${url}/coach/template?coach_template_id=${id}`).then(result => {
-        this.template = result.data;
+      const id = self.$route.params.id;
+      self.role = self.$store.state.userData.role;
+      let arg = self.role == 'COACH' ? '/coach/template?coach_template_id' : '/client/template?client_template_id';
+      axios.get(`${url}${arg}=${id}`).then(result => {
+        self.template = result.data;
         self.loading = false;
         self.error = false;
       }).catch(error => {

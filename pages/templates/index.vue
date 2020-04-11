@@ -31,12 +31,15 @@ export default {
       error: false,
       errorMessage: '',
       templateList: [],
+      role: '',
     }
   },
   methods: {
     updateTemplateList: function() {
         let self = this;
-        axios.get(`${url}/coach/templates`).then(result => {
+        self.role = self.$store.state.userData.role;
+        let arg = self.role == 'COACH' ? '/coach/templates' : '/client/templates';
+        axios.get(`${url}${arg}`).then(result => {
           self.templateList = result.data.result;
           self.loading = false;
           self.error = false;
@@ -56,7 +59,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-
-</style>
