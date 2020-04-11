@@ -1,11 +1,11 @@
 <template>
   <v-form class="pageContent">
-    <div v-show="edit">
+    <div v-if="edit">
       <FormEditSession/>
       <ButtonViewStatus/>
     </div>
-    <div v-show="!edit">
-      <ViewSession/>
+    <div v-if="!edit">
+      <ViewSession />
       <ButtonEditStatus/>
     </div>
   </v-form>

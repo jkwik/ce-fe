@@ -40,12 +40,12 @@ export default {
         self.role = self.$store.state.userData.role;
         let arg = self.role == 'COACH' ? '/coach/templates' : '/client/templates';
         axios.get(`${url}${arg}`).then(result => {
-          self.templateList = result.data.result;
+          self.templateList = result.data.templates;
           self.loading = false;
           self.error = false;
         }).catch(error => {
           self.error = true;
-          self.errorMessage = error;
+          self.errorMessage = "failed";
           self.loading = false;
         }); 
     },

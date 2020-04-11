@@ -8,7 +8,7 @@
         :key="i"
       >
         <v-row>
-            <v-card class="listSessionsCard" to="/session">
+            <v-card class="listSessionsCard" :to="`/sessions/${session.id}`">
               <div> 
                 <span> Name: {{ session.name }} </span> <br>
                 <span> Order: {{ session.order}} </span>
