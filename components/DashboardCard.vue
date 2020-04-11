@@ -12,7 +12,7 @@
         <div 
           v-if="type==='templates'"
           class="dashContents">
-          <MdPeopleIcon w="75px" h="75px"/>
+          <MdFolderIcon w="75px" h="75px"/>
           <h2 class="subHeading">Templates</h2>
         </div>
       </v-card>
@@ -22,12 +22,14 @@
 
 <script>
 import MdPeopleIcon from 'vue-ionicons/dist/md-people.vue'
+import MdFolderIcon from 'vue-ionicons/dist/md-folder.vue'
 export default {
   props:{
     type: String,
   },
   components:{
-    MdPeopleIcon
+    MdPeopleIcon,
+    MdFolderIcon,
   }
 }
 </script>

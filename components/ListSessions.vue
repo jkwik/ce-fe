@@ -8,7 +8,7 @@
         :key="i"
       >
         <v-row>
-            <v-card class="ListSessionsCard" to="/session">
+            <v-card class="listSessionsCard" to="/session">
               <div> 
                 <span> Name: {{ session.name }} </span> <br>
                 <span> Completed: {{ isCompleted(session.completed) }} </span>
@@ -62,19 +62,10 @@ export default {
 }
 </script>
 
-<style>
-  .sessionListCard{
-    width: 100%;
-    background: #353535 !important;
-    padding: 4px 8px;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .ListSessionsCard{
+<style lang="scss">
+  .listSessionsCard{
   width: 100%;
-  background: #353535 !important;
+  background: $background-secondary !important;
   padding: 8px 16px;
   margin-bottom: 8px;
   display: flex;

@@ -27,7 +27,7 @@ export default {
 <style lang="scss">
 .listTemplateCard{
   width: 100%;
-  background: #353535 !important;
+  background: $background-secondary !important;
   padding: 8px 16px;
   margin-bottom: 8px;
   display: flex;

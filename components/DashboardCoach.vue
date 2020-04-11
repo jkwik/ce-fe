@@ -2,7 +2,7 @@
   <div class="cardRow">
     <div class="cardCol" v-for="i in 3" :key="i">
       <DashboardCard 
-        type="clients"
+        v-bind:type="cardList[i-1]"
       />
     </div>
   </div>
@@ -14,6 +14,17 @@ export default {
   components: {
     DashboardCard
   },
+  data() {
+    return {
+      cardList: ["clients", "templates", "other"],
+    }
+  },
+  methods: {
+    getType: function(index) {
+      console.log(this.cardList[index]);
+      return this.cardList[index];
+    },
+  }
 }
 </script>
 
