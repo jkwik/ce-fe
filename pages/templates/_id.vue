@@ -4,7 +4,7 @@
     <ButtonEditStatus v-if="!edit" />
     <ListCoachSessions v-if="!loading && !edit && role==='COACH'" :template="this.template"/>  
     <ListClientSessions v-if="!loading && !edit && role==='CLIENT'" :template="this.template"/>  
-    <EditTemplate v-if="edit" :template="this.template" />
+    <FormEditTemplate v-if="edit" :template="this.template" />
   </div>
 </template>
 
@@ -12,7 +12,7 @@
 import ListCoachSessions from '~/components/ListCoachSessions'
 import ListClientSessions from '~/components/ListClientSessions'
 import ButtonEditStatus from '~/components/ButtonEditStatus'
-import EditTemplate from '~/components/EditTemplate'
+import FormEditTemplate from '~/components/FormEditTemplate'
 import HeadingPage from '~/components/HeadingPage'
 
 import axios from 'axios'
@@ -24,7 +24,7 @@ export default {
     ListCoachSessions,
     ListClientSessions,
     ButtonEditStatus,
-    EditTemplate,
+    FormEditTemplate,
     HeadingPage,
   },
   data() {

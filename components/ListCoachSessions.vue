@@ -26,12 +26,10 @@
 
 import HeadingPage from '~/components/HeadingPage'
 import Loading from '~/components/Loading'
-import EditTemplate from '~/components/EditTemplate'
 export default {
   components: {
     HeadingPage,
     Loading,
-    EditTemplate,
   },
   props: {
     template: Object
