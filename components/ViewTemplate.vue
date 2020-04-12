@@ -33,10 +33,6 @@ export default {
       this.sessionList = this.currentTemplate.sessions;
       this.loading = false;
     },
-    editSession: function(data) {
-      let actionText = `Editing session ${data.id}`;
-      console.log(actionText)
-    }
   },
   mounted() {
     this.currentTemplate = this.$props.template

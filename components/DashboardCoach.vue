@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     getType: function(index) {
-      console.log(this.cardList[index]);
       return this.cardList[index];
     },
   }

@@ -1,8 +1,10 @@
 <template>
-  <div class="exerciseGrid">
-    <p class="exerciseCol"> Session ID: {{exercise.coach_session_id}} </p>
-    <p class="exerciseCol"> Exercise ID: {{exercise.exercise_id}} </p>
-    <p class="exerciseCol"> Order: {{exercise.order}} </p>
+  <div>
+      <v-card class="exerciseCol"> 
+        Session ID: {{exercise.coach_session_id}} <br>
+        Exercise ID: {{exercise.exercise_id}} <br>
+         Order: {{exercise.order}} 
+      </v-card>
   </div>
 </template>
 
@@ -20,6 +22,12 @@ export default {
   }
 
   .exerciseCol{
-    flex:1
+    width: 100%;
+    background: $background-secondary !important;
+    padding: 8px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>
