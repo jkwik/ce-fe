@@ -14,7 +14,7 @@
         :u="this.user" />
       <SpacerSmall />
     </div>
-    <MessagePrompt link='/changePassword' m='Change Password?' />
+    <MessageRedirect link='/changePassword' message='Change Password?' />
   </div>
 </template>
 
@@ -25,7 +25,6 @@ const url = 'https://coach-easy-deploy.herokuapp.com';
 
 
 import HeadingProfile from '~/components/HeadingProfile'
-import MessagePrompt from '~/components/MessagePrompt'
 import ProfileUser from '~/components/ProfileUser'
 import FormEditProfile from '~/components/FormEditProfile'
 import SpacerSmall from '~/components/SpacerSmall'
@@ -37,7 +36,6 @@ export default {
     FormEditProfile,
     SpacerSmall,
     Loading,
-    MessagePrompt
   },
   data() {
     return {

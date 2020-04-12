@@ -1,5 +1,6 @@
 <template>
 <div>
+    <MessageError v-if="error" :message="errorMessage" />
     <v-text-field
       label="Old Password"
       v-model="oldPassword"
@@ -28,9 +29,8 @@
       @click='changePassword'
       class="submitBtn"
     >
-      <MessageButton m='Save'/>
+      <MessageButton message='Save'/>
     </button>
-    <MessageError v-if="error" :message="errorMessage" />
 </div>
 </template>
 
@@ -53,7 +53,7 @@ export default {
       newPassword: '',
       confirmPassword: '',
       error: false,
-      errorMessage: '',
+      errorMessage: "Failed to Submit Form",
       show1: false,
       show2: false,
       show3: false
@@ -64,20 +64,18 @@ export default {
       if(this.newPassword === this.confirmPassword && this.newPassword!==''){
         this.error = false;
         let em = this.$store.state.userData.email;
+        const self = this;
         axios.put(`${url}/updateProfile`, {
           email: em,
           newPassword: this.newPassword,
           oldPassword: this.oldPassword
         })
         .then(function (response) {
-          console.log(response);
           window.location.href = '/profile'
         })
         .catch(function (error) {
           //axios promise failed
-          this.error = true;
-          errorMessage = error.response.data.error
-          console.log(error);
+          self.error = true;
         });
       } else {
         this.error = true;

@@ -1,12 +1,11 @@
 <template>
-  <a :href=link>{{message}}</a>
+    <h2 class="clientListHeader">{{text}}</h2>
 </template>
 
 <script>
 export default {
-  props: {
-    message: String,
-    link: String,
+  props:{
+    text: String
   }
 }
 </script>

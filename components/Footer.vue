@@ -7,7 +7,7 @@
 <style lang="scss">
   footer {
     height: 64px;
-    background: #191919;
+    background: $background-secondary;
     display: flex;
     align-items: center;
     justify-content: center;
