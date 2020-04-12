@@ -47,7 +47,6 @@ export default {
     },
     updateClientList: function(){
       let self = this;
-      console.log('here')
       axios.get(`${url}/clientList`).then(result => {
         self.clientList = result.data
         self.loading = false;

@@ -2,29 +2,8 @@
   <div class="pageContent" >
     <Loading v-if="loading" :loading="this.loading"/>
     <HeadingPage />
-    <div>
-      <div
-        v-for="(template, i) in templateList.templates"
-        :key="i"
-      >
-        <v-row>
-          <v-card class="templateListCard">
-            <div>
-              Template {{ template.template_id }} <br>
-              Start Date: {{ template.start_date }} <br>
-              End Date: {{ template.end_date }}   
-            </div>
-            <div>
-              <nuxt-link
-                class="primaryBackground actionBtn"
-                :to="`/${$router.currentRoute.name}/${template.template_id}`">
-                View
-              </nuxt-link>
-            </div>
-          </v-card>
-        </v-row>
-      </div>
-    </div>
+    <ListTemplates :templates="this.templateList" />
+    <MessageError :error="error" :message="errorMessage" />
   </div> 
 
 </template>
@@ -32,58 +11,51 @@
 <script>
 import HeadingPage from '~/components/HeadingPage'
 import Loading from '~/components/Loading'
+import ListTemplates from '~/components/ListTemplates'
+import MessageError from '~/components/MessageError'
+
+import axios from 'axios'
+axios.defaults.withCredentials = true;
+const url = 'https://coach-easy-deploy.herokuapp.com';
+
 export default {
   components: {
     HeadingPage,
-    Loading
+    Loading,
+    ListTemplates,
+    MessageError,
   },
   data() {
     return {
       loading: true,
-      templateList: {
-        "templates": [
-          {
-            "template_id": 1,
-            "start_date": "01/01/2020",
-            "end_date": "01/08/2020",
-            "completed": false,
-            "sessions": [
-            ],
-          },
-          {
-            "template_id": 2,
-            "start_date": "01/01/2020",
-            "end_date": "01/08/2020",
-            "completed": false,
-            "sessions": [
-            ],
-          },
-        ]
-      }
+      error: false,
+      errorMessage: '',
+      templateList: [],
+      role: '',
     }
   },
   methods: {
     updateTemplateList: function() {
-      let actionText = "updating template list";
-      this.loading = false;
-      console.log(actionText);
+        let self = this;
+        self.role = self.$store.state.userData.role;
+        let arg = self.role == 'COACH' ? '/coach/templates' : '/client/templates';
+        axios.get(`${url}${arg}`).then(result => {
+          self.templateList = result.data.templates;
+          self.loading = false;
+          self.error = false;
+        }).catch(error => {
+          self.error = true;
+          self.errorMessage = "failed";
+          self.loading = false;
+        }); 
+    },
+    setNoEdit: function() {
+      this.$store.commit('noEdit');
     },
   },
   mounted() {
     this.updateTemplateList();
+    this.setNoEdit();
   },
 }
 </script>
-
-<style lang="scss">
-  .templateListCard{
-    width: 100%;
-    background: #353535 !important;
-    padding: 8px 16px;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-</style>

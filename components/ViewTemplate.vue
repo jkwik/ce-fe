@@ -1,47 +1,26 @@
 <template>
-
+  <div>
     <div v-if="!loading">
-      <Loading v-if="loading" :loading="this.loading"/>
-
-      <div
+      <ListSessions
         v-for="(session, i) in sessionList"
         :key="i"
-      >
-        <v-row>
-          <v-col>
-            <v-card class="sessionListCard">
-              <div>Session: {{session.id}} <br> Name: {{session.name}}</div>
-              <div>
-                <nuxt-link
-                  class="primaryBackground actionBtn"
-                  to="/session">
-                  View
-                </nuxt-link>
-              </div>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
+        :session="session"
+      />
     </div> 
+  </div>
 </template>
 
 <script>
-
-import HeadingPage from '~/components/HeadingPage'
-import Loading from '~/components/Loading'
-import EditTemplate from '~/components/EditTemplate'
+import ListSessions from '~/components/ListSessions.vue'
 export default {
-  components: {
-    HeadingPage,
-    Loading,
-    EditTemplate,
+  components:{
+    ListSessions
   },
   props: {
     template: Object
   },
   data() {
     return {
-      error: false,
       loading: true,
       currentTemplate: null,
       sessionList: {
@@ -64,7 +43,7 @@ export default {
 
 <style>
   .sessionListCard{
-    width: 100%;
+    width: 33%;
     background: #353535 !important;
     padding: 4px 8px;
     margin-bottom: 8px;

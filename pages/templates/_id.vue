@@ -2,144 +2,55 @@
   <div class="pageContent">
     <HeadingPage v-if="!edit" />
     <ButtonEditStatus v-if="!edit" />
-    <ViewTemplate v-if="!loading && !edit" :template="temp"/>  
-    <EditTemplate v-if="edit" :t="this.temp" />
+    <ListCoachSessions v-if="!loading && !edit && role==='COACH'" :template="this.template"/>  
+    <ListClientSessions v-if="!loading && !edit && role==='CLIENT'" :template="this.template"/>  
+    <FormEditTemplate v-if="edit" :template="this.template" />
   </div>
 </template>
 
 <script>
-import ViewTemplate from '~/components/ViewTemplate'
+import ListCoachSessions from '~/components/ListCoachSessions'
+import ListClientSessions from '~/components/ListClientSessions'
 import ButtonEditStatus from '~/components/ButtonEditStatus'
-import EditTemplate from '~/components/EditTemplate'
+import FormEditTemplate from '~/components/FormEditTemplate'
 import HeadingPage from '~/components/HeadingPage'
+
+import axios from 'axios'
+axios.defaults.withCredentials = true;
+const url = 'https://coach-easy-deploy.herokuapp.com';
 
 export default {
   components: {
-    ViewTemplate,
+    ListCoachSessions,
+    ListClientSessions,
     ButtonEditStatus,
-    EditTemplate,
+    FormEditTemplate,
     HeadingPage,
   },
   data() {
     return {
       loading: true,
-      temp: {},
+      error: false,
+      errorMessage: '',
+      template: {},
+      role: '',
     }
   },
   methods: {
     getTemplate: function() {
       const self = this;
-      const id= this.$route.params.id;
-      console.log(`templates/id page: ${id}`);
-      if (id == 1) {
-        self.temp = {
-          "id": 1,
-          "start_date": "01/01/2020",
-          "end_date": null,
-          "completed": false,
-          "sessions": [
-            {
-              "id": 5,
-              "name": "Leg day baby",
-              "client_exercise": {
-                "id": 10,
-                "reps": 10,
-                "sets": 4,
-                "weight": 100,
-
-              },
-              "completed": true,
-              "training_entry": {
-                "id": 7,
-                "client_id": 1,
-                "client_session_id": 5,
-                "client_exercise_id": 10,
-                "exercise_id": null,
-                "reps": null,
-                "sets": null,
-                "weight": null
-              }
-            },
-            {
-              "id": 6,
-              "name": "Arm day gainz",
-              "client_exercise": {
-                "id": 11,
-                "reps": 10,
-                "sets": 4,
-                "weight": 100,
-
-              },
-              "completed": true,
-              "training_entry": {
-                "id": 9,
-                "client_id": 1,
-                "client_session_id": 6,
-                "client_exercise_id": 10,
-                "exercise_id": null,
-                "reps": null,
-                "sets": null,
-                "weight": null
-              }
-            }
-          ]
-        }
-      }
-      else if (id == 2) {
-        self.temp = {
-          "id": 2,
-          "start_date": "01/01/2020",
-          "end_date": null,
-          "completed": false,
-          "sessions": [
-            {
-              "id": 7,
-              "name": "Pulls up or gfto",
-              "client_exercise": {
-                "id": 10,
-                "reps": 10,
-                "sets": 4,
-                "weight": 100,
-
-              },
-              "completed": true,
-              "training_entry": {
-                "id": 7,
-                "client_id": 1,
-                "client_session_id": 5,
-                "client_exercise_id": 10,
-                "exercise_id": null,
-                "reps": null,
-                "sets": null,
-                "weight": null
-              }
-            },
-            {
-              "id": 8,
-              "name": "Strictly calves",
-              "client_exercise": {
-                "id": 11,
-                "reps": 10,
-                "sets": 4,
-                "weight": 100,
-
-              },
-              "completed": true,
-              "training_entry": {
-                "id": 9,
-                "client_id": 1,
-                "client_session_id": 6,
-                "client_exercise_id": 10,
-                "exercise_id": null,
-                "reps": null,
-                "sets": null,
-                "weight": null
-              }
-            }
-          ]
-        }
-      }
-      this.loading = false;
+      const id = self.$route.params.id;
+      self.role = self.$store.state.userData.role;
+      let arg = self.role == 'COACH' ? '/coach/template?coach_template_id' : '/client/template?client_template_id';
+      axios.get(`${url}${arg}=${id}`).then(result => {
+        self.template = result.data;
+        self.loading = false;
+        self.error = false;
+      }).catch(error => {
+        self.error = true;
+        self.errorMessage = error;
+        self.loading = false;
+      });
     }
   },
   mounted() {
