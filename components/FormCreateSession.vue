@@ -4,6 +4,7 @@
       <v-text-field
         label="Name">
       </v-text-field>
+      <p v-if="deleteStatus" class="buttonDelete errorBackground"><v-icon dark>mdi-delete</v-icon></p>
       <ButtonAddForm @newExerciseForm="addExcerciseForm()" type="Exercise" v-if="exerciseCount===0"/>
     </div>
     <FormCreateExercise v-for="i in exerciseCount" :key="i" />

@@ -37,3 +37,16 @@ path{
   display: flex;
   justify-content: space-between;
 }
+
+.listRow{
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.buttonDelete{
+  border-radius: 4px;
+  padding: 6px 10px;
+  margin-left: 8px;
+  border: 1px solid $text;
+  box-shadow: $elevation2;
+}

@@ -2,6 +2,7 @@
   <div class="listRow">
     <v-card class="listCard"  :to="`/template/${template.id}`">
       <p class="listItem">{{ template.name }}</p>
+      <!-- {{template}} -->
     </v-card>
     <p v-if="deleteStatus" class="buttonDelete errorBackground"><v-icon dark>mdi-delete</v-icon></p>
   </div>
@@ -17,17 +18,5 @@ export default {
 </script>
 
 <style lang="scss">
-  .listRow{
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  .buttonDelete{
-    border-radius: 4px;
-    padding: 6px 10px;
-    margin-left: 8px;
-    border: 1px solid $text;
-    box-shadow: $elevation2;
-  }
 </style>
 
