@@ -1,16 +1,25 @@
 <template>
-  <v-card class="listTemplateCard" :to="`/templates/${template.id}`">
-    <div>
-      {{template.name}}
+  <div>
+    <div
+      v-for="(template, i) in this.templates"
+      :key="i"
+    >
+      <v-row>
+        <v-card class="listTemplateCard" :to="`/templates/${template.id}`">
+          <div>
+            Template {{ template.id }} <br>
+            Name: {{ template.name }}
+          </div>
+        </v-card>
+      </v-row>
     </div>
-    <div>{{template.completed}}</div>
-  </v-card>
+  </div>
 </template>
 
 <script>
 export default {
-  props:{
-    template: Object,
+  props: {
+    templates: Array,
   }
 }
 </script>
@@ -18,7 +27,7 @@ export default {
 <style lang="scss">
 .listTemplateCard{
   width: 100%;
-  background: black !important;
+  background: $background-secondary !important;
   padding: 8px 16px;
   margin-bottom: 8px;
   display: flex;

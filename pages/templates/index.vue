@@ -1,69 +1,61 @@
 <template>
   <div class="pageContent" >
+    <Loading v-if="loading" :loading="this.loading"/>
     <HeadingPage />
-    <div
-      v-for="(template, i) in templates"
-      :key="i">
-      <ListTemplates :template="template"/> 
-    </div>
+    <ListTemplates :templates="this.templateList" />
+    <MessageError :error="error" :message="errorMessage" />
   </div> 
+
 </template>
 
 <script>
-import ListTemplates from "~/components/ListTemplates"
-import HeadingPage from "~/components/HeadingPage"
+import HeadingPage from '~/components/HeadingPage'
+import Loading from '~/components/Loading'
+import ListTemplates from '~/components/ListTemplates'
+import MessageError from '~/components/MessageError'
+
+import axios from 'axios'
+axios.defaults.withCredentials = true;
+const url = 'https://coach-easy-deploy.herokuapp.com';
+
 export default {
-  components:{
+  components: {
+    HeadingPage,
+    Loading,
     ListTemplates,
-    HeadingPage
+    MessageError,
   },
   data() {
     return {
-      templates: [
-        {
-          "completed": false,
-          "end_date": null,
-          "id": 1,
-          "name": "Soldier Program",
-          "start_date": "04-08-2020",
-          "user_id": 355
-        },
-        {
-          "completed": true,
-          "end_date": "06-10-2020",
-          "id": 2,
-          "name": "Fat Burner",
-          "start_date": "04-10-2020",
-          "user_id": 355
-        }
-      ]
+      loading: true,
+      error: false,
+      errorMessage: '',
+      templateList: [],
+      role: '',
     }
   },
   methods: {
     updateTemplateList: function() {
-      let actionText = "updating template list";
-      console.log(actionText);
+        let self = this;
+        self.role = self.$store.state.userData.role;
+        let arg = self.role == 'COACH' ? '/coach/templates' : '/client/templates';
+        axios.get(`${url}${arg}`).then(result => {
+          self.templateList = result.data.templates;
+          self.loading = false;
+          self.error = false;
+        }).catch(error => {
+          self.error = true;
+          self.errorMessage = "failed";
+          self.loading = false;
+        }); 
     },
-    editTemplate: function(data) {
-      let actionText = `Editing template: ${data.template_id}`;
-      console.log(actionText);
+    setNoEdit: function() {
+      this.$store.commit('noEdit');
     },
   },
   mounted() {
     this.updateTemplateList();
+    this.setNoEdit();
   },
 }
 </script>
-
-<style lang="scss">
-  .templateListCard{
-    width: 33%;
-    background: #353535 !important;
-    padding: 8px 16px;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-</style>

@@ -14,10 +14,5 @@ export default {
     NavBar,
     Footer
   },
-  beforeUpdate(){
-    if(loggedIn && role==='coach'){
-      this.$store.commit('setClientList');
-    }
-  }
 }
 </script>

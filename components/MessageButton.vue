@@ -1,11 +1,11 @@
 <template>
-  <p class="colorDark">{{m}}</p>
+  <p class="colorDark">{{message}}</p>
 </template>
 
 <script>
 export default {
   props: {
-    m: String
+    message: String
   }
 }
 </script>
