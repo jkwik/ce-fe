@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading" class="loadingMessage">
+  <div class="loadingMessage">
     <v-progress-circular 
       indeterminate>
     </v-progress-circular>
@@ -15,9 +15,6 @@ export default {
   components: {
     SpacerSmall
   },
-  props: {
-    loading: Boolean
-  }
 }
 </script>
 

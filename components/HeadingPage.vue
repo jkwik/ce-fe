@@ -2,7 +2,10 @@
   <div class="headingContainer">
     <h1 class="headingPage" v-if="this.name">{{this.name}}</h1>
     <h1 class="headingPage" v-if="!this.name">{{this.$router.currentRoute.name}}</h1>
-    <ButtonHeading @setStatus="updateStatus()" v-if="hasButton()" :message="this.message"/>
+    <div>
+      <ButtonHeading @sendRequest="save()" v-if="this.status==='Save' || this.status==='Edit' || this.status==='Done'" :message="this.status"/>
+      <ButtonHeading @setStatus="updateStatus()" v-if="hasButton() && this.status!=='Done'" :message="this.message"/>
+    </div>
   </div>
 </template>
 
@@ -12,6 +15,7 @@ export default {
   props:{
     name: String,
     message: String,
+    status: String
   },
   components: {
     ButtonHeading
@@ -23,6 +27,9 @@ export default {
     }
   },
   methods:{
+    save: function(){
+      this.$emit('sendRequest')
+    },
     updateStatus: function(){
       this.$emit('updateStatus')
     },
