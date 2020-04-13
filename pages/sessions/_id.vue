@@ -1,11 +1,11 @@
 <template>
   <v-form class="pageContent">
     <div v-if="edit">
-      <FormEditSession/>
+      <FormEditSession :session="this.session"/>
       <ButtonViewStatus/>
     </div>
     <div v-if="!edit">
-      <ViewSession v-if="!loading" :session="this.session"/>
+      <ViewSession v-if="!loading" :session="this.session" />
       <ButtonEditStatus/>
     </div>
   </v-form>
@@ -36,6 +36,7 @@ export default {
   },
   data: () => ({
     loading: true,
+    loadingFailed: false,
     error: false,
     errorMessage: '',
     session: {},
@@ -45,11 +46,9 @@ export default {
     getSession: function() {
       const self = this;
       const id = self.$route.params.id;
-      self.role = self.$store.state.userData.role;
       let arg = self.role = 'COACH' ? '/coach/session?coach_session_id' : 'client/session?client_session_id';
       axios.get(`${url}${arg}=${id}`).then(result => {
         self.session = result.data;
-        console.log(self.session);
         self.loading = false;
         self.error = false;
       }).catch(error => {
@@ -65,6 +64,12 @@ export default {
     }
   },
   mounted() {
+    Promise.all([ this.$store.state.userData ]).then( () => {
+        this.role = this.$store.state.userData.role
+        this.loading = false
+      },() => {
+        this.loadingFailed = true
+    });
     this.getSession();
   }
 }

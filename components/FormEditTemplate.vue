@@ -4,7 +4,7 @@
     <MessageError :error="error" :message="errorMessage" />
     <div v-if="!loading">
       <Loading v-if="loading" :loading="this.loading"/>
-      <draggable v-model="sessionList" @end="reorderSessionList(sessionList)">
+      <draggable :key="reorderKey" v-model="sessionList" @end="reorderSessionList(sessionList)">
         <div
           v-for="(session, i) in sessionList"
           :key="i"
@@ -20,12 +20,6 @@
         </div>
       </draggable>
     </div>
-    <button 
-      @click='editTemplate'
-      class="submitBtn"
-    >
-      <MessageButton message='Save'/>
-    </button>
   </div>
 </template>
 
@@ -37,6 +31,9 @@ import MessageButton from '~/components/MessageButton'
 import HeadingUserAuth from '~/components/HeadingUserAuth'
 import draggable from 'vuedraggable'
 
+import axios from 'axios'
+axios.defaults.withCredentials = true;
+const url = 'https://coach-easy-deploy.herokuapp.com';
 
 export default {
   components:{
@@ -48,7 +45,7 @@ export default {
     draggable
   },
   props: {
-    template: Object
+    template: Object,
   },
   data() {
     return {
@@ -57,7 +54,8 @@ export default {
       errorMessage: '',
       temp: this.template,
       sessionList: [],
-      drag: false,
+      newSessionName: '',
+      reorderKey: 0,
     }
 
   },
@@ -67,6 +65,7 @@ export default {
       this.loading = false;
     },
     editTemplate: function() {
+      // TODO: axios PUT on new session list ordering
       this.$store.commit('editStatus');
     },
     reorderSessionList: function (sessionList) {
@@ -77,6 +76,27 @@ export default {
       });
       this.temp.sessions = sessionList;
     },
+    async newSession() {
+      try {
+        axios.post(`${url}/coach/session`, {
+          name: this.newSessionName,
+          coach_template_id: this.template.id
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          this.error = true;
+        })
+      } catch (error) {
+        this.error = true;
+      }
+      this.updateSessionList();
+      this.updateReorderKey();
+    },
+    updateReorderKey: function() {
+      this.reorderKey += 1;
+    }
   },
   mounted() {
     this.updateSessionList();
