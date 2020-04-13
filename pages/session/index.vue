@@ -2,19 +2,17 @@
   <div class="pageContent" >
     <Loading v-if="loading" :loading="this.loading"/>
     <div v-if="!loading && !status">
-      <HeadingPage @updateStatus="setStatus()" @sendRequest="request()" message="Create" :status="deleteMessage"/>
+      <HeadingPage @updateStatus="setStatus()" message="Create"/>
       <SpacerSmall />
       <ListTemplates 
-        v-for="(template) in this.templateList"
-        :deleteStatus="deleteStatus"
-        :key="template.id"
-        :template="template"/>
+        v-for="(session) in this.sessionList"
+        :key="session.id"
+        :template="session"/>
       <MessageError :error="error" :message="errorMessage" />
     </div>
     <div v-if="!loading && status">
-      <HeadingPage @updateStatus="setStatus()" @sendRequest="request()" message="Exit" status="Save"/>
+      <HeadingPage @updateStatus="setStatus()" message="Done"/>
       <SpacerSmall />
-      <FormCreateTemplate />
     </div>
   </div> 
 
@@ -25,7 +23,6 @@ import Loading from '~/components/Loading'
 import HeadingPage from '~/components/HeadingPage'
 import SpacerSmall from '~/components/SpacerSmall'
 import ListTemplates from '~/components/ListTemplates'
-import FormCreateTemplate from '~/components/FormCreateTemplate'
 import MessageError from '~/components/MessageError'
 
 import axios from 'axios'
@@ -38,7 +35,6 @@ export default {
     Loading,
     SpacerSmall,
     ListTemplates,
-    FormCreateTemplate,
     MessageError,
   },
   data() {
@@ -46,59 +42,33 @@ export default {
       loading: true,
       error: false,
       status: false,
-      deleteStatus: false,
       errorMessage: '',
-      templateList: [],
+      sessionList: [],
       user: {},
     }
   },
-  computed: {
-    deleteMessage: function(){
-      if(!this.deleteStatus){
-        return "Edit"
-      } else {
-        return "Done"
-      }
-    }
-  },
   methods: {
-    request: function(){
-      if(this.status){
-        this.saveRequest();
-      } else if(!this.status){
-        this.setDelete();
-      }
-    },
-    saveRequest: function(){
-      console.log('saving')
-      this.status = !this.status;
-    },
-    setDelete: function(){
-      this.deleteStatus = !this.deleteStatus
-    },
-    deleteRequest: function(){
-      console.log('deleting')
-    },
     setStatus: function(){
       this.status = !this.status;
     },
-    getUserTemplate: function(){
+    getUsersession: function(){
       Promise.all([ this.$store.state.userData ]).then( () => {
         this.user = this.$store.state.userData
         this.loading = false
-        this.updateTemplateList();
+        this.updatesessionList();
       },() => {
         this.loadingFailed = true
       })
     },
-    updateTemplateList: function() {
+    updatesessionList: function() {
         console.log('Update')
         let self = this;
-        let arg = self.user.role == 'COACH' ? '/coach/templates' : `/client/templates?user_id=${self.user.id}`;
+        let arg = self.user.role == 'COACH' ? '/coach/session' : `/client/templates`;
         console.log(`${url}${arg}`)
         axios.get(`${url}${arg}`).then(result => {
-          self.templateList = result.data.templates;
-          console.log(self.templateList)
+          console.log(result)
+          let list = result.data.templates.completed
+          self.sessionList = result.data.templates;
           self.loading = false;
           self.error = false;
         }).catch(error => {
@@ -112,7 +82,7 @@ export default {
     },
   },
   mounted() {
-    this.getUserTemplate();
+    this.getUsersession();
     this.setNoEdit();
   },
 }

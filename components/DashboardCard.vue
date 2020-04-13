@@ -13,7 +13,7 @@
           v-if="type==='template'"
           class="dashContents">
           <MdFolderIcon w="75px" h="75px"/>
-          <h2 class="subHeading">Template</h2>
+          <h2 class="subHeading">Templates</h2>
         </div>
       </v-card>
     </nuxt-link>
