@@ -1,16 +1,15 @@
 <template>
   <div>
-    <HeadingUserAuth message="Edit Template"/>
+    <Loading v-if="loading" :loading="this.loading"/>
     <MessageError :error="error" :message="errorMessage" />
     <div v-if="!loading">
-      <Loading v-if="loading" :loading="this.loading"/>
       <draggable v-model="sessionList" @end="reorderSessionList(sessionList)">
         <div
           v-for="(session, i) in sessionList"
           :key="i"
         >
           <v-row>
-              <v-card class="listSessionsCard" :to="`/sessions/${session.id}`">
+              <v-card class="listCard" :to="`/sessions/${session.id}`">
                 <div> 
                   <span> Name: {{ session.name }} </span> <br>
                   <span> Order: {{ session.order}} </span>
@@ -85,12 +84,4 @@ export default {
 </script>
 
 <style lang="scss">
-  .listSessionsCard{
-  width: 100%;
-  background: $background-secondary !important;
-  padding: 8px 16px;
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  

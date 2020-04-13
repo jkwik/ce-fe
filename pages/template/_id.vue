@@ -1,14 +1,23 @@
 <template>
   <div class="pageContent">
-    <HeadingPage v-if="!edit" />
-    <ButtonEditStatus v-if="!edit" />
-    <ListCoachSessions v-if="!loading && !edit && role==='COACH'" :template="this.template"/>  
-    <ListClientSessions v-if="!loading && !edit && role==='CLIENT'" :template="this.template"/>  
-    <FormEditTemplate v-if="edit" :template="this.template" />
+    <Loading />
+    <div v-if="!loading && !status">
+      <HeadingPage @updateStatus="setStatus()" :name="template.name" message="Edit"/>
+      <SpacerSmall />
+      {{template.sessions[0]}}
+      <!-- <ListCoachSessions v-if="!loading  && role==='COACH'" :template="this.template"/>  
+      <ListClientSessions v-if="!loading  && role==='CLIENT'" :template="this.template"/>   -->
+    </div>
+    <div v-if="!loading && status">
+      <HeadingPage @updateStatus="setStatus()" :name="template.name" message="Done"/>
+      <SpacerSmall />
+      <FormEditTemplate :template="this.template" />
+    </div>
   </div>
 </template>
 
 <script>
+import Loading from '~/components/Loading'
 import ListCoachSessions from '~/components/ListCoachSessions'
 import ListClientSessions from '~/components/ListClientSessions'
 import ButtonEditStatus from '~/components/ButtonEditStatus'
@@ -21,6 +30,7 @@ const url = 'https://coach-easy-deploy.herokuapp.com';
 
 export default {
   components: {
+    Loading,
     ListCoachSessions,
     ListClientSessions,
     ButtonEditStatus,
@@ -31,12 +41,16 @@ export default {
     return {
       loading: true,
       error: false,
+      status: false,
       errorMessage: '',
       template: {},
       role: '',
     }
   },
   methods: {
+    setStatus: function(){
+      this.status = !this.status;
+    },
     getTemplate: function() {
       const self = this;
       const id = self.$route.params.id;

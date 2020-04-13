@@ -10,10 +10,10 @@
           <h2 class="subHeading">Client List</h2>
         </div>
         <div 
-          v-if="type==='templates'"
+          v-if="type==='template'"
           class="dashContents">
           <MdFolderIcon w="75px" h="75px"/>
-          <h2 class="subHeading">Templates</h2>
+          <h2 class="subHeading">Template</h2>
         </div>
       </v-card>
     </nuxt-link>
@@ -45,6 +45,7 @@ export default {
     border-radius: 10px !important;
     text-decoration: none !important;
     color: $text !important;
+    box-shadow: $elevation1 !important;
   }
   .dashCard:hover{
     box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.20);
