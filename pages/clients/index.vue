@@ -34,7 +34,7 @@ export default {
     return {
       loading: true,
       error: false,
-      errorMessage: '',
+      errorMessage: 'Error',
       clientList: {},
       agh: this.$refs
     }
@@ -53,7 +53,7 @@ export default {
         self.error = false;
       }).catch(error => {
         self.error = true;
-        self.errorMessage = error;
+        console.log(error)
       });
     },
   },
