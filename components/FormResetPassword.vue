@@ -11,6 +11,7 @@
         outlined
         required
         @click:append="showPassword = !showPassword"
+        @keyup.enter="resetPassword()"
       ></v-text-field>
       <v-text-field
         label="New password"
@@ -21,6 +22,7 @@
         outlined
         required
         @click:append="showNewPassword = !showNewPassword"
+        @keyup.enter="resetPassword()"
       ></v-text-field>
     </v-form>
     <MessageError v-if="error" :message="errorMessage" />

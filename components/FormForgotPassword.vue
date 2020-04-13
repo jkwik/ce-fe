@@ -9,6 +9,7 @@
         :rules="emailRules"
         outlined
         required
+        @keyup.enter="forgotPassword()"
       ></v-text-field>
     </v-form>
     <button 

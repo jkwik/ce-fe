@@ -8,6 +8,7 @@
         :rules="emailRules"
         outlined
         required
+        @keyup.enter="loginSubmit()"
       ></v-text-field>
       <v-text-field
         label="Password"
@@ -18,13 +19,14 @@
         outlined
         required
         @click:append="show = !show"
+        @keyup.enter="loginSubmit()"
       ></v-text-field>
       <MessageRedirect link='/forgotPassword' message='Forgot password?' />
       <SpacerExtraSmall />
       <MessageRedirect link="/signup" message="Not registered? Sign Up" />
     </v-form>
     <MessageError v-if="error" :message="errorMessage" />
-    <button 
+    <button
       @click='loginSubmit'
       class="submitBtn"
     >
