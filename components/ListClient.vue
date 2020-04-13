@@ -12,13 +12,13 @@
           v-if="remove.includes(clientType)"
           @click.stop="deleteClient(client)"
           class="errorBackground actionBtn">
-          Delete
+          Remove
         </button>
         <button 
           v-if="terminate.includes(clientType)"
           @click="changeClient(client, 'terminateClient')"
           class="errorBackground actionBtn">
-          Terminate
+          Remove
         </button>
       </div>
     </v-card>
@@ -57,6 +57,7 @@ export default {
         // self.error = true;
         // self.errorMessage = error;
       });
+      this.setUpdate();
     },
     changeClient: function(data, endpoint){
       var self = this;
@@ -85,6 +86,9 @@ export default {
         // self.errorMessage = `Delete failed: ${data.first_name} ${data.last_name}`;
       });
     },
+    setUpdate: function() {
+      this.$emit('setUpdate');
+    }
   },
 }
 </script>

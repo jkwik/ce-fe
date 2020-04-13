@@ -7,7 +7,7 @@
       v-for="(clients, clientType) in clientList"
       :key="clientType">
       <HeadingSection :text="getHeader(clientType)"/>
-      <ContentList :clientList="clients" :clientType="clientType"/>
+      <ContentList @shouldUpdate="updateClientList()" :clientList="clients" :clientType="clientType"/>
     </div>
   </div>
 </div>
