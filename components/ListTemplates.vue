@@ -1,28 +1,16 @@
 <template>
-  <v-card class="listTemplateCard" :to="`/templates/${template.id}`">
-    <div>
-      {{template.name}}
-    </div>
-    <div>{{template.completed}}</div>
-  </v-card>
+  <div>
+    <v-card class="listCard"  :to="`/template/${template.id}`">
+      <p class="listItem">{{ template.name }}</p>
+    </v-card>
+  </div>
 </template>
 
 <script>
 export default {
-  props:{
+  props: {
     template: Object,
   }
 }
 </script>
 
-<style lang="scss">
-.listTemplateCard{
-  width: 100%;
-  background: $background-secondary !important;
-  padding: 8px 16px;
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-</style>

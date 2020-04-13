@@ -16,7 +16,9 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/pwa": "^3.0.0-0",
     "nuxt": "^2.12.1",
+    "vue": "^2.6.11",
     "vue-ionicons": "^3.0.4",
+    "vuedraggable": "^2.23.2",
     "vuex-persist": "^2.2.0"
   },
   "devDependencies": {

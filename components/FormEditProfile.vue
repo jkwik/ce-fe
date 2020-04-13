@@ -86,7 +86,7 @@ export default {
         self.$store.commit('setUserData', response.data.user);
         self.submitted = true;
         self.success = true;
-        self.store.commit('editStatus');
+        self.$store.commit('editStatus');
       })
       .catch(function (error) {
         self.submitted = true;

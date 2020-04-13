@@ -1,10 +1,7 @@
 <template>
   <div>
-    <div>
-      
-    </div>
     <div v-if="!loading">
-      <ListTemplate
+      <ListSessions
         v-for="(session, i) in sessionList"
         :key="i"
         :session="session"
@@ -14,10 +11,10 @@
 </template>
 
 <script>
-import ListTemplate from '~/components/ListTemplate'
+import ListSessions from '~/components/ListSessions.vue'
 export default {
   components:{
-    ListTemplate
+    ListSessions
   },
   props: {
     template: Object
@@ -36,10 +33,6 @@ export default {
       this.sessionList = this.currentTemplate.sessions;
       this.loading = false;
     },
-    editSession: function(data) {
-      let actionText = `Editing session ${data.id}`;
-      console.log(actionText)
-    }
   },
   mounted() {
     this.currentTemplate = this.$props.template

@@ -18,6 +18,9 @@ export const mutations = {
   editStatus (state) {
     return state.edit = !state.edit;
   },
+  noEdit (state) {
+    return state.edit = false;
+  },
   setUserData (state, data) {
     console.log(data)
     return state.userData = data;

@@ -2,29 +2,24 @@
   <div class="pageContent">
     <Loading v-if="loading" :loading="this.loading"/>
     <HeadingPage v-if="!loading" />
-    <DashboardCoach v-if="isCoach() && !loading"/>
+    <ViewDashboard v-if="!loading" :type="this.role"/>
   </div>
 </template>
 
 <script>
 import Loading from '~/components/Loading'
 import HeadingPage from '~/components/HeadingPage'
-import DashboardCoach from '~/components/DashboardCoach'
+import ViewDashboard from '~/components/ViewDashboard'
 export default {
   components: {
     Loading,
     HeadingPage,
-    DashboardCoach
+    ViewDashboard
   },
   data() {
     return {
       loading: true,
       role: ''
-    }
-  },
-  methods: {
-    isCoach: function(){
-      return this.role === 'COACH'
     }
   },
   mounted(){

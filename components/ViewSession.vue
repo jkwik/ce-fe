@@ -1,59 +1,56 @@
 <template>
-  <v-form>
-    <v-container>
-      <HeadingPage/>
-      <ViewExercise v-for="(exercise, index) in clientExercises" :key="index" 
-        :exerciseName="exercise.name" 
-        :sets="exercise.sets" 
-        :reps="exercise.reps" 
-        :weight="exercise.weight" />
-    </v-container>
-  </v-form>
+  <Div>
+    <HeadingPage />
+    <draggable v-if="!loading" v-model="exerciseList">
+      <ViewClientExercise v-if="role==='CLIENT'" v-for="(exercise, index) in exerciseList" 
+        :key="index" 
+        :exercise="exercise"  />
+      <ViewCoachExercise v-if="role==='COACH'" v-for="(exercise, index) in exerciseList" 
+        :key="index" 
+        :exercise="exercise"  />
+    </draggable>
+  </Div>
 </template>
 
 <script>
-// ******* need axios request to get session data ********
-//Create ViewExercise components for each item in the array 
 
 import axios from 'axios'
 axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
 
 import HeadingPage from '~/components/HeadingPage'
-import ViewExercise from '~/components/ViewExercise'
-
+import ViewClientExercise from '~/components/ViewClientExercise'
+import ViewCoachExercise from '~/components/ViewCoachExercise'
+import draggable from 'vuedraggable'
 export default {
+  props: {
+    session: Object
+  },
   components: {
     HeadingPage,
-    ViewExercise
+    ViewClientExercise,
+    ViewCoachExercise,
+    draggable
   },
-  data: () => ({
-    "id": 1, //session id
-    "name": "Chest and Back Day 1",
-    clientExercises : [
-      {
-        "id": 10, // This is the client exercise id that they need to do
-        "name": "Chest Fly",
-        "reps": 10,
-        "sets": 3,
-        "weight": "100"
-      },
-      {
-        "id": 11, // This is the client exercise id that they need to do
-        "name": "Incline Chest Press",
-        "reps": 8,
-        "sets": 4,
-        "weight": "200"
-      },
-      {
-        "id": 12, // This is the client exercise id that they need to do
-        "name": "Chest Press",
-        "reps": 2,
-        "sets": 3,
-        "weight": "3000"
-      },
-    ]
-  }),
+  data() {
+    return {
+      loading: true,
+      exerciseList: [],
+      role: ''
+    }
+  },
+  methods: {
+    updateExerciseList: function() {
+      this.exerciseList = (this.role == 'COACH') ? this.$props.session.coach_exercises : this.$props.session.client_exercises;
+      console.log(this.exerciseList);
+      this.loading = false;
+    }
+  },
+  mounted() {
+    this.role = this.$store.state.userData.role;
+    this.updateExerciseList();
+
+  }
 }
 </script>
 

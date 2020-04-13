@@ -34,7 +34,7 @@ export default {
     return {
       loading: true,
       error: false,
-      errorMessage: '',
+      errorMessage: 'Error',
       clientList: {},
       agh: this.$refs
     }
@@ -47,14 +47,13 @@ export default {
     },
     updateClientList: function(){
       let self = this;
-      console.log('here')
       axios.get(`${url}/clientList`).then(result => {
         self.clientList = result.data
         self.loading = false;
         self.error = false;
       }).catch(error => {
         self.error = true;
-        self.errorMessage = error;
+        console.log(error)
       });
     },
   },
