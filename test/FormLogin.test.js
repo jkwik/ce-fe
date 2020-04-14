@@ -1,16 +1,20 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
-import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+
+import mockAxios from 'axios'
+jest.mock("axios")
+
 import FormLogin from '@/components/FormLogin.vue'
 
 Vue.use(Vuetify)
 const localVue = createLocalVue()
+localVue.use([Vuetify, Vuex])
 
 describe('FormLogin', () => {
-  let vuetify
-
   beforeEach(() => {
-    vuetify = new Vuetify()
+   
   })
 
   test('has a login Submit method', () => {
@@ -21,5 +25,15 @@ describe('FormLogin', () => {
     expect(typeof FormLogin.data).toBe('function')
     const defaultData = FormLogin.data()
     expect(defaultData.show).toBe(false)
+  })
+
+  test('loginSubmit method returns nothing', async () => {
+    expect(FormLogin.methods.loginSubmit).toBeDefined()
+    
+    const data = undefined
+    mockAxios.get.mockResolvedValue(data)
+    
+    const result = await FormLogin.methods.loginSubmit()
+    expect(result).toEqual(data)
   })
 })
