@@ -9,7 +9,9 @@
       <p v-if="deleteStatus" class="buttonDelete errorBackground"><v-icon dark>mdi-delete</v-icon></p>
       <ButtonAddForm @newExerciseForm="addExcerciseForm()" type="Exercise" v-if="exerciseCount===0"/>
     </div>
-    <FormCreateExercise v-if="!creating" v-for="i in exerciseCount" :key="i" :session="session"/>
+    <div v-if="!creating">
+      <FormCreateExercise  v-for="i in exerciseCount" :key="i" :session="session"/>
+    </div>
     <ButtonAddForm @newExerciseForm="addExcerciseForm()" type="Exercise" v-if="exerciseCount!==0"/>
   </div>
 </template>
@@ -33,6 +35,7 @@ export default {
       index: 0,
       order: 0,
       creating: true,
+      deleteStatus: false,
     }
   },
   methods: {
