@@ -3,7 +3,7 @@
     <v-card class="listCard"  :to="`/${type}/${items.id}`">
       <p class="listItem">{{ items.name }}</p>
     </v-card>
-    <p v-if="deleteStatus" class="buttonDelete errorBackground"><v-icon dark>mdi-delete</v-icon></p>
+    <button @click="sendDelete" v-if="deleteStatus" class="buttonDelete errorBackground"><v-icon dark>mdi-delete</v-icon></button>
   </div>
 </template>
 
@@ -14,6 +14,11 @@ export default {
     items: Object,
     type: String,
     id: Number
+  },
+  methods: {
+    sendDelete: function() {
+      this.$emit('sendDelete');
+    }
   }
 }
 </script>
