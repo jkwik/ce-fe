@@ -4,7 +4,7 @@
     <div v-if="!loading && !status">
       <HeadingPage @updateStatus="setStatus()" message="Create"/>
       <SpacerSmall />
-      <ListTemplates 
+      <ListItem 
         v-for="(session) in this.sessionList"
         :key="session.id"
         :template="session"/>
@@ -22,7 +22,7 @@
 import Loading from '~/components/Loading'
 import HeadingPage from '~/components/HeadingPage'
 import SpacerSmall from '~/components/SpacerSmall'
-import ListTemplates from '~/components/ListTemplates'
+import ListItem from '~/components/ListItem'
 import MessageError from '~/components/MessageError'
 
 import axios from 'axios'
@@ -34,7 +34,7 @@ export default {
     HeadingPage,
     Loading,
     SpacerSmall,
-    ListTemplates,
+    ListItem,
     MessageError,
   },
   data() {

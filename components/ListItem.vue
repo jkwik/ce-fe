@@ -1,8 +1,7 @@
 <template>
   <div class="listRow">
-    <v-card class="listCard"  :to="`/template/${template.id}`">
-      <p class="listItem">{{ template.name }}</p>
-      <!-- {{template}} -->
+    <v-card class="listCard"  :to="`/${type}/${items.id}`">
+      <p class="listItem">{{ items.name }}</p>
     </v-card>
     <p v-if="deleteStatus" class="buttonDelete errorBackground"><v-icon dark>mdi-delete</v-icon></p>
   </div>
@@ -12,7 +11,9 @@
 export default {
   props: {
     deleteStatus: Boolean,
-    template: Object,
+    items: Object,
+    type: String,
+    id: Number
   }
 }
 </script>

@@ -1,14 +1,24 @@
 <template>
-  <v-form class="pageContent">
-    <div v-if="edit">
-      <FormEditSession/>
-      <ButtonViewStatus/>
+  <div class="pageContent" >
+    <Loading v-if="loading" :loading="this.loading"/>
+    <MessageError v-if="error" :message="errorMessage" />
+    <div v-if="!loading && !edit">
+      <HeadingPage @sendRequest="setEdit()" status="Edit" :name="session.name"/>
+      <SpacerSmall />
+      <ListItem 
+        v-for="(exercise) in this.session.coach_exercises"
+        :key="exercise.id"
+        type="exercise"
+        :items="exercise"/>
     </div>
-    <div v-if="!edit">
-      <ViewSession v-if="!loading" :session="this.session"/>
-      <ButtonEditStatus/>
+    <div v-if="!loading && edit">
+      <HeadingPage @sendRequest="saveRequest()" status="Save" :name="session.name"/>
+      <SpacerSmall />
+      <FormEditTemplate 
+        :templateList="this.session"
+      />
     </div>
-  </v-form>
+  </div> 
 </template>
 
 <script>
@@ -22,50 +32,62 @@ import axios from 'axios'
 axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
 
-import ButtonEditStatus from '~/components/ButtonEditStatus'
-import ButtonViewStatus from '~/components/ButtonViewStatus'
-import FormEditSession from '~/components/FormEditSession'
-import ViewSession from '~/components/ViewSession'
+import HeadingPage from '~/components/HeadingPage'
+import Loading from '~/components/Loading'
+import MessageError from '~/components/MessageError'
+import SpacerSmall from '~/components/SpacerSmall'
+import ListItem from '~/components/ListItem'
+import FormEditTemplate from '~/components/FormEditTemplate'
 
 export default {
   components: {
-    ButtonEditStatus,
-    ButtonViewStatus,
-    FormEditSession,
-    ViewSession
+    HeadingPage,
+    Loading,
+    MessageError,
+    SpacerSmall,
+    ListItem,
+    FormEditTemplate
   },
   data: () => ({
     loading: true,
     error: false,
     errorMessage: '',
     session: {},
-    role: '',
+    user: {},
+    edit: false,
   }),
   methods: {
-    getSession: function() {
-      const self = this;
-      const id = self.$route.params.id;
-      self.role = self.$store.state.userData.role;
-      let arg = self.role = 'COACH' ? '/coach/session?coach_session_id' : 'client/session?client_session_id';
-      axios.get(`${url}${arg}=${id}`).then(result => {
-        self.session = result.data;
-        console.log(self.session);
-        self.loading = false;
-        self.error = false;
-      }).catch(error => {
-        self.error = true;
-        self.errorMessage = "failed";
-        self.loading = false;
-      });
-    }
-  },
-  computed: {
-    edit: function() {
-      return this.$store.state.edit;
-    }
+    saveRequest: function(){
+      this.setEdit();
+    },
+    setEdit: function(){
+      console.log(this.edit)
+      this.edit = !this.edit
+    },
+    getUserSession: function(){
+      Promise.all([ this.$store.state.userData ]).then( () => {
+        this.user = this.$store.state.userData
+        this.loading = false
+        this.updateSession();
+      },() => {
+      })
+    },
+    updateSession: function() {
+        let self = this;
+        let route = this.$route.params.id
+        let arg = self.user.role == 'COACH' ? `/coach/session?coach_session_id=${route}` : `/client/session?user_template_id=${route}`;
+        axios.get(`${url}${arg}`).then(result => {
+          self.session = result.data;
+          self.loading = false;
+          self.error = false;
+        }).catch(error => {
+          self.error = true;
+          self.loading = false;
+        }); 
+    },
   },
   mounted() {
-    this.getSession();
+    this.getUserSession();
   }
 }
 </script>

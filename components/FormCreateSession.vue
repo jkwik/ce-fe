@@ -1,5 +1,5 @@
 <template>
-  <div class="session">
+  <div class="formContainer">
     <div class="formCreateHeading">
       <v-text-field
         label="Name">
@@ -37,11 +37,4 @@ export default {
 </script>
 
 <style lang="scss">
-  .session{
-    border-radius: 5px;
-    background: $background-secondary;
-    box-shadow: $elevation2;
-    margin: 8px;
-    padding: 8px;
-  }
 </style>

@@ -1,80 +1,94 @@
 <template>
   <div>
-    <Loading v-if="loading" :loading="this.loading"/>
-    <MessageError :error="error" :message="errorMessage" />
-    <div v-if="!loading">
-      <draggable v-model="sessionList" @end="reorderSessionList(sessionList)">
-        <div
-          v-for="(session, i) in sessionList"
-          :key="i"
-        >
-          <v-row>
-              <v-card class="listCard" :to="`/sessions/${session.id}`">
-                <div> 
-                  <span> Name: {{ session.name }} </span> <br>
-                  <span> Order: {{ session.order}} </span>
-                </div>
-              </v-card>
-          </v-row>
-        </div>
-      </draggable>
-    </div>
-    <button 
-      @click='editTemplate'
-      class="submitBtn"
-    >
-      <MessageButton message='Save'/>
-    </button>
+    <MessageError v-if="error" :message="errorMessage" />
+    <draggable v-model="sessionList" @end="reorderSessionList()">
+    <ListItem 
+      v-for="(session) in sessionList"
+      :key="session.id"
+      :deleteStatus="truthVar"
+      type="session"
+      :items="session"/>
+    </draggable>
+    <FormCreateSession v-for="i in sessionCount" :key="i"/>
+    <FormCreateExercise v-for="i in exerciseCount" :key="i" solo="true"/>
+    <ButtonAddForm v-if="isTemplate()" @newForm="addSessionForm()" type="Session"/>
+    <ButtonAddForm v-if="!isTemplate()" @newExerciseForm="addExerciseForm()" type="Exercise"/>
   </div>
 </template>
 
 <script>
 import Loading from '~/components/Loading'
-import MessageSuccess from '~/components/MessageSuccess'
+import ListItem from '~/components/ListItem'
 import MessageError from '~/components/MessageError'
 import MessageButton from '~/components/MessageButton'
 import HeadingUserAuth from '~/components/HeadingUserAuth'
 import draggable from 'vuedraggable'
+import FormCreateSession from '~/components/FormCreateSession'
+import FormCreateExercise from '~/components/FormCreateExercise'
+import ButtonAddForm from '~/components/ButtonAddForm'
 
 
 export default {
   components:{
     Loading,
-    MessageSuccess,
+    ListItem,
     MessageError,
     MessageButton,
     HeadingUserAuth,
-    draggable
+    draggable,
+    FormCreateSession,
+    FormCreateExercise,
+    ButtonAddForm
   },
   props: {
-    template: Object
+    templateList: Object
   },
   data() {
     return {
+      truthVar: true,
       loading: true,
       error: false,
       errorMessage: '',
-      temp: this.template,
-      sessionList: [],
       drag: false,
+      items: {},
+      sessionList: [],
+      sessionCount: 0,
+      exerciseCount: 0
     }
 
   },
   methods: {
+    isTemplate: function(){
+      if(this.$router.currentRoute.name === 'template-id'){
+        return true;
+      }
+      return false
+    },
+    addSessionForm: function(){
+      console.log('here')
+      this.sessionCount++;
+    },
+    addExerciseForm: function(){
+      console.log('here')
+      this.exerciseCount++;
+    },
     updateSessionList: function () {
-      this.sessionList = this.temp.sessions;
+      if(this.isTemplate()){
+        this.sessionList = this.templateList.sessions;
+      } else {
+        this.sessionList = this.templateList.coach_exercises;
+      }
       this.loading = false;
     },
     editTemplate: function() {
       this.$store.commit('editStatus');
     },
-    reorderSessionList: function (sessionList) {
+    reorderSessionList: function () {
       let index = 1;
-      sessionList.forEach(session => {
+      this.sessionList.forEach(session => {
         session.order = index;
         index++;
       });
-      this.temp.sessions = sessionList;
     },
   },
   mounted() {

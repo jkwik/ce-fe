@@ -1,10 +1,10 @@
 <template>
-  <div class="formCreateExercise">
+  <div class="formCreateExercise" :class="{formContainer: solo}">
     <v-text-field
       class="formCreateItem"
       label="Exercise"
     />
-    <v-text-field
+    <!-- <v-text-field
       class="formCreateItem smallItem"
       label="Sets"
       type="number"
@@ -13,16 +13,15 @@
       class="formCreateItem smallItem"
       label="Reps"
       type="number"
-    />
+    /> -->
   </div>
 </template>
 
 <script>
-import SpacerHorizontalSmall from '~/components/SpacerHorizontalSmall'
 export default {
-  components:[
-    SpacerHorizontalSmall
-  ]
+  props:{
+    solo: Boolean
+  }
 }
 </script>
 

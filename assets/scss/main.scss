@@ -50,3 +50,10 @@ path{
   border: 1px solid $text;
   box-shadow: $elevation2;
 }
+.formContainer{
+  border-radius: 5px;
+  background: $background-secondary;
+  box-shadow: $elevation2;
+  margin: 16px 0px;
+  padding: 8px;
+}

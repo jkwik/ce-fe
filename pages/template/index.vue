@@ -4,11 +4,12 @@
     <div v-if="!loading && !status">
       <HeadingPage @updateStatus="setStatus()" @sendRequest="request()" message="Create" :status="deleteMessage"/>
       <SpacerSmall />
-      <ListTemplates 
+      <ListItem 
         v-for="(template) in this.templateList"
         :deleteStatus="deleteStatus"
         :key="template.id"
-        :template="template"/>
+        type="template"
+        :items="template"/>
       <MessageError :error="error" :message="errorMessage" />
     </div>
     <div v-if="!loading && status">
@@ -24,7 +25,7 @@
 import Loading from '~/components/Loading'
 import HeadingPage from '~/components/HeadingPage'
 import SpacerSmall from '~/components/SpacerSmall'
-import ListTemplates from '~/components/ListTemplates'
+import ListItem from '~/components/ListItem'
 import FormCreateTemplate from '~/components/FormCreateTemplate'
 import MessageError from '~/components/MessageError'
 
@@ -37,7 +38,7 @@ export default {
     HeadingPage,
     Loading,
     SpacerSmall,
-    ListTemplates,
+    ListItem,
     FormCreateTemplate,
     MessageError,
   },
