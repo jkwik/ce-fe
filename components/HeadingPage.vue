@@ -3,7 +3,7 @@
     <h1 class="headingPage" v-if="this.name">{{this.name}}</h1>
     <h1 class="headingPage" v-if="!this.name">{{this.$router.currentRoute.name}}</h1>
     <div>
-      <ButtonHeading @sendRequest="save()" v-if="this.status==='Save' || this.status==='Edit' || this.status==='Done'" :message="this.status"/>
+      <ButtonHeading @sendRequest="save()" v-if="this.status==='Create' || this.status==='Edit' || this.status==='Done'" :message="this.status"/>
       <ButtonHeading @setStatus="updateStatus()" v-if="hasButton() && this.status!=='Done'" :message="this.message"/>
     </div>
   </div>
