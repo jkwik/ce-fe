@@ -9,6 +9,12 @@
           <MdPeopleIcon w="75px" h="75px"/>
           <h2 class="subHeading">Client List</h2>
         </div>
+        <div 
+          v-if="type==='template'"
+          class="dashContents">
+          <MdFolderIcon w="75px" h="75px"/>
+          <h2 class="subHeading">Templates</h2>
+        </div>
       </v-card>
     </nuxt-link>
   </div>
@@ -16,12 +22,14 @@
 
 <script>
 import MdPeopleIcon from 'vue-ionicons/dist/md-people.vue'
+import MdFolderIcon from 'vue-ionicons/dist/md-folder.vue'
 export default {
   props:{
     type: String,
   },
   components:{
-    MdPeopleIcon
+    MdPeopleIcon,
+    MdFolderIcon,
   }
 }
 </script>
@@ -33,37 +41,33 @@ export default {
     height: 250px;
     align-items: center;
     justify-content: center;
-    background: #353535 !important;
-    border: 2px solid #191919 !important;
+    background: $background-secondary !important;
+    border-radius: 10px !important;
     text-decoration: none !important;
-    color: #f5f5f5 !important;
+    color: $text !important;
+    box-shadow: $elevation1 !important;
   }
   .dashCard:hover{
     box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.20);
     .dashContents{
-      color: #79DEF2;
       .subHeading{
-        color: #79DEF2 !important;
+        color: $primary !important;
       }
     }
     .ion__svg{
       padding-top: 7px;
       path{
-        fill: #79DEF2;
+        fill: $primary;
       }
     }
   }
   .dashContents{
-    background: #353535;
     text-align: center;
     .subHeading{
-      color: #f5f5f5 !important;
+      color: $text !important;
     }
     .ion__svg{
       padding-top: 7px;
-      path{
-        fill: #f5f5f5;
-      }
     }
   }
 </style>

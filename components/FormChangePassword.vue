@@ -1,5 +1,6 @@
 <template>
 <div>
+    <MessageError v-if="error" :message="errorMessage" />
     <v-text-field
       label="Old Password"
       v-model="oldPassword"
@@ -28,7 +29,7 @@
       @click='changePassword'
       class="submitBtn"
     >
-      <MessageButton m='Save'/>
+      <MessageButton message='Save'/>
     </button>
 </div>
 </template>
@@ -39,10 +40,12 @@ axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
 
 import MessageButton from '~/components/MessageButton'
+import MessageError from '~/components/MessageError'
 
 export default {
   components:{
-    MessageButton
+    MessageButton,
+    MessageError
   },
   data() {
     return {
@@ -50,6 +53,7 @@ export default {
       newPassword: '',
       confirmPassword: '',
       error: false,
+      errorMessage: "Failed to Submit Form",
       show1: false,
       show2: false,
       show3: false
@@ -60,20 +64,22 @@ export default {
       if(this.newPassword === this.confirmPassword && this.newPassword!==''){
         this.error = false;
         let em = this.$store.state.userData.email;
+        const self = this;
         axios.put(`${url}/updateProfile`, {
           email: em,
           newPassword: this.newPassword,
           oldPassword: this.oldPassword
         })
         .then(function (response) {
-          console.log(response);
           window.location.href = '/profile'
         })
         .catch(function (error) {
-          console.log(error);
+          //axios promise failed
+          self.error = true;
         });
       } else {
         this.error = true;
+        errorMessage = 'New password and password confirmation do not match'
       }
     }
   },

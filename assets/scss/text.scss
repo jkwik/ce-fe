@@ -1,19 +1,18 @@
 // Headings
 .logo{
-  color: #00C9F2;
+  color: $primary !important;
   font-family: 'Bodoni', serif;
   font-size: 28px;
   font-weight: 700;
 }
 .subHeading{
-  color: #79DEF2 !important;
   font-family: 'Bodoni', serif !important;
   font-size: 1.5em;
 }
 
 // Links
 .prompt{
-  color: #00C9F2 !important;
+  color: $primary !important;
 }
 
 // User Authentication

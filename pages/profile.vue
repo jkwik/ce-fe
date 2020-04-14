@@ -13,8 +13,8 @@
         v-if="edit"
         :u="this.user" />
       <SpacerSmall />
-      <nuxt-link to="/changePassword" class="prompt">Change Password?</nuxt-link>
     </div>
+    <MessageRedirect link='/changePassword' message='Change Password?' />
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
     ProfileUser,
     FormEditProfile,
     SpacerSmall,
-    Loading
+    Loading,
   },
   data() {
     return {

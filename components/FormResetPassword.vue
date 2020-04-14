@@ -11,6 +11,7 @@
         outlined
         required
         @click:append="showPassword = !showPassword"
+        @keyup.enter="resetPassword()"
       ></v-text-field>
       <v-text-field
         label="New password"
@@ -21,25 +22,29 @@
         outlined
         required
         @click:append="showNewPassword = !showNewPassword"
+        @keyup.enter="resetPassword()"
       ></v-text-field>
     </v-form>
+    <MessageError v-if="error" :message="errorMessage" />
     <button 
       @click='resetPassword'
       class="submitBtn"
     >
-      <MessageButton m='Continue'/>
+      <MessageButton message='Continue'/>
     </button>
   </div>
 </template>
 
 <script>
 import MessageButton from '~/components/MessageButton'
+import MessageError from '~/components/MessageError'
 import axios from 'axios'
 axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
 export default {
   components: {
-    MessageButton
+    MessageButton,
+    MessageError
   },
   data: () => ({
     password: '',
@@ -52,6 +57,8 @@ export default {
     newPasswordRules: [
       v => !!v || 'New password is required',
     ],
+    errorMessage: 'Failed to Submit Form',
+    error: false,
   }),
   methods:{
     resetPassword: function() {
@@ -61,10 +68,11 @@ export default {
         reset_token: self.$route.query.reset_token
       })
       .then(function (response){
+        self.error = true
         window.location.href = '/login'
       })
       .catch(function (error){
-        console.log(error);
+        self.error = true
       })
     },
   },

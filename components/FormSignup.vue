@@ -8,6 +8,7 @@
         :rules="firstNameRules"
         outlined
         required
+        @keyup.enter="signUp()"
       ></v-text-field>
       <v-text-field
         class="userInput"
@@ -16,6 +17,7 @@
         :rules="lastNameRules"
         outlined
         required
+        @keyup.enter="signUp()"
       ></v-text-field>
       <v-text-field
         class="userInput"
@@ -24,6 +26,7 @@
         :rules="emailRules"
         outlined
         required
+        @keyup.enter="signUp()"
       ></v-text-field>
       <v-text-field
         class="userInput"
@@ -35,31 +38,35 @@
         outlined
         required
         @click:append="show = !show"
+        @keyup.enter="signUp()"
       ></v-text-field>
+      <MessageRedirect link="/login" message="Already a member? Log in" />
+      <SpacerExtraSmall />
     </v-form>
     <button 
       @click='signUp'
       class="submitBtn"
     >
-      <MessageButton m='Sign Up'/>
+      <MessageButton message='Sign Up'/>
     </button>
-    <button 
-      @click='viewLogin'
-      class="submitBtn"
-    >
-      <MessageButton m='Log In'/>
-    </button>
+    <MessageError v-if="error" :message="errorMessage" />
   </div>
 </template>
 
 <script>
 import MessageButton from '~/components/MessageButton'
+import MessageError from '~/components/MessageError'
+import MessageRedirect from '~/components/MessageRedirect'
+import SpacerExtraSmall from '~/components/SpacerExtraSmall'
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
 export default {
   components: {
-    MessageButton
+    MessageButton,
+    MessageError,
+    MessageRedirect,
+    SpacerExtraSmall
   },
   data: () => ({
     firstName: '',
@@ -79,11 +86,15 @@ export default {
     passwordRules: [
       v => !!v || 'password is required',
     ],
+    errorMessage: 'Failed to Submit Form',
+    error: false,
   }),
   methods:{
     async signUp() {
       try {
           var self = this;
+          self.error = false 
+          self.errorMessage = ''
           axios.post(`${url}/signUp`, {
             first_name: this.firstName,
             last_name: this.lastName,
@@ -98,31 +109,24 @@ export default {
               password: self.password
             })
             .then(function (response){
-              console.log(response)
               self.$store.commit('setUserData', response.data.user)
               self.$store.commit('logIn')
               window.location.href = '/dashboard'
             })
             .catch(function (error){
-              console.log(error);
+              //if the login request fails
+              self.error = true
             })
           })
           .catch(function (error) {
-            console.log(error);
-          });
-          // await this.$auth.loginWith('local', {
-          //   data: signupInfo
-          // })
-          
-          // 
+            //if the signup request fails
+            self.error = true
+          }); 
         } catch (error) {
-          //Do something if it fails
-          console.log(error)
+          //if the try fails
+          self.error = true
         }
     },
-    viewLogin() {
-      window.location.href = '/login'
-    }
   }
 }
 </script>

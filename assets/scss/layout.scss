@@ -1,9 +1,9 @@
 // Main Layouts
 .defaultLayout{
-  background: #202020;
+  background: $background;
 }
 .pageContent{
-  background: #202020;
+  background: $background;
   padding: 64px 128px 128px 128px;
   min-height: calc(100vh - 60px) !important;
 }
@@ -12,4 +12,12 @@
 .userForm{
   max-width: 256px;
   margin: 16px 0px;
+}
+
+// media queries
+/* On screens that are 650px wide or less*/
+@media screen and (max-width: 650px) {
+  .pageContent{
+    padding: 16px 32px 32px 32px;
+  }
 }
