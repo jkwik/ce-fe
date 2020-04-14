@@ -7,7 +7,7 @@
       :key="session.id"
       :deleteStatus="truthVar"
       type="session"
-      :items="session"/>
+      :items="session" />
     </draggable>
     <FormCreateSession v-for="i in sessionCount" :key="i"/>
     <FormCreateExercise v-for="i in exerciseCount" :key="i" solo="true"/>
@@ -58,21 +58,17 @@ export default {
       sessionCount: 0,
       exerciseCount: 0
     }
-
   },
   methods: {
     isTemplate: function(){
-      if(this.$router.currentRoute.name === 'template-id'){
+      if(this.$router.currentRoute.name === 'template-id')
         return true;
-      }
       return false
     },
     addSessionForm: function(){
-      console.log('here')
       this.sessionCount++;
     },
     addExerciseForm: function(){
-      console.log('here')
       this.exerciseCount++;
     },
     updateSessionList: function () {
@@ -83,34 +79,12 @@ export default {
       }
       this.loading = false;
     },
-    editTemplate: function() {
-      // TODO: axios PUT on new session list ordering
-      this.$store.commit('editStatus');
-    },
     reorderSessionList: function () {
       let index = 1;
       this.sessionList.forEach(session => {
         session.order = index;
         index++;
       });
-    },
-    async newSession() {
-      try {
-        axios.post(`${url}/coach/session`, {
-          name: this.newSessionName,
-          coach_template_id: this.template.id
-        })
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          this.error = true;
-        })
-      } catch (error) {
-        this.error = true;
-      }
-      this.updateSessionList();
-      this.updateReorderKey();
     },
     updateReorderKey: function() {
       this.reorderKey += 1;

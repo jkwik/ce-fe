@@ -11,7 +11,7 @@ export default {
   },
   methods: {
     emitFunction: function(){
-      if(this.message==="Create" || this.message==="Edit" || this.message==="Done"){
+      if(this.message==="Create" || this.message==="Edit" || this.message==="Done" || this.message==="Save"){
         this.sendRequest();
       } else {
         this.setStatus();

@@ -2,9 +2,9 @@
   <div class="headingContainer">
     <h1 class="headingPage" v-if="this.name">{{this.name}}</h1>
     <h1 class="headingPage" v-if="!this.name">{{this.$router.currentRoute.name}}</h1>
-    <div>
-      <ButtonHeading @sendRequest="save()" v-if="this.status==='Create' || this.status==='Edit' || this.status==='Done'" :message="this.status"/>
-      <ButtonHeading @setStatus="updateStatus()" v-if="hasButton() && this.status!=='Done'" :message="this.message"/>
+    <div v-if="this.role==='COACH'">
+      <ButtonHeading @sendRequest="save()" v-if="this.status==='Create' || this.status==='Edit' || this.status==='Done' || this.status==='Save'" :message="this.status"/>
+      <ButtonHeading @setStatus="updateStatus()" v-if="hasButton() && this.message" :message="this.message"/>
     </div>
   </div>
 </template>
@@ -41,10 +41,6 @@ export default {
         return false;
       }
     },
-    pandaTest: function(){
-      console.log('clicked')
-      this.$emit('pandaTest')
-    }
   },
   mounted(){
     Promise.all([ this.$store.state.userData ]).then( () => {

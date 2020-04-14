@@ -8,7 +8,7 @@
       <ListItem 
         v-for="(session) in this.templateList.sessions"
         :key="session.id"
-        type="session"
+        :type="`template/${templateList.id}`"
         :items="session"/>
     </div>
     <div v-if="!loading && edit">
@@ -55,11 +55,13 @@ export default {
     }
   },
   methods: {
+    testMethod: function(){
+      console.log(this.$route)
+    },
     saveRequest: function(){
       this.setEdit();
     },
     setEdit: function(){
-      console.log(this.edit)
       this.edit = !this.edit
     },
     getUserTemplate: function(){
@@ -73,7 +75,7 @@ export default {
     updateTemplateList: function() {
         let self = this;
         let route = this.$route.params.id
-        let arg = self.user.role == 'COACH' ? `/coach/template?coach_template_id=${route}` : `/client/template?user_template_id=${route}`;
+        let arg = self.user.role == 'COACH' ? `/coach/template?coach_template_id=${route}` : `/client/template?id=${route}`;
         axios.get(`${url}${arg}`).then(result => {
           self.templateList = result.data;
           self.loading = false;

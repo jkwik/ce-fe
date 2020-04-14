@@ -77,13 +77,10 @@ export default {
     },
     createRequest: function(){
       try {
-        console.log("Submitting");
         axios.post(`${url}/coach/template`, 
           this.submitTemplate
         ).then(function (response){
-          console.log(response)
         }).catch(function (error){ 
-            // on login promise failure
             self.error = true
         });
       } catch (error) {
@@ -120,10 +117,8 @@ export default {
         console.log('Update')
         let self = this;
         let arg = self.user.role == 'COACH' ? '/coach/templates' : `/client/templates?user_id=${self.user.id}`;
-        console.log(`${url}${arg}`)
         axios.get(`${url}${arg}`).then(result => {
           self.templateList = result.data.templates;
-          console.log(self.templateList)
           self.loading = false;
           self.error = false;
         }).catch(error => {

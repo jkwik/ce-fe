@@ -6,7 +6,7 @@
       <HeadingPage @sendRequest="setEdit()" status="Edit" :name="session.name"/>
       <SpacerSmall />
       <ListItem 
-        v-for="(exercise) in this.session.coach_exercises"
+        v-for="(exercise) in this.exercises"
         :key="exercise.id"
         type="exercise"
         :items="exercise"/>
@@ -56,6 +56,7 @@ export default {
     session: {},
     user: {},
     edit: false,
+    exercises: []
   }),
   methods: {
     saveRequest: function(){
@@ -75,9 +76,15 @@ export default {
     },
     updateSession: function() {
         let self = this;
-        let route = this.$route.params.id
-        let arg = self.user.role == 'COACH' ? `/coach/session?coach_session_id=${route}` : `/client/session?user_template_id=${route}`;
+        let tempID = this.$route.params.id
+        let seshID = this.$route.params.sid
+        let arg = self.user.role == 'COACH' ? `/coach/session?coach_session_id=${seshID}` : `/client/session?template_id=${tempID}&session_id=${seshID}`;
         axios.get(`${url}${arg}`).then(result => {
+          if(self.user.role === 'COACH'){
+            self.exercises = result.data.coach_exercises
+          } else {
+            self.exercises = result.data.exercises
+          }
           self.session = result.data;
           self.loading = false;
           self.error = false;
