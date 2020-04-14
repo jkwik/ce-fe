@@ -33,7 +33,6 @@
 <script>
 export default {
   components: {
-    SpacerHorizontalSmall
   },
   props: {
     session: Object,
