@@ -1,0 +1,26 @@
+// Vuetify Overwrites
+.v-application p {
+  margin-bottom: 0px !important;
+  text-decoration: none !important;
+}
+.v-application a {
+  color: $text;
+  text-decoration: none !important;
+}
+.row{
+  margin: 0 !important;
+}
+
+.v-label, .v-application .primary--text{
+  color: $text !important;
+  background: transparent !important;
+}
+.v-input__slot .error--text{
+  color: $error !important;
+}
+.v-input__slot {
+  background: $background !important;
+}
+.v-input input{
+  color: $text !important;
+}

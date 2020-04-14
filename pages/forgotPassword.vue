@@ -1,21 +1,19 @@
 <template>
   <div class="pageContent">
-    <h1 class="userHeading">Forgot Password</h1>
+    <HeadingUserAuth message="Forgot Password" />
     <p>Enter your email for your account</p>
     <FormForgotPassword />
   </div>
 </template>
 
 <script>
-import FormForgotPassword from '~/components/FormForgotPassword.vue'
+import HeadingUserAuth from '~/components/HeadingUserAuth'
+import FormForgotPassword from '~/components/FormForgotPassword'
 
 export default {
   components: {
+    HeadingUserAuth,
     FormForgotPassword
   }
 }
 </script>
-
-<style>
-
-</style>

@@ -8,6 +8,7 @@
         :rules="emailRules"
         outlined
         required
+        @keyup.enter="loginSubmit()"
       ></v-text-field>
       <v-text-field
         label="Password"
@@ -18,32 +19,38 @@
         outlined
         required
         @click:append="show = !show"
+        @keyup.enter="loginSubmit()"
       ></v-text-field>
-      <nuxt-link to="/forgotPassword" class="prompt">Forgot password?</nuxt-link>
+      <MessageRedirect link='/forgotPassword' message='Forgot password?' />
+      <SpacerExtraSmall />
+      <MessageRedirect link="/signup" message="Not registered? Sign Up" />
     </v-form>
-    <button 
+    <MessageError v-if="error" :message="errorMessage" />
+    <button
       @click='loginSubmit'
       class="submitBtn"
     >
-      <MessageButton m='Log In'/>
-    </button>
-    <button 
-      @click='viewSignup'
-      class="submitBtn"
-    >
-      <MessageButton m='Sign Up'/>
+      <MessageButton message='Log In'/>
     </button>
   </div>
 </template>
 
 <script>
 import MessageButton from '~/components/MessageButton'
+import MessageError from '~/components/MessageError'
+import MessageRedirect from '~/components/MessageRedirect'
+import SpacerExtraSmall from '~/components/SpacerExtraSmall'
+
 import axios from 'axios'
 axios.defaults.withCredentials = true;
 const url = 'https://coach-easy-deploy.herokuapp.com';
+
 export default {
   components: {
-    MessageButton
+    MessageButton,
+    MessageError,
+    MessageRedirect,
+    SpacerExtraSmall
   },
   data: () => ({
       email: '',
@@ -55,11 +62,15 @@ export default {
       passwordRules: [
         v => !!v || 'Password is required',
       ],
+      errorMessage: 'Failed to Submit Form',
+      error: false,
   }),
   methods:{
     async loginSubmit () {
       try {
         var self = this;
+        self.error = false
+        self.errorMessage = ''
         axios.post(`${url}/auth/login`, {
             email: self.email,
             password: self.password
@@ -70,11 +81,12 @@ export default {
             self.$store.commit('logIn')
             window.location.href = '/dashboard'
           })
-          .catch(function (error){
-            console.log(error);
+          .catch(function (error){ 
+            // on login promise failure
+            self.error = true
           })
       } catch (error){
-        console.log(error)
+        self.error = true
       }
     },
     viewSignup() {
