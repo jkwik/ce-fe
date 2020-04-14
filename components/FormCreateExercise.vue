@@ -1,5 +1,5 @@
 <template>
-  <div class="formCreateExercise">
+  <div class="formCreateExercise" :class="{formContainer: solo}">
     <v-text-field
       class="formCreateItem smallItem"
       label="ID"
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import SpacerHorizontalSmall from '~/components/SpacerHorizontalSmall'
 export default {
   components: {
     SpacerHorizontalSmall
