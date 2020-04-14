@@ -32,6 +32,7 @@ path{
 }
 .listItem{
   text-transform: capitalize;
+  color: $text !important;
 }
 .formCreateHeading{
   display: flex;
