@@ -27,6 +27,9 @@ import FormCreateSession from '~/components/FormCreateSession'
 import FormCreateExercise from '~/components/FormCreateExercise'
 import ButtonAddForm from '~/components/ButtonAddForm'
 
+import axios from 'axios'
+axios.defaults.withCredentials = true;
+const url = 'https://coach-easy-deploy.herokuapp.com';
 
 export default {
   components:{
@@ -81,6 +84,7 @@ export default {
       this.loading = false;
     },
     editTemplate: function() {
+      // TODO: axios PUT on new session list ordering
       this.$store.commit('editStatus');
     },
     reorderSessionList: function () {
@@ -90,6 +94,27 @@ export default {
         index++;
       });
     },
+    async newSession() {
+      try {
+        axios.post(`${url}/coach/session`, {
+          name: this.newSessionName,
+          coach_template_id: this.template.id
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          this.error = true;
+        })
+      } catch (error) {
+        this.error = true;
+      }
+      this.updateSessionList();
+      this.updateReorderKey();
+    },
+    updateReorderKey: function() {
+      this.reorderKey += 1;
+    }
   },
   mounted() {
     this.updateSessionList();

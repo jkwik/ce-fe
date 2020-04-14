@@ -5,7 +5,8 @@
       :key="id"
       :ref="`List${id}`"
       :client="client" 
-      :clientType='clientType' />
+      :clientType='clientType' 
+      @setUpdate="shouldUpdate()"/>
   </div>
 </template>
 
@@ -18,6 +19,18 @@ export default {
   },
   components:{
     ListClient
+  },
+  methods: {
+    shouldUpdate: function() {
+      this.$emit('shouldUpdate');
+    },
+    sortList: function() {
+      this.clientList.sort((a, b) => (a.first_name > b.first_name) ? 1 :
+      (a.first_name == b.first_name) ? ((a.last_name > b.last_name) ? 1: -1) : -1);
+    }
+  },
+  mounted() {
+    this.sortList();
   }
 }
 </script>

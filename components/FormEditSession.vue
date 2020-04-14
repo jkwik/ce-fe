@@ -1,7 +1,7 @@
 <template>
   <div>
-    <FormEditExercise v-for="(exercise, index) in clientExercises" 
-      :key="index" 
+    <FormEditExercise v-for="exercise in exerciseList" 
+      :key="exercise.id" 
       :exercise="exercise" />
   </div>
 </template>
@@ -20,37 +20,31 @@ export default {
     HeadingPage,
     FormEditExercise
   },
-  data: () => ({
-    "id": 1, //session id
-    "name": "Chest and Back Day 1",
-    clientExercises : [
-      {
-        "id": 10, // This is the client exercise id that they need to do
-        "name": "Chest Fly",
-        "reps": 10,
-        "sets": 3,
-        "weight": 100
-      },
-      {
-        "id": 11, // This is the client exercise id that they need to do
-        "name": "Incline Chest Press",
-        "reps": 8,
-        "sets": 4,
-        "weight": 200
-      },
-      {
-        "id": 12, // This is the client exercise id that they need to do
-        "name": "Chest Press",
-        "reps": 2,
-        "sets": 3,
-        "weight": 3000
-      },
-      {
-        "id": 12, // This is the client exercise id that they need to do
-        "name": "Test", 
-      },
-    ]
-  }),
+  props: {
+    session: Object,
+  },
+  data() {
+    return {
+      exerciseList: [],
+      role: '',
+      loading: false,
+      loadingFailed: false,
+    }
+  },
+  methods: {
+    getSessionEditRole: function(){
+      Promise.all([ this.$store.state.userData ]).then( () => {
+        this.role = this.$store.state.userData.role
+        this.loading = false
+      },() => {
+        this.loadingFailed = true
+      })
+    }
+  },
+  mounted() {
+    this.getSessionEditRole();
+    this.exerciseList = (this.role == 'COACH') ? this.$props.session.coach_exercises : this.$props.session.client_exercises;
+  }
 }
 </script>
 

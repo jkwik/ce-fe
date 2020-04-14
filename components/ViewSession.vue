@@ -36,20 +36,29 @@ export default {
     return {
       loading: true,
       exerciseList: [],
-      role: ''
+      role: '',
+      loading: true,
+      loadingFailed: false,
     }
   },
   methods: {
+    getSessionRole: function(){
+      Promise.all([ this.$store.state.userData ]).then( () => {
+        this.role = this.$store.state.userData.role
+        this.loading = false
+      },() => {
+        this.loadingFailed = true
+      })
+    },
     updateExerciseList: function() {
-      this.exerciseList = (this.role == 'COACH') ? this.$props.session.coach_exercises : this.$props.session.client_exercises;
-      console.log(this.exerciseList);
+      this.exerciseList = (this.role == 'COACH') ? 
+        this.$props.session.coach_exercises : this.$props.session.client_exercises;
       this.loading = false;
     }
   },
   mounted() {
-    this.role = this.$store.state.userData.role;
+    this.getSessionRole();
     this.updateExerciseList();
-
   }
 }
 </script>

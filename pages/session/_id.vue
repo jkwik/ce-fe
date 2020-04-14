@@ -50,6 +50,7 @@ export default {
   },
   data: () => ({
     loading: true,
+    loadingFailed: false,
     error: false,
     errorMessage: '',
     session: {},

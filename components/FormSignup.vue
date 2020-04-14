@@ -8,6 +8,7 @@
         :rules="firstNameRules"
         outlined
         required
+        @keyup.enter="signUp()"
       ></v-text-field>
       <v-text-field
         class="userInput"
@@ -16,6 +17,7 @@
         :rules="lastNameRules"
         outlined
         required
+        @keyup.enter="signUp()"
       ></v-text-field>
       <v-text-field
         class="userInput"
@@ -24,6 +26,7 @@
         :rules="emailRules"
         outlined
         required
+        @keyup.enter="signUp()"
       ></v-text-field>
       <v-text-field
         class="userInput"
@@ -35,6 +38,7 @@
         outlined
         required
         @click:append="show = !show"
+        @keyup.enter="signUp()"
       ></v-text-field>
       <MessageRedirect link="/login" message="Already a member? Log in" />
       <SpacerExtraSmall />

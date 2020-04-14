@@ -2,7 +2,7 @@
   <div class="pageContent" >
     <Loading v-if="loading" :loading="this.loading"/>
     <div v-if="!loading && !status">
-      <HeadingPage @updateStatus="setStatus()" @sendRequest="request()" message="Create" :status="deleteMessage"/>
+      <HeadingPage @updateStatus="setStatus()" @sendRequest="request()" message="New" :status="deleteMessage"/>
       <SpacerSmall />
       <ListItem 
         v-for="(template) in this.templateList"
@@ -13,9 +13,9 @@
       <MessageError :error="error" :message="errorMessage" />
     </div>
     <div v-if="!loading && status">
-      <HeadingPage @updateStatus="setStatus()" @sendRequest="request()" message="Exit" status="Save"/>
+      <HeadingPage @updateStatus="setStatus()" @sendRequest="request()" message="Exit" status="Create"/>
       <SpacerSmall />
-      <FormCreateTemplate />
+      <FormCreateTemplate :shouldCreate="submitTemplate" />
     </div>
   </div> 
 
@@ -47,10 +47,15 @@ export default {
       loading: true,
       error: false,
       status: false,
+      submitTemplate: {
+        name: '',
+        sessions: []
+      },
       deleteStatus: false,
       errorMessage: '',
       templateList: [],
       user: {},
+
     }
   },
   computed: {
@@ -65,14 +70,28 @@ export default {
   methods: {
     request: function(){
       if(this.status){
-        this.saveRequest();
+        this.createRequest();
       } else if(!this.status){
         this.setDelete();
       }
     },
-    saveRequest: function(){
+    createRequest: function(){
+      try {
+        console.log("Submitting");
+        axios.post(`${url}/coach/template`, 
+          this.submitTemplate
+        ).then(function (response){
+          console.log(response)
+        }).catch(function (error){ 
+            // on login promise failure
+            self.error = true
+        });
+      } catch (error) {
+        this.error = true;
+      }
       console.log('saving')
       this.status = !this.status;
+
     },
     setDelete: function(){
       this.deleteStatus = !this.deleteStatus
@@ -81,6 +100,11 @@ export default {
       console.log('deleting')
     },
     setStatus: function(){
+      this.submitTemplate = 
+      {
+        name: '',
+        sessions: []
+      },
       this.status = !this.status;
     },
     getUserTemplate: function(){
