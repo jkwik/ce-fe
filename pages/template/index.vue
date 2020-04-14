@@ -9,7 +9,8 @@
         :deleteStatus="deleteStatus"
         :key="template.id"
         type="template"
-        :items="template"/>
+        :items="template"
+        @sendDelete="deleteTemplate(template.id)"/>
       <MessageError :error="error" :message="errorMessage" />
     </div>
     <div v-if="!loading && status">
@@ -76,12 +77,14 @@ export default {
       }
     },
     createRequest: function(){
+      let self = this;
       try {
         console.log("Submitting");
         axios.post(`${url}/coach/template`, 
-          this.submitTemplate
+          self.submitTemplate
         ).then(function (response){
-          console.log(response)
+          console.log(response);
+          self.updateTemplateList();
         }).catch(function (error){ 
             // on login promise failure
             self.error = true
@@ -131,6 +134,21 @@ export default {
           self.errorMessage = "Unable to load content.";
           self.loading = false;
         }); 
+    },
+    deleteTemplate: function(template_id) {
+      try {
+        axios.put(`${url}/coach/template/delete`, 
+        {
+          "coach_template_id": template_id
+        }).then(response => {
+          console.log(response);
+          this.updateTemplateList();
+        }).catch(error => {
+          console.log(error);
+        })
+      } catch (error) {
+        this.error = true;
+      }
     },
     setNoEdit: function() {
       this.$store.commit('noEdit');

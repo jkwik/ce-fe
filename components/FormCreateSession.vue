@@ -33,6 +33,7 @@ export default {
       index: 0,
       order: 0,
       creating: true,
+      deleteStatus: false,
     }
   },
   methods: {
